@@ -1,0 +1,194 @@
+fileFormatVersion: 2
+guid: 42fce1e395392504c8c49402756a060e
+timeCreated: 1456461355
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: backGlass
+    100002: bodyBottom
+    100004: bodyTop
+    100006: bodyTopDetail
+    100008: enclosure_rods
+    100010: frontGlass
+    100012: glass_enclosure
+    100014: internalSpillGuard
+    100016: knob
+    100018: knob 1
+    100020: knob 2
+    100022: left_handle
+    100024: leftGlass
+    100026: levelIndicator
+    100028: lock_handle
+    100030: pan
+    100032: panSupport
+    100034: pinConnector
+    100036: right_handle
+    100038: rightGlass
+    100040: screw
+    100042: screw 1
+    100044: screw 2
+    100046: spillGuard
+    100048: //RootNode
+    100050: top_handle
+    100052: topGlass
+    400000: backGlass
+    400002: bodyBottom
+    400004: bodyTop
+    400006: bodyTopDetail
+    400008: enclosure_rods
+    400010: frontGlass
+    400012: glass_enclosure
+    400014: internalSpillGuard
+    400016: knob
+    400018: knob 1
+    400020: knob 2
+    400022: left_handle
+    400024: leftGlass
+    400026: levelIndicator
+    400028: lock_handle
+    400030: pan
+    400032: panSupport
+    400034: pinConnector
+    400036: right_handle
+    400038: rightGlass
+    400040: screw
+    400042: screw 1
+    400044: screw 2
+    400046: spillGuard
+    400048: //RootNode
+    400050: top_handle
+    400052: topGlass
+    2300000: backGlass
+    2300002: bodyBottom
+    2300004: bodyTop
+    2300006: bodyTopDetail
+    2300008: enclosure_rods
+    2300010: frontGlass
+    2300012: glass_enclosure
+    2300014: internalSpillGuard
+    2300016: knob
+    2300018: knob 1
+    2300020: knob 2
+    2300022: leftGlass
+    2300024: levelIndicator
+    2300026: lock_handle
+    2300028: pan
+    2300030: panSupport
+    2300032: pinConnector
+    2300034: rightGlass
+    2300036: screw
+    2300038: screw 1
+    2300040: screw 2
+    2300042: spillGuard
+    2300044: topGlass
+    3300000: backGlass
+    3300002: bodyBottom
+    3300004: bodyTop
+    3300006: bodyTopDetail
+    3300008: enclosure_rods
+    3300010: frontGlass
+    3300012: glass_enclosure
+    3300014: internalSpillGuard
+    3300016: knob
+    3300018: knob 1
+    3300020: knob 2
+    3300022: leftGlass
+    3300024: levelIndicator
+    3300026: lock_handle
+    3300028: pan
+    3300030: panSupport
+    3300032: pinConnector
+    3300034: rightGlass
+    3300036: screw
+    3300038: screw 1
+    3300040: screw 2
+    3300042: spillGuard
+    3300044: topGlass
+    4300000: bodyTop
+    4300002: bodyBottom
+    4300004: bodyTopDetail
+    4300006: screw
+    4300008: knob
+    4300010: leftGlass
+    4300012: screw
+    4300014: knob
+    4300016: rightGlass
+    4300018: screw
+    4300020: knob
+    4300022: topGlass
+    4300024: backGlass
+    4300026: frontGlass
+    4300028: enclosure_rods
+    4300030: glass_enclosure
+    4300032: lock_handle
+    4300034: levelIndicator
+    4300036: pinConnector
+    4300038: pan
+    4300040: panSupport
+    4300042: internalSpillGuard
+    4300044: spillGuard
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
