@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 42fce1e395392504c8c49402756a060e
-timeCreated: 1456461355
+timeCreated: 1457047987
 licenseType: Pro
 ModelImporter:
   serializedVersion: 19
@@ -128,6 +128,7 @@ ModelImporter:
     4300040: panSupport
     4300042: internalSpillGuard
     4300044: spillGuard
+    9500000: //RootNode
   materials:
     importMaterials: 0
     materialName: 0
@@ -186,7 +187,7 @@ ModelImporter:
     rootMotionBoneName: 
     hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
