@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class camRectAdjust : MonoBehaviour {
+public class CamRectAdjust : MonoBehaviour {
 
 	public bool updateRect = true;
 
