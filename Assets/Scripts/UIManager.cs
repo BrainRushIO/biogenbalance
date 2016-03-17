@@ -6,11 +6,11 @@ public class UIManager : MonoBehaviour {
 	public static UIManager s_instance;
 
 	[Header("Top Bar")]
-	public Button familiarizeButton,
-				acquireButton,
-				practiceButton,
-				validateButton,
-				progressButton;
+	public Button familiarizeButton;
+	public Button acquireButton;
+	public Button practiceButton;
+	public Button validateButton;
+	public Button progressButton;
 	public RectTransform familiarizeDropdownItems,
 				acquireDropdownItems,
 				practiceDropdownItems;
@@ -21,10 +21,10 @@ public class UIManager : MonoBehaviour {
 				descriptionViewText;
 
 	[Header("Tools")]
-	public Button pointerToolButton,
-				rotateToolButton,
-				panToolButton,
-				forcepsToolButton;
+	public Button pointerToolButton;
+	public Button rotateToolButton;
+	public Button panToolButton;
+	public Button forcepsToolButton;
 
 	void Awake() {
 		if( s_instance == null ) {
