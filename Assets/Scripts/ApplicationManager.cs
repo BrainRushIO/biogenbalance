@@ -21,6 +21,9 @@ public class ApplicationManager : MonoBehaviour {
 		InitSceneDictionary();
 	}
 
+	/// <summary>
+	/// Initialized the scene dictionary that holds all the scene names.
+	/// </summary>
 	void InitSceneDictionary() {
 		scenesDictionary = new Dictionary<string, string>();
 		scenesDictionary.Add( "F1", "F1_SemiMicroBalance" );
