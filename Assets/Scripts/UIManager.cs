@@ -11,12 +11,13 @@ public class UIManager : MonoBehaviour {
 	public Button practiceButton;
 	public Button validateButton;
 	public Button progressButton;
+	public Button settingsButton;
 	public RectTransform familiarizeDropdownItems,
 				acquireDropdownItems,
 				practiceDropdownItems;
 
 	[Header("Side Bar")]
-	public RectTransform sidepanel;
+	public RectTransform sidePanel;
 	public Text listViewText,
 				descriptionViewText;
 
@@ -35,11 +36,18 @@ public class UIManager : MonoBehaviour {
 		}
 	}
 
-	void Start () {
-	
+	public void CloseDropDowns() {
+		familiarizeDropdownItems.gameObject.SetActive (false);
+		acquireDropdownItems.gameObject.SetActive (false);
+		practiceDropdownItems.gameObject.SetActive (false);
 	}
 
-	void Update () {
-	
+	public void DeselectTopBarButtons() {
+		familiarizeButton.GetComponent<MenuBarButton> ().Deselect();
+		acquireButton.GetComponent<MenuBarButton> ().Deselect();
+		practiceButton.GetComponent<MenuBarButton> ().Deselect();
+		validateButton.GetComponent<MenuBarButton> ().Deselect();
+		progressButton.GetComponent<MenuBarButton> ().Deselect();
+		settingsButton.GetComponent<MenuBarButton> ().Deselect();
 	}
 }
