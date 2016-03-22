@@ -2,14 +2,24 @@
 using System.Collections;
 
 public class FamiliarizeManager : MonoBehaviour {
+	public static FamiliarizeManager s_instance;
 
 	public Camera sceneCamera;
+	[System.NonSerialized]
+	public bool isDragging = false;
 
 	/// <summary>
 	/// Checks if user has clicked down on mouse item. Used to differentiate between a click and drag
 	/// </summary>
 	private bool hasClickedDownOnItem = false;
-	private bool isDragging = false;
+
+	void Start() {
+		if( s_instance == null ) {
+			s_instance = this;
+		} else {
+			DestroyImmediate( gameObject );
+		}
+	}
 
 	void Update () {
 		#region Input
@@ -24,6 +34,9 @@ public class FamiliarizeManager : MonoBehaviour {
 					//TODO Check if they have a clickable object on them and do something about it
 				}
 			}
+
+			hasClickedDownOnItem = false;
+			isDragging = false;
 		}
 		if ( Input.GetMouseButtonDown(0) ){
 			Ray ray = sceneCamera.ScreenPointToRay(Input.mousePosition);
