@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 public class ApplicationManager : MonoBehaviour {
 	public static ApplicationManager s_instance;
 
+	public enum ApplicationMode { Familiarize, Acquire, Practice, Validate, Progress, Settings }
+	public ApplicationMode currentApplicationMode = ApplicationMode.Familiarize;
+
 	private Dictionary<string, string> scenesDictionary;
 
 	void Awake() {
@@ -50,6 +53,9 @@ public class ApplicationManager : MonoBehaviour {
 	/// <param name="sceneInitials">The initials that correspond to the specific scene.</param>
 	public void LoadScene( string sceneInitials ) {
 		string newScene = scenesDictionary[sceneInitials];
+		if (newScene == SceneManager.GetActiveScene ().name)
+			return;
+
 		SceneManager.LoadScene( newScene );
 		Debug.Log( "Loaded new scene: " + newScene );
 	}
