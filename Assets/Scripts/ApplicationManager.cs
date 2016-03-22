@@ -9,6 +9,9 @@ public class ApplicationManager : MonoBehaviour {
 	public enum ApplicationMode { Familiarize, Acquire, Practice, Validate, Progress, Settings }
 	public ApplicationMode currentApplicationMode = ApplicationMode.Familiarize;
 
+	public enum MouseMode { Pointer, Rotate, Pan, Forceps }
+	public MouseMode currentMouseMode = MouseMode.Pointer;
+
 	private Dictionary<string, string> scenesDictionary;
 
 	void Awake() {
@@ -58,5 +61,10 @@ public class ApplicationManager : MonoBehaviour {
 
 		SceneManager.LoadScene( newScene );
 		Debug.Log( "Loaded new scene: " + newScene );
+	}
+
+	public void ChangeMouseMode( int newMouseMode ) {
+		currentMouseMode = (MouseMode)newMouseMode;
+		UIManager.s_instance.UpdateMouseCursor();
 	}
 }

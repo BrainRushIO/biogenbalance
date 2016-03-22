@@ -28,6 +28,14 @@ public class UIManager : MonoBehaviour {
 	public Button panToolButton;
 	public Button forcepsToolButton;
 
+	public Texture2D pointerCursor,
+				rotateCursor,
+				panCursor,
+				forcepsCursor,
+				selectableItemCursor,
+				holdingItemCursor,
+				placeItemCursor;
+
 	void Awake() {
 		if( s_instance == null ) {
 			s_instance = this;
@@ -83,6 +91,24 @@ public class UIManager : MonoBehaviour {
 			break;
 		case 5:
 			settingsButton.GetComponent<MenuBarButton> ().ToggleHighlight( true );
+			break;
+		}
+	}
+
+	public void UpdateMouseCursor() {
+		switch (ApplicationManager.s_instance.currentMouseMode) 
+		{
+		case ApplicationManager.MouseMode.Pointer:
+			Cursor.SetCursor( pointerCursor, Vector2.zero, CursorMode.ForceSoftware );
+			break;
+		case ApplicationManager.MouseMode.Rotate:
+			Cursor.SetCursor( rotateCursor, Vector2.zero, CursorMode.ForceSoftware );
+			break;
+		case ApplicationManager.MouseMode.Pan:
+			Cursor.SetCursor( panCursor, Vector2.zero, CursorMode.ForceSoftware );
+			break;
+		case ApplicationManager.MouseMode.Forceps:
+			Cursor.SetCursor( forcepsCursor, Vector2.zero, CursorMode.ForceSoftware );
 			break;
 		}
 	}
