@@ -28,7 +28,6 @@ public class MenuBarButton : MonoBehaviour {
 		isSelected = false;
 		if( dropDownMenuObject != null && !isHoveringOverDropdown )
 			dropDownMenuObject.SetActive (false);
-		//TODO button color stuff
 	}
 
 	/// <summary>
