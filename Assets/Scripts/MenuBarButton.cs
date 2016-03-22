@@ -38,4 +38,15 @@ public class MenuBarButton : MonoBehaviour {
 	public void SetIsHoveringOverDropdown( bool val ) {
 		isHoveringOverDropdown = val;
 	}
+
+	/// <summary>
+	/// Changes the normal color of the button to highlighted and back.
+	/// </summary>
+	/// <param name="toggleHighlightOn">If set to <c>true</c> toggle highlight on.</param>
+	public void ToggleHighlight( bool toggleHighlightOn ) {
+		Button thisButton = GetComponent<Button> ();
+		ColorBlock newBlock = thisButton.colors;
+		newBlock.normalColor = (toggleHighlightOn) ? UIManager.s_instance.menuButtonsHighlightColor : UIManager.s_instance.menuButtonsBaseColor;
+		thisButton.colors = newBlock;
+	}
 }
