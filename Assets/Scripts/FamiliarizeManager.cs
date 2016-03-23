@@ -131,7 +131,7 @@ public class FamiliarizeManager : MonoBehaviour {
 	private IEnumerator LerpCameraLookAt() {
 		isCameraRotLerping = true;
 		float elapsedTime = 0f;
-		float slerpTime = 0.25f;
+		float slerpTime = 0.5f;
 		float startTime = Time.time;
 		Quaternion startRot = sceneCamera.transform.rotation;
 
