@@ -10,11 +10,20 @@ public class FamiliarizeObject : MonoBehaviour {
 	public Transform cameraPivot, cameraStartPosition;
 	public GameObject popupBubble;
 
+	private Vector3 defautPivotPos, defaultStartPos;
+
+	void Start() {
+		defautPivotPos = cameraPivot.position;
+		defaultStartPos = cameraStartPosition.position;
+	}
+
 	public void Select() {
-		popupBubble.SetActive( true );
+		//popupBubble.SetActive( true );
 	}
 
 	public void Deselect() {
-		popupBubble.SetActive( false );
+		//popupBubble.SetActive( false );
+		cameraPivot.position = defautPivotPos;
+		cameraStartPosition.position = defaultStartPos;
 	}
 }

@@ -4,10 +4,9 @@ using System.Collections;
 public class OrbitCamera : MonoBehaviour {
 
 	public Transform pivot;
-	public Transform target;
 	public float dragSpeed = 1;
 	public float scrollSpeed= 1;
-	public float minDistance = 3;
+	public float minDistance = 1;
 	public float maxDistance = 8;
 
 	private Vector3 lastMousePos;
