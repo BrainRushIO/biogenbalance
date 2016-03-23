@@ -46,10 +46,10 @@ public class FamiliarizeManager : MonoBehaviour {
 						FamiliarizeObject clickedObject = hit.transform.GetComponent<FamiliarizeObject>();
 						if( clickedObject != null ) {
 							SelectFamiliarizeObject( clickedObject );
-						} else {
-							ClearSelectedFamiliarizeObject( true );
 						}
 					}
+				} else if( !isDragging ) {
+					ClearSelectedFamiliarizeObject( true );
 				}
 
 				hasClickedDownOnItem = false;

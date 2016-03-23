@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<microBalance>
+	<item>
+		<key>readoutDisplay</key>
+		<listText>Readout Display</listText>
+		<descriptionText>Displays the recorded weight.</descriptionText>
+	</item>
+	<item>
+		<key>readoutDisplayButtons</key>
+		<listText>Readout Display Buttons</listText>
+		<descriptionText>Buttons whos functions change depending on the current screen on the Readout Display.</descriptionText>
+	</item>
+	<item>
+		<key>lTareButton</key>
+		<listText>Left Tare Button</listText>
+		<descriptionText>Zeros or re-zeros the scale. Used often during calibration and when preparing the balance for use. There is one on both sides of the scale face.</descriptionText>
+	</item>
+	<item>
+		<key>rTareButton</key>
+		<listText>Right Tare Button</listText>
+		<descriptionText>Zeros or re-zeros the scale. Used often during calibration and when preparing the balance for use. There is one on both sides of the scale face.</descriptionText>
+	</item>
+	<item>
+		<key>numericalButtons</key>
+		<listText>Numerical Buttons</listText>
+		<descriptionText>Numbered buttons that serve as input.</descriptionText>
+	</item>
+	<item>
+		<key>decimalButton</key>
+		<listText>Decimal Point Button</listText>
+		<descriptionText>Button used to input a decimal point.</descriptionText>
+	</item>
+	<item>
+		<key>abcButton</key>
+		<listText>Alphabet Input Toggle Button</listText>
+		<descriptionText>Changes the input from numbers to alphabetical letters.</descriptionText>
+	</item>
+	<item>
+		<key>powerButton</key>
+		<listText>Power(On/Off) Button</listText>
+		<descriptionText>Turns the balance on or off.</descriptionText>
+	</item>
+	<item>
+		<key>setupButton</key>
+		<listText>Setup Button</listText>
+		<descriptionText>Used to configure settings on Micro Balance.</descriptionText>
+	</item>
+	<item>
+		<key>doorButton</key>
+		<listText>Rotating Door Button</listText>
+		<descriptionText>Buttons used to rotate the motorized balance door to the open and closed positions.</descriptionText>
+	</item>
+	<item>
+		<key>changeAppProgramButton</key>
+		<listText>Change Application Program Button</listText>
+		<descriptionText>Cycle through built-in application programs. This will not be used during this course.</descriptionText>
+	</item>
+	<item>
+		<key>clearFunctionButton</key>
+		<listText>Clear Function(CF) Button</listText>
+		<descriptionText>Resets function to default.</descriptionText>
+	</item>
+	<item>
+		<key>printButton</key>
+		<listText>Print Button</listText>
+		<descriptionText>Prints out the recorded data to a printer connected via the Serial Port.</descriptionText>
+	</item>
+	<item>
+		<key>levelingScrews</key>
+		<listText>Leveling Screws</listText>
+		<descriptionText>Screws that change the height the balance to make sure it is on a level surface.</descriptionText>
+	</item>
+	<item>
+		<key>bubbleLevelIndicator</key>
+		<listText>Air Bubble Level</listText>
+		<descriptionText>Used to verify that the balance is on a level surface.</descriptionText>
+	</item>
+	<item>
+		<key>serialPort</key>
+		<listText>Serial Port</listText>
+		<descriptionText>Port used to connect to printers.</descriptionText>
+	</item>
+	<item>
+		<key>calibrationLabel</key>
+		<listText>Calibration Label</listText>
+		<descriptionText>Gives information about the calibration of the label, such as: Metrology ID number, Date calibrated, Month/Year of calibration expiration, and Metrology Technician.</descriptionText>
+	</item>
+	<item>
+		<key>revolvingGlassDoor</key>
+		<listText>Revolving Door</listText>
+		<descriptionText>Rotating door that encloses the weighing area. Used to stop wind drafts from affecting the weight reading. Some doors are motorized and don't require manual adjustment.</descriptionText>
+	</item>
+	<item>
+		<key>pan</key>
+		<listText>Pan</listText>
+		<descriptionText>Surface where weighing materials are placed on.</descriptionText>
+	</item>
+	<item>
+		<key>protectionRing</key>
+		<listText>Protection Ring</listText>
+		<descriptionText>Protects the sensitive inner-mechanisms from spill damage.</descriptionText>
+	</item>
+	<item>
+		<key>shieldPlate</key>
+		<listText>Shield Plate</listText>
+		<descriptionText>The last line of defense against spill damages. The weighing mechanisms exist under this.</descriptionText>
+	</item>
+	<item>
+		<key>balancingMechanisms</key>
+		<listText>Balancing Mechanisms</listText>
+		<descriptionText>Sensitive mechanisms used to weigh objects.</descriptionText>
+	</item>
+	<item>
+		<key>acAdapterPort</key>
+		<listText>AC Adapter Port</listText>
+		<descriptionText>Port where you plug in the AC adapter (power cable). Scales need a power source to work and are usually plugged into a wall.</descriptionText>
+	</item>
+</microBalance>
+
+<semiMicroBalance>
+	<item>
+		<key>readoutDisplay</key>
+		<listText>Readout Display</listText>
+		<descriptionText>Displays the recorded weight.</descriptionText>
+	</item>
+	<item>
+		<key>lTareButton</key>
+		<listText>Left Tare Button</listText>
+		<descriptionText>Zeros or re-zeros the scale. Used often during calibration and when preparing the balance for use. There is one on both sides of the scale face.</descriptionText>
+	</item>
+	<item>
+		<key>rTareButton</key>
+		<listText>Right Tare Button</listText>
+		<descriptionText>Zeros or re-zeros the scale. Used often during calibration and when preparing the balance for use. There is one on both sides of the scale face.</descriptionText>
+	</item>
+	<item>
+		<key>powerButton</key>
+		<listText>Power(On/Off) Button</listText>
+		<descriptionText>Turns the balance on or off.</descriptionText>
+	</item>
+	<item>
+		<key>clearFunctionButton</key>
+		<listText>Clear Function(CF) Button</listText>
+		<descriptionText>Resets function back to default.</descriptionText>
+	</item>
+	<item>
+		<key>functionButton</key>
+		<listText>Function(F) Button</listText>
+		<descriptionText>Changes function from grams to another unit.</descriptionText>
+	</item>
+	<item>
+		<key>printButton</key>
+		<listText>Print Button</listText>
+		<descriptionText>Prints out the recorded data to a printer connected via the Serial Port.</descriptionText>
+	</item>
+	<item>
+		<key>levelingScrews</key>
+		<listText>Leveling Screws</listText>
+		<descriptionText>Screws that change the height the balance to make sure it is on a level surface.</descriptionText>
+	</item>
+	<item>
+		<key>bubbleLevelIndicator</key>
+		<listText>Air Bubble Level</listText>
+		<descriptionText>Used to verify that the balance is on a level surface.</descriptionText>
+	</item>
+	<item>
+		<key>serialPort</key>
+		<listText>Serial Port</listText>
+		<descriptionText>Port used to connect to printers.</descriptionText>
+	</item>
+	<item>
+		<key>calibrationLabel</key>
+		<listText>Calibration Label</listText>
+		<descriptionText>Gives information about the calibration of the label, such as: Metrology ID number, Date calibrated, Month/Year of calibration expiration, and Metrology Technician.</descriptionText> 
+	</item>
+	<item>
+		<key>glassDoors</key>
+		<listText>Glass Doors</listText>
+		<descriptionText>Glass doors that enclose the weighing area. Used to stop wind drafts from affecting the weight reading.</descriptionText>
+	</item>
+	<item>
+		<key>doorHandles</key>
+		<listText>Door Handle</listText>
+		<descriptionText>Handles to safely open the doors.</descriptionText>
+	</item>
+	<item>
+		<key>pan</key>
+		<listText>Pan</listText>
+		<descriptionText>Surface where weighing materials are placed on.</descriptionText>
+	</item>
+	<item>
+		<key>protectionRing</key>
+		<listText>Protection Ring</listText>
+		<descriptionText>Protects the sensitive inner-mechanisms from spill damage.</descriptionText>
+	</item>
+	<item>
+		<key>shieldPlate</key>
+		<listText>Shield Plate</listText>
+		<descriptionText>The last line of defense against spill damages. The weighing mechanisms exist under this.</descriptionText>
+	</item>
+	<item>
+		<key>balancingMechanisms</key>
+		<listText>Balancing Mechanisms</listText>
+		<descriptionText>Sensitive mechanisms used to weigh objects.</descriptionText>
+	</item>
+	<item>
+		<key>acAdapterPort</key>
+		<listText>AC Adapter Port</listText>
+		<descriptionText>Port where you plug in the AC adapter (power cable). Scales need a power source to work and are usually plugged into a wall.</descriptionText>
+	</item>
+</semiMicroBalance>
