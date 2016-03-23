@@ -29,10 +29,10 @@ public class OrbitCamera : MonoBehaviour {
 
 		// Handle zooming in and out
 		float mouseWheelValue = Input.GetAxis ("Mouse ScrollWheel");
-		if ( mouseWheelValue > 0f && transform.localPosition.z > minDistance) {
+		if ( mouseWheelValue > 0f && transform.localPosition.z > minDistance ) {
 			transform.localPosition += -(transform.localPosition).normalized * Input.GetAxis ("Mouse ScrollWheel") * scrollSpeed;
 			transform.LookAt (pivot);
-		} else if ( mouseWheelValue < 0f && transform.localPosition.z < maxDistance) {
+		} else if ( mouseWheelValue < 0f && transform.localPosition.z < maxDistance ) {
 			transform.localPosition += -(transform.localPosition).normalized * Input.GetAxis ("Mouse ScrollWheel") * scrollSpeed;
 			transform.LookAt (pivot);
 		}
