@@ -14,10 +14,10 @@ public class FamiliarizeManager : MonoBehaviour {
 	/// Checks if user has clicked down on mouse item. Used to differentiate between a click and drag
 	/// </summary>
 	private bool hasClickedDownOnItem = false;
-	public bool isSlerpingToNewPosition = false;
-	public Vector3 defaultCameraStartPos;
-	public OrbitCamera orbitCam;
-	public Transform currentCameraPivot, currentCameraStartPos;
+	private bool isLerpingToNewPosition = false;
+	private bool isCameraRotLerping = false;
+	private OrbitCamera orbitCam;
+	private Transform currentCameraPivot, currentCameraStartPos;
 
 	void Awake() {
 		if( s_instance == null ) {
@@ -29,13 +29,12 @@ public class FamiliarizeManager : MonoBehaviour {
 
 	void Start() {
 		UIManager.s_instance.ToggleToolsActive( false, false, false, false );
-		defaultCameraStartPos = defaultCameraStartTransform.position;
 		orbitCam = sceneCamera.GetComponent<OrbitCamera>();
 	}
 
 	void Update () {
 		#region Input
-		if( !isSlerpingToNewPosition ) {
+		if( !isLerpingToNewPosition ) {
 			if ( Input.GetMouseButtonUp(0) ) {
 				if( hasClickedDownOnItem && !isDragging ) {
 					Ray ray = sceneCamera.ScreenPointToRay(Input.mousePosition);
@@ -76,41 +75,76 @@ public class FamiliarizeManager : MonoBehaviour {
 		currentCameraPivot = selectedObject.cameraPivot;
 		currentCameraStartPos = selectedObject.cameraStartPosition;
 		selectedObject.Select();
-		StartCoroutine( SlerpToNewCamPos() );
+		StartCameraTransition();
 	}
 		
 	private void ClearSelectedFamiliarizeObject( bool slerpToDefaultPos ) {
-		if( selectedObject != null ) {
-			selectedObject.Deselect();
-			selectedObject = null;
-			currentCameraPivot = defaultCameraPivot;
-			currentCameraStartPos = defaultCameraStartTransform;
+		if( selectedObject == null )
+			return;
+		
+		selectedObject.Deselect();
+		selectedObject = null;
+		currentCameraPivot = defaultCameraPivot;
+		currentCameraStartPos = defaultCameraStartTransform;
 
-			if( slerpToDefaultPos ) {
-				StartCoroutine( SlerpToNewCamPos() );
-			}
+		if( slerpToDefaultPos ) {
+			StartCameraTransition();
 		}
 	}
 
+	private void StartCameraTransition() {
+		orbitCam.canRotate = false;
+		orbitCam.canZoom = false;
+		StartCoroutine( LerpCameraLookAt() );
+		StartCoroutine( SlerpToNewCamPos() );
+	}
+
 	private IEnumerator SlerpToNewCamPos() {
-		isSlerpingToNewPosition = true;
+		isLerpingToNewPosition = true;
+		orbitCam.transform.parent = null;
+		orbitCam.pivotParent.position = currentCameraPivot.position;
 		float elapsedTime = 0f;
 		float slerpTime = 1f;
 		float startTime = Time.time;
 		Vector3 startPos = sceneCamera.transform.position;
 
-		while( elapsedTime < slerpTime) {
+		while( elapsedTime < slerpTime ) {
 			if( (elapsedTime/slerpTime) >= 0.98f ) {
-				sceneCamera.transform.position = currentCameraStartPos.position;
 				break;
 			}
-			sceneCamera.transform.position = Vector3.Slerp( startPos, currentCameraStartPos.position, elapsedTime/slerpTime );
-			sceneCamera.transform.LookAt( currentCameraPivot );
+			sceneCamera.transform.position = Vector3.Lerp( startPos, currentCameraStartPos.position, elapsedTime/slerpTime );
+			if( !isCameraRotLerping )
+				sceneCamera.transform.LookAt( currentCameraPivot );
 			yield return null;
 			elapsedTime = Time.time-startTime;
 		}
-		isSlerpingToNewPosition = false;
-		orbitCam.pivot.position = currentCameraPivot.position;
-		sceneCamera.transform.LookAt( currentCameraPivot.position );
+		orbitCam.pivotParent.rotation = Quaternion.identity;
+		orbitCam.transform.parent = orbitCam.pivotParent;
+
+		sceneCamera.transform.position = currentCameraStartPos.position;
+		sceneCamera.transform.LookAt( currentCameraPivot );
+		isLerpingToNewPosition = false;
+		orbitCam.canRotate = true;
+		orbitCam.canZoom = true;
+	}
+
+	private IEnumerator LerpCameraLookAt() {
+		isCameraRotLerping = true;
+		float elapsedTime = 0f;
+		float slerpTime = 0.25f;
+		float startTime = Time.time;
+		Quaternion startRot = sceneCamera.transform.rotation;
+
+		while( elapsedTime < slerpTime ) {
+			if( (elapsedTime/slerpTime) >= 0.98f ) {
+				break;
+			}
+			Quaternion targetRot = Quaternion.LookRotation( (currentCameraPivot.position-sceneCamera.transform.position).normalized );
+			sceneCamera.transform.rotation = Quaternion.Lerp( startRot, targetRot, elapsedTime/slerpTime );
+			yield return null;
+			elapsedTime = Time.time-startTime;
+		}
+		sceneCamera.transform.LookAt( currentCameraPivot );
+		isCameraRotLerping = false;
 	}
 }

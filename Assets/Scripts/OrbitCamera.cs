@@ -3,37 +3,42 @@ using System.Collections;
 
 public class OrbitCamera : MonoBehaviour {
 
-	public Transform pivot;
+	public Transform pivotParent;
 	public float dragSpeed = 1;
 	public float scrollSpeed= 1;
 	public float minDistance = 1;
 	public float maxDistance = 8;
+	public bool canRotate = true, canZoom = true;
 
 	private Vector3 lastMousePos;
 
 	void Start () {
-		transform.LookAt (pivot);
+		transform.LookAt (pivotParent);
 	}
 
 	void Update () {
 		// Handle draggin camera
-		if ( FamiliarizeManager.s_instance.isDragging == false && Input.GetMouseButton (0) && Mathf.Abs((Input.mousePosition-lastMousePos).magnitude) > 2f ) {
-			FamiliarizeManager.s_instance.isDragging = true;
-		}
-		if( FamiliarizeManager.s_instance.isDragging ) {
-			pivot.transform.RotateAround (pivot.position, pivot.up, Input.GetAxis ("Mouse X") * dragSpeed);
-			pivot.transform.RotateAround (pivot.position, pivot.right, Input.GetAxis ("Mouse Y") * dragSpeed);
-			transform.LookAt (pivot);
+		if( canRotate ) {
+			if ( FamiliarizeManager.s_instance.isDragging == false && Input.GetMouseButton (0) && Mathf.Abs((Input.mousePosition-lastMousePos).magnitude) > 2f ) {
+				FamiliarizeManager.s_instance.isDragging = true;
+			}
+			if( FamiliarizeManager.s_instance.isDragging ) {
+				pivotParent.transform.RotateAround (pivotParent.position, pivotParent.up, Input.GetAxis ("Mouse X") * dragSpeed);
+				pivotParent.transform.RotateAround (pivotParent.position, pivotParent.right, Input.GetAxis ("Mouse Y") * dragSpeed);
+				transform.LookAt (pivotParent);
+			}
 		}
 
 		// Handle zooming in and out
+		if( canZoom ) {
 		float mouseWheelValue = Input.GetAxis ("Mouse ScrollWheel");
-		if ( mouseWheelValue > 0f && transform.localPosition.z > minDistance ) {
-			transform.localPosition += -(transform.localPosition).normalized * Input.GetAxis ("Mouse ScrollWheel") * scrollSpeed;
-			transform.LookAt (pivot);
-		} else if ( mouseWheelValue < 0f && transform.localPosition.z < maxDistance ) {
-			transform.localPosition += -(transform.localPosition).normalized * Input.GetAxis ("Mouse ScrollWheel") * scrollSpeed;
-			transform.LookAt (pivot);
+			if ( mouseWheelValue > 0f && transform.localPosition.z > minDistance ) {
+				transform.localPosition += -(transform.localPosition).normalized * Input.GetAxis ("Mouse ScrollWheel") * scrollSpeed;
+				transform.LookAt (pivotParent);
+			} else if ( mouseWheelValue < 0f && transform.localPosition.z < maxDistance ) {
+				transform.localPosition += -(transform.localPosition).normalized * Input.GetAxis ("Mouse ScrollWheel") * scrollSpeed;
+				transform.LookAt (pivotParent);
+			}
 		}
 
 		lastMousePos = Input.mousePosition;
