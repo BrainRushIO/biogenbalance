@@ -112,4 +112,25 @@ public class UIManager : MonoBehaviour {
 			break;
 		}
 	}
+
+	/// <summary>
+	/// Toggles the tools active or innactive.
+	/// </summary>
+	/// <param name="pointer">If set to <c>true</c> pointer is toggled active.</param>
+	/// <param name="rotate">If set to <c>true</c> rotate is toggled active.</param>
+	/// <param name="pan">If set to <c>true</c> pan is toggled active.</param>
+	/// <param name="forceps">If set to <c>true</c> forceps is toggled active.</param>
+	public void ToggleToolsActive( bool pointer, bool rotate, bool pan, bool forceps ) {
+		pointerToolButton.interactable = pointer;
+		pointerToolButton.transform.GetChild(1).gameObject.SetActive( !pointer );
+
+		rotateToolButton.interactable = rotate;
+		rotateToolButton.transform.GetChild(1).gameObject.SetActive( !rotate );
+
+		panToolButton.interactable = pan;
+		panToolButton.transform.GetChild(1).gameObject.SetActive( !pan );
+
+		forcepsToolButton.interactable = forceps;
+		forcepsToolButton.transform.GetChild(1).gameObject.SetActive( !forceps );
+	}
 }

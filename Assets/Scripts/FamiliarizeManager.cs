@@ -17,12 +17,16 @@ public class FamiliarizeManager : MonoBehaviour {
 	private bool isSlerpingToNewPosition = false;
 	public Transform currentCameraPivot, currentCameraStartPos;
 
-	void Start() {
+	void Awake() {
 		if( s_instance == null ) {
 			s_instance = this;
 		} else {
 			DestroyImmediate( gameObject );
 		}
+	}
+
+	void Start() {
+		UIManager.s_instance.ToggleToolsActive( false, false, false, false );
 	}
 
 	void Update () {
