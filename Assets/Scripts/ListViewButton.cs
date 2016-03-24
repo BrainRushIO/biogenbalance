@@ -8,6 +8,6 @@ public class ListViewButton : MonoBehaviour {
 	public Text childText;
 
 	public void ClickedButton() {
-		// find 
+		FamiliarizeManager.s_instance.SelectObjectOfKey( key );
 	}
 }

@@ -1,9 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
+
+struct FamiliarizeDictionaryEntry {
+	public string listViewText, descriptionViewText;
+	public FamiliarizeObject obj;
+}
 
 public class FamiliarizeManager : MonoBehaviour {
 	public static FamiliarizeManager s_instance;
+
+	public enum FamiliarizeModule { MicroBalance, SemiMicroBalance }
+	public FamiliarizeModule moduleType = FamiliarizeModule.MicroBalance;
 
 	public Camera sceneCamera;
 	public Transform defaultCameraPivot, defaultCameraStartTransform;
@@ -13,6 +22,8 @@ public class FamiliarizeManager : MonoBehaviour {
 
 	[Header("UI")]
 	public Button defaultListViewButton;
+
+	private Dictionary<string, FamiliarizeDictionaryEntry> familiarizeDictionary;
 
 	/// <summary>
 	/// Checks if user has clicked down on mouse item. Used to differentiate between a click and drag
@@ -26,6 +37,13 @@ public class FamiliarizeManager : MonoBehaviour {
 	void Awake() {
 		if( s_instance == null ) {
 			s_instance = this;
+			familiarizeDictionary = new Dictionary<string, FamiliarizeDictionaryEntry>();
+
+			FamiliarizeObject newObj = GameObject.FindObjectOfType<FamiliarizeObject>();
+			FamiliarizeDictionaryEntry newEntry = new FamiliarizeDictionaryEntry();
+			newEntry.obj = newObj;
+			familiarizeDictionary.Add( "lTare", newEntry );
+
 		} else {
 			DestroyImmediate( gameObject );
 		}
@@ -70,6 +88,19 @@ public class FamiliarizeManager : MonoBehaviour {
 			}
 		}
 		#endregion
+	}
+
+	public void SelectObjectOfKey( string searchKey ) {
+		FamiliarizeDictionaryEntry temp;
+		if( familiarizeDictionary.TryGetValue(searchKey, out temp) ) {
+			ClearSelectedFamiliarizeObject( false );
+
+			SelectFamiliarizeObject( temp.obj );
+		} else {
+			Debug.LogError( "Could not find dictionary entry for key: "+ searchKey );
+		}
+
+
 	}
 
 	private void SelectFamiliarizeObject( FamiliarizeObject newSelection ) {
