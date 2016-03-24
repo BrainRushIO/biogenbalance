@@ -53,8 +53,6 @@ public class FamiliarizeManager : MonoBehaviour {
 
 	void Update () {
 		#region Input
-		if( ApplicationManager.s_instance.userIsInteractingWithUI )
-			return;
 
 		if( !isLerpingToNewPosition ) {
 			if ( Input.GetMouseButtonUp(0) ) {
@@ -77,6 +75,9 @@ public class FamiliarizeManager : MonoBehaviour {
 				hasClickedDownOnItem = false;
 				isDragging = false;
 			}
+
+			if( ApplicationManager.s_instance.userIsInteractingWithUI )
+				return;
 			if ( Input.GetMouseButtonDown(0) ){
 				Ray ray = sceneCamera.ScreenPointToRay(Input.mousePosition);
 				RaycastHit hit;
