@@ -17,6 +17,9 @@ public class OrbitCamera : MonoBehaviour {
 	}
 
 	void Update () {
+		if( ApplicationManager.s_instance.userIsInteractingWithUI )
+			return;
+
 		// Handle draggin camera
 		if( canRotate ) {
 			if ( FamiliarizeManager.s_instance.isDragging == false && Input.GetMouseButton (0) && Mathf.Abs((Input.mousePosition-lastMousePos).magnitude) > 2f ) {

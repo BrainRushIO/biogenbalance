@@ -14,6 +14,8 @@ public class ApplicationManager : MonoBehaviour {
 
 	private Dictionary<string, string> scenesDictionary;
 
+	public bool userIsInteractingWithUI = false;
+
 	void Awake() {
 		if( s_instance == null ) {
 			s_instance = this;
