@@ -12,6 +12,13 @@ public class FamiliarizeObject : MonoBehaviour {
 	public UnityEngine.UI.Text bubbleText;
 
 	void Start() {
+		if( FamiliarizeManager.s_instance.familiarizeDictionary.ContainsKey( dictionaryKey ) ) {
+			FamiliarizeDictionaryEntry appendedEntry =  FamiliarizeManager.s_instance.familiarizeDictionary[dictionaryKey];
+			appendedEntry.obj = this;
+			FamiliarizeManager.s_instance.familiarizeDictionary[dictionaryKey] = appendedEntry;
+		} else {
+			Debug.LogWarning( gameObject.name +"'s FamiliarizeObject couldn't find its key in the Dictionary. Key:" +dictionaryKey );
+		}
 	}
 
 	public void Select() {

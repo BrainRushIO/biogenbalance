@@ -53,6 +53,9 @@ public class FamiliarizeManager : MonoBehaviour {
 
 	void Update () {
 		#region Input
+		if( ApplicationManager.s_instance.userIsInteractingWithUI )
+			return;
+
 		if( !isLerpingToNewPosition ) {
 			if ( Input.GetMouseButtonUp(0) ) {
 				if( hasClickedDownOnItem && !isDragging ) {
@@ -108,7 +111,7 @@ public class FamiliarizeManager : MonoBehaviour {
 		foreach( XmlNode item in itemList ) {
 			FamiliarizeDictionaryEntry newEntry = new FamiliarizeDictionaryEntry();
 			newEntry.listViewText = item.SelectSingleNode( "listText" ).InnerText;
-			newEntry.listViewText = item.SelectSingleNode( "descriptionText" ).InnerText;
+			newEntry.descriptionViewText = item.SelectSingleNode( "descriptionText" ).InnerText;
 			newEntry.button = null;
 			newEntry.obj = null;
 
@@ -127,17 +130,27 @@ public class FamiliarizeManager : MonoBehaviour {
 		listViewVerticalLayoutGroup.sizeDelta = newWidthHeight;
 
 		// Creating new buttons out the dictionary and stuffing them in the vertical layout group
-		for( int i = 0; i < familiarizeDictionaryCount; i++ ) {
-			Button newButton = Instantiate( defaultListViewButton ).GetComponent<Button>();
+		foreach(  KeyValuePair<string, FamiliarizeDictionaryEntry> entry in familiarizeDictionary ) {
+			KeyValuePair<string, FamiliarizeDictionaryEntry> appendedEntry = entry;
+			ListViewButton newListViewButton = Instantiate( defaultListViewButton ).GetComponent<ListViewButton>();
+			newListViewButton.childText.text = entry.Value.listViewText;
+			newListViewButton.key = appendedEntry.Key;
+			FamiliarizeDictionaryEntry appendedValue = appendedEntry.Value;
+			appendedValue.button = newListViewButton;
+			newListViewButton.transform.SetParent(listViewVerticalLayoutGroup, false );
+
+			// Setting the individual keys is called on the Start function of the list items.
 		}
 	}
 
 	public void SelectObjectOfKey( string searchKey ) {
 		FamiliarizeDictionaryEntry temp;
 		if( familiarizeDictionary.TryGetValue(searchKey, out temp) ) {
-			ClearSelectedFamiliarizeObject( false );
-
-			SelectFamiliarizeObject( temp.obj );
+			if( temp.obj != null ) {
+				SelectFamiliarizeObject( temp.obj );
+			}
+			else
+				Debug.LogError( "Dictionary lookup was successful but obj reference is null" );
 		} else {
 			Debug.LogError( "Could not find dictionary entry for key: "+ searchKey );
 		}
@@ -148,6 +161,7 @@ public class FamiliarizeManager : MonoBehaviour {
 	private void SelectFamiliarizeObject( FamiliarizeObject newSelection ) {
 		ClearSelectedFamiliarizeObject( false );
 
+		UIManager.s_instance.descriptionViewText.text = familiarizeDictionary[newSelection.dictionaryKey].descriptionViewText;
 		selectedObject = newSelection;
 		currentCameraPivot = selectedObject.cameraPivot;
 		currentCameraStartPos = selectedObject.cameraStartPosition;
@@ -208,7 +222,7 @@ public class FamiliarizeManager : MonoBehaviour {
 	private IEnumerator LerpCameraLookAt() {
 		isCameraRotLerping = true;
 		float elapsedTime = 0f;
-		float slerpTime = 0.5f;
+		float slerpTime = 0.8f;
 		float startTime = Time.time;
 		Quaternion startRot = sceneCamera.transform.rotation;
 
