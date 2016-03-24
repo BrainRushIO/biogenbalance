@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEngine.UI;
+using System.Xml;
 
-struct FamiliarizeDictionaryEntry {
+public struct FamiliarizeDictionaryEntry {
 	public string listViewText, descriptionViewText;
+	public ListViewButton button;
 	public FamiliarizeObject obj;
 }
 
@@ -23,7 +25,7 @@ public class FamiliarizeManager : MonoBehaviour {
 	[Header("UI")]
 	public Button defaultListViewButton;
 
-	private Dictionary<string, FamiliarizeDictionaryEntry> familiarizeDictionary;
+	public Dictionary<string, FamiliarizeDictionaryEntry> familiarizeDictionary;
 
 	/// <summary>
 	/// Checks if user has clicked down on mouse item. Used to differentiate between a click and drag
@@ -37,13 +39,8 @@ public class FamiliarizeManager : MonoBehaviour {
 	void Awake() {
 		if( s_instance == null ) {
 			s_instance = this;
-			familiarizeDictionary = new Dictionary<string, FamiliarizeDictionaryEntry>();
-
-			FamiliarizeObject newObj = GameObject.FindObjectOfType<FamiliarizeObject>();
-			FamiliarizeDictionaryEntry newEntry = new FamiliarizeDictionaryEntry();
-			newEntry.obj = newObj;
-			familiarizeDictionary.Add( "lTare", newEntry );
-
+			InitializeFamiliarizeDictionary();
+			InitializeListView();
 		} else {
 			DestroyImmediate( gameObject );
 		}
@@ -90,6 +87,51 @@ public class FamiliarizeManager : MonoBehaviour {
 		#endregion
 	}
 
+	void InitializeFamiliarizeDictionary() {
+		familiarizeDictionary = new Dictionary<string, FamiliarizeDictionaryEntry>();
+		XmlDocument xmlFamiliarizeContent = new XmlDocument();
+		xmlFamiliarizeContent.Load( Application.dataPath + "/Resources/familiarize_content.xml" );
+
+		string path = "";
+		switch( moduleType ) 
+		{
+		case FamiliarizeModule.MicroBalance:
+			path = "microBalance";
+			break;
+		case FamiliarizeModule.SemiMicroBalance:
+			path = "semiMicroBalance";
+			break;
+		}
+
+		XmlNodeList itemList = xmlFamiliarizeContent.SelectNodes( "/content/"+ path +"/item" );
+
+		foreach( XmlNode item in itemList ) {
+			FamiliarizeDictionaryEntry newEntry = new FamiliarizeDictionaryEntry();
+			newEntry.listViewText = item.SelectSingleNode( "listText" ).InnerText;
+			newEntry.listViewText = item.SelectSingleNode( "descriptionText" ).InnerText;
+			newEntry.button = null;
+			newEntry.obj = null;
+
+			familiarizeDictionary.Add( item.SelectSingleNode("key").InnerText, newEntry );
+		}
+		Debug.Log( "Created dictionary." );
+	}
+
+	private void InitializeListView() {
+		int familiarizeDictionaryCount = familiarizeDictionary.Count;
+
+		// Setting the height of the list view to match the amount of buttons i will add to it.
+		RectTransform listViewVerticalLayoutGroup = UIManager.s_instance.listViewContentParent;
+		Vector2 newWidthHeight = listViewVerticalLayoutGroup.sizeDelta;
+		newWidthHeight.y = defaultListViewButton.GetComponent<RectTransform>().sizeDelta.y * familiarizeDictionaryCount;
+		listViewVerticalLayoutGroup.sizeDelta = newWidthHeight;
+
+		// Creating new buttons out the dictionary and stuffing them in the vertical layout group
+		for( int i = 0; i < familiarizeDictionaryCount; i++ ) {
+			Button newButton = Instantiate( defaultListViewButton ).GetComponent<Button>();
+		}
+	}
+
 	public void SelectObjectOfKey( string searchKey ) {
 		FamiliarizeDictionaryEntry temp;
 		if( familiarizeDictionary.TryGetValue(searchKey, out temp) ) {
@@ -99,7 +141,7 @@ public class FamiliarizeManager : MonoBehaviour {
 		} else {
 			Debug.LogError( "Could not find dictionary entry for key: "+ searchKey );
 		}
-
+		//TODO figure out if something should go here
 
 	}
 

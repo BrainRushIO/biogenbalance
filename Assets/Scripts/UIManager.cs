@@ -18,9 +18,8 @@ public class UIManager : MonoBehaviour {
 	public Color menuButtonsBaseColor, menuButtonsHighlightColor;
 
 	[Header("Side Bar")]
-	public RectTransform sidePanel;
-	public Text listViewText,
-				descriptionViewText;
+	public RectTransform sidePanel, listViewContentParent;
+	public Text descriptionViewText;
 
 	[Header("Tools")]
 	public Button pointerToolButton;
