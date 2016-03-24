@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class FamiliarizeManager : MonoBehaviour {
 	public static FamiliarizeManager s_instance;
@@ -9,6 +10,9 @@ public class FamiliarizeManager : MonoBehaviour {
 	public FamiliarizeObject selectedObject;
 	[System.NonSerialized]
 	public bool isDragging = false;
+
+	[Header("UI")]
+	public Button defaultListViewButton;
 
 	/// <summary>
 	/// Checks if user has clicked down on mouse item. Used to differentiate between a click and drag

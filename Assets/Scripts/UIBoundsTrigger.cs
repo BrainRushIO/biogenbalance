@@ -11,7 +11,6 @@ public class UIBoundsTrigger : MonoBehaviour {
 	/// </summary>
 	/// <param name="value">If set to <c>true</c> value.</param>
 	public void SetUITrigger( bool value ) {
-		Debug.Log( "Sent message:" + value );
 		ApplicationManager.s_instance.userIsInteractingWithUI = value;
 	}
 }
