@@ -93,8 +93,8 @@
 			<descriptionText>Gives information about the calibration of the label, such as: Metrology ID number, Date calibrated, Month/Year of calibration expiration, and Metrology Technician.</descriptionText>
 		</item>-->
 		<item>
-			<key>revolvingGlassDoor</key>
-			<listText>Revolving Door</listText>
+			<key>revolvingDoor</key>
+			<listText>Draft Shield</listText>
 			<descriptionText>Rotating door that encloses the weighing area. Used to stop wind drafts from affecting the weight reading. Some doors are motorized and don't require manual adjustment.</descriptionText>
 		</item>
 		<item>
