@@ -35,6 +35,7 @@ public class FamiliarizeManager : MonoBehaviour {
 	private bool isCameraRotLerping = false;
 	private OrbitCamera orbitCam;
 	private Transform currentCameraPivot, currentCameraStartPos;
+	private string defaultDescViewText = "Click an item in the Outliner to learn more about it.";
 
 	void Awake() {
 		if( s_instance == null ) {
@@ -49,6 +50,7 @@ public class FamiliarizeManager : MonoBehaviour {
 	void Start() {
 		UIManager.s_instance.ToggleToolsActive( false, false, false, false );
 		orbitCam = sceneCamera.GetComponent<OrbitCamera>();
+		UIManager.s_instance.descriptionViewText.text = defaultDescViewText;
 	}
 
 	void Update () {
@@ -180,6 +182,7 @@ public class FamiliarizeManager : MonoBehaviour {
 		currentCameraStartPos = defaultCameraStartTransform;
 
 		if( slerpToDefaultPos ) {
+			UIManager.s_instance.descriptionViewText.text = defaultDescViewText;
 			StartCameraTransition();
 		}
 	}
