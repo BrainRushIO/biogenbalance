@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class ApplicationManager : MonoBehaviour {
 	public static ApplicationManager s_instance;
 
-	public enum ApplicationMode { Familiarize, Acquire, Practice, Validate, Progress, Settings }
+	public enum ApplicationMode { Intro, Familiarize, Acquire, Practice, Validate, Progress, Settings }
 	public ApplicationMode currentApplicationMode = ApplicationMode.Familiarize;
 
 	public enum MouseMode { Pointer, Rotate, Pan, Forceps }
@@ -15,6 +15,7 @@ public class ApplicationManager : MonoBehaviour {
 	private Dictionary<string, string> scenesDictionary;
 
 	public bool userIsInteractingWithUI = false;
+	public bool messageWindowActive = true;
 
 	void Awake() {
 		if( s_instance == null ) {
@@ -63,6 +64,24 @@ public class ApplicationManager : MonoBehaviour {
 		if (newScene == SceneManager.GetActiveScene ().name)
 			return;
 
+		switch( currentApplicationMode )
+		{
+		case ApplicationMode.Intro:
+			CloseMessageWindow();
+			break;
+		}
+
+		// Change state
+		if( sceneInitials.Contains("F") ) {
+			currentApplicationMode = ApplicationMode.Familiarize;
+		} else if ( sceneInitials.Contains("A") ) {
+			currentApplicationMode = ApplicationMode.Acquire;
+		} else if ( sceneInitials.Contains("P") ) {
+			currentApplicationMode = ApplicationMode.Practice;
+		} else if ( sceneInitials.Contains("V") ) {
+			currentApplicationMode = ApplicationMode.Validate;
+		}
+
 		UIManager.s_instance.ClearListView();
 		SceneManager.LoadScene( newScene );
 		Debug.Log( "Loaded new scene: " + newScene );
@@ -71,5 +90,10 @@ public class ApplicationManager : MonoBehaviour {
 	public void ChangeMouseMode( int newMouseMode ) {
 		currentMouseMode = (MouseMode)newMouseMode;
 		UIManager.s_instance.UpdateMouseCursor();
+	}
+
+	public void CloseMessageWindow() {
+		messageWindowActive = false;
+		UIManager.s_instance.messageWindow.gameObject.SetActive( false );
 	}
 }

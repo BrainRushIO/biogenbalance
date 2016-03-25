@@ -5,6 +5,9 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour {
 	public static UIManager s_instance;
 
+	[Header("General")]
+	public MessageWindow messageWindow;
+
 	[Header("Top Bar")]
 	public Button familiarizeButton;
 	public Button acquireButton;
