@@ -132,4 +132,8 @@ public class UIManager : MonoBehaviour {
 		forcepsToolButton.interactable = forceps;
 		forcepsToolButton.transform.GetChild(1).gameObject.SetActive( !forceps );
 	}
+
+	public void ClearListView() {
+		listViewContentParent.DetachChildren();
+	}
 }
