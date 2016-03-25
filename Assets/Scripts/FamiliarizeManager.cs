@@ -57,7 +57,6 @@ public class FamiliarizeManager : MonoBehaviour {
 
 	void Update () {
 		#region Input
-
 		if( !isLerpingToNewPosition ) {
 			if ( Input.GetMouseButtonUp(0) ) {
 				if( hasClickedDownOnItem && !isDragging ) {
@@ -72,7 +71,7 @@ public class FamiliarizeManager : MonoBehaviour {
 							SelectFamiliarizeObject( clickedObject );
 						}
 					}
-				} else if( !isDragging ) {
+				} else if( !isDragging && !ApplicationManager.s_instance.userIsInteractingWithUI ) {
 					ClearSelectedFamiliarizeObject( true );
 				}
 
