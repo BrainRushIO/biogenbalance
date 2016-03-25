@@ -169,11 +169,11 @@
 			<listText>Serial Port</listText>
 			<descriptionText>Port used to connect to printers.</descriptionText>
 		</item>
-		<item>
+		<!--<item>
 			<key>calibrationLabel</key>
 			<listText>Calibration Label</listText>
 			<descriptionText>Gives information about the calibration of the label, such as: Metrology ID number, Date calibrated, Month/Year of calibration expiration, and Metrology Technician.</descriptionText> 
-		</item>
+		</item>-->
 		<item>
 			<key>glassDoors</key>
 			<listText>Glass Doors</listText>
@@ -189,7 +189,7 @@
 			<listText>Pan</listText>
 			<descriptionText>Surface where weighing materials are placed on.</descriptionText>
 		</item>
-		<item>
+		<!--<item>
 			<key>protectionRing</key>
 			<listText>Protection Ring</listText>
 			<descriptionText>Protects the sensitive inner-mechanisms from spill damage.</descriptionText>
@@ -208,6 +208,6 @@
 			<key>acAdapterPort</key>
 			<listText>AC Adapter Port</listText>
 			<descriptionText>Port where you plug in the AC adapter (power cable). Scales need a power source to work and are usually plugged into a wall.</descriptionText>
-		</item>
+		</item>-->
 	</semiMicroBalance>
 </content>
