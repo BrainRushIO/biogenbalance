@@ -94,6 +94,7 @@ public class ApplicationManager : MonoBehaviour {
 
 	public void CloseMessageWindow() {
 		messageWindowActive = false;
-		UIManager.s_instance.messageWindow.gameObject.SetActive( false );
+		if( UIManager.s_instance.messageWindow != null )
+			UIManager.s_instance.messageWindow.gameObject.SetActive( false );
 	}
 }
