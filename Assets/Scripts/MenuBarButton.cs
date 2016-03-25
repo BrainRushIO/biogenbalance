@@ -43,7 +43,7 @@ public class MenuBarButton : MonoBehaviour {
 	/// </summary>
 	/// <param name="toggleHighlightOn">If set to <c>true</c> toggle highlight on.</param>
 	public void ToggleHighlight( bool toggleHighlightOn ) {
-		Button thisButton = GetComponent<Button> ();
+		Button thisButton = GetComponent<Button>();
 		ColorBlock newBlock = thisButton.colors;
 		newBlock.normalColor = (toggleHighlightOn) ? UIManager.s_instance.menuButtonsHighlightColor : UIManager.s_instance.menuButtonsBaseColor;
 		thisButton.colors = newBlock;

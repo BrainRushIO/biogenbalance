@@ -6,7 +6,7 @@ public class ListViewButton : MonoBehaviour {
 
 	public string key;
 	public Text childText;
-	public Image checkBox;
+	public Toggle checkBox;
 
 	void Start() {
 		if( FamiliarizeManager.s_instance.familiarizeDictionary.ContainsKey( key ) ) {
