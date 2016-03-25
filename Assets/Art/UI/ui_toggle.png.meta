@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 0aae6a69debe2cc418e6724513f71330
-timeCreated: 1458901767
+timeCreated: 1458902852
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
@@ -31,7 +31,7 @@ TextureImporter:
   textureFormat: -1
   maxTextureSize: 2048
   textureSettings:
-    filterMode: 0
+    filterMode: 1
     aniso: 16
     mipBias: -1
     wrapMode: 1
@@ -61,7 +61,7 @@ TextureImporter:
         height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 2, y: 2, z: 2, w: 2}
+      border: {x: 1, y: 1, z: 1, w: 1}
       outline:
       - - {x: -16, y: 16}
         - {x: -16, y: -16}
