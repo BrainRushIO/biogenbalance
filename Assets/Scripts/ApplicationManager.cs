@@ -27,6 +27,7 @@ public class ApplicationManager : MonoBehaviour {
 
 	void Start () {
 		InitSceneDictionary();
+		Screen.fullScreen = false;
 	}
 
 	/// <summary>

@@ -21,6 +21,7 @@ public class FamiliarizeManager : MonoBehaviour {
 	public FamiliarizeObject selectedObject;
 	[System.NonSerialized]
 	public bool isDragging = false;
+	public TextAsset familiarizeContentXML;
 
 	[Header("UI")]
 	public Button defaultListViewButton;
@@ -43,6 +44,7 @@ public class FamiliarizeManager : MonoBehaviour {
 			InitializeFamiliarizeDictionary();
 			InitializeListView();
 		} else {
+			Debug.LogWarning( "Destroying duplicate Familiarize Manager" );
 			DestroyImmediate( gameObject );
 		}
 	}
@@ -96,7 +98,8 @@ public class FamiliarizeManager : MonoBehaviour {
 	void InitializeFamiliarizeDictionary() {
 		familiarizeDictionary = new Dictionary<string, FamiliarizeDictionaryEntry>();
 		XmlDocument xmlFamiliarizeContent = new XmlDocument();
-		xmlFamiliarizeContent.Load( Application.dataPath + "/Resources/familiarize_content.xml" );
+		xmlFamiliarizeContent.LoadXml( familiarizeContentXML.text );
+		//xmlFamiliarizeContent.Load( Application.dataPath + "/Resources/familiarize_content.xml" );
 
 		string path = "";
 		switch( moduleType ) 
