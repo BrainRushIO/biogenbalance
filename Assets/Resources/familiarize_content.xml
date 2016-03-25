@@ -70,7 +70,7 @@
 		<item>
 			<key>levelingScrews</key>
 			<listText>Leveling Screws</listText>
-			<descriptionText>Screws that change the height the balance to make sure it is on a level surface.</descriptionText>
+			<descriptionText>Screws that change the height the balance to make sure it is on a level surface. There is one on each side of the scale.</descriptionText>
 		</item>
 		<item>
 			<key>bubbleLevelIndicator</key>
