@@ -23,16 +23,6 @@
 			<descriptionText>Zeros or re-zeros the scale. Used often during calibration and when preparing the balance for use. There is one on both sides of the scale face.</descriptionText>
 		</item>
 		<item>
-			<key>numericalButtons</key>
-			<listText>Numerical Buttons</listText>
-			<descriptionText>Numbered buttons that serve as input.</descriptionText>
-		</item>
-		<item>
-			<key>decimalButton</key>
-			<listText>Decimal Point Button</listText>
-			<descriptionText>Button used to input a decimal point.</descriptionText>
-		</item>
-		<item>
 			<key>abcButton</key>
 			<listText>Alphabet Input Toggle Button</listText>
 			<descriptionText>Changes the input from numbers to alphabetical letters.</descriptionText>
@@ -48,16 +38,6 @@
 			<descriptionText>Used to configure settings on Micro Balance.</descriptionText>
 		</item>
 		<item>
-			<key>lDoorButton</key>
-			<listText>Left Draft Shield Rotate Button</listText>
-			<descriptionText>Buttons used to rotate the motorized balance door to the open and closed positions.</descriptionText>
-		</item>
-		<item>
-			<key>rDoorButton</key>
-			<listText>Right Draft Shield Rotate Button</listText>
-			<descriptionText>Buttons used to rotate the motorized balance door to the open and closed positions.</descriptionText>
-		</item>
-		<item>
 			<key>changeAppProgramButton</key>
 			<listText>Change Application Program Button</listText>
 			<descriptionText>Cycle through built-in application programs. This will not be used during this course.</descriptionText>
@@ -71,6 +51,26 @@
 			<key>printButton</key>
 			<listText>Print Button</listText>
 			<descriptionText>Prints out the recorded data to a printer connected via the Serial Port.</descriptionText>
+		</item>
+		<item>
+			<key>decimalButton</key>
+			<listText>Decimal Point Button</listText>
+			<descriptionText>Button used to input a decimal point.</descriptionText>
+		</item>
+		<item>
+			<key>numericalButtons</key>
+			<listText>Numerical Buttons</listText>
+			<descriptionText>Numbered buttons that serve as input.</descriptionText>
+		</item>
+		<item>
+			<key>lDoorButton</key>
+			<listText>Left Draft Shield Rotate Button</listText>
+			<descriptionText>Buttons used to rotate the motorized balance door to the open and closed positions.</descriptionText>
+		</item>
+		<item>
+			<key>rDoorButton</key>
+			<listText>Right Draft Shield Rotate Button</listText>
+			<descriptionText>Buttons used to rotate the motorized balance door to the open and closed positions.</descriptionText>
 		</item>
 		<item>
 			<key>levelingScrews</key>

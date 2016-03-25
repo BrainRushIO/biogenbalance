@@ -207,9 +207,9 @@ public class FamiliarizeManager : MonoBehaviour {
 		Vector3 startPos = sceneCamera.transform.position;
 
 		while( elapsedTime < slerpTime ) {
-			if( (elapsedTime/slerpTime) >= 0.99f ) {
-				break;
-			}
+//			if( (elapsedTime/slerpTime) >= 0.99f ) {
+//				break;
+//			}
 			sceneCamera.transform.position = Vector3.Lerp( startPos, currentCameraStartPos.position, elapsedTime/slerpTime );
 			if( !isCameraRotLerping )
 				sceneCamera.transform.LookAt( currentCameraPivot );
@@ -234,9 +234,9 @@ public class FamiliarizeManager : MonoBehaviour {
 		Quaternion startRot = sceneCamera.transform.rotation;
 
 		while( elapsedTime < slerpTime ) {
-			if( (elapsedTime/slerpTime) >= 0.99f ) {
-				break;
-			}
+//			if( (elapsedTime/slerpTime) >= 0.99f ) {
+//				break;
+//			}
 			Quaternion targetRot = Quaternion.LookRotation( (currentCameraPivot.position-sceneCamera.transform.position).normalized );
 			sceneCamera.transform.rotation = Quaternion.Lerp( startRot, targetRot, elapsedTime/slerpTime );
 			yield return null;
