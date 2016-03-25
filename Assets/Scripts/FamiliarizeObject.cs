@@ -12,6 +12,9 @@ public class FamiliarizeObject : MonoBehaviour {
 	public UnityEngine.UI.Text bubbleText;
 
 	void Start() {
+		if( gameObject.tag != "Selectable" )
+			Debug.LogWarning( gameObject.name +"'s tag is not set to \"Selectable\"");
+
 		if( FamiliarizeManager.s_instance.familiarizeDictionary.ContainsKey( dictionaryKey ) ) {
 			FamiliarizeDictionaryEntry appendedEntry =  FamiliarizeManager.s_instance.familiarizeDictionary[dictionaryKey];
 			appendedEntry.obj = this;
