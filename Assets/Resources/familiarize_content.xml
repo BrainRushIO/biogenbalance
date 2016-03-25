@@ -48,8 +48,13 @@
 			<descriptionText>Used to configure settings on Micro Balance.</descriptionText>
 		</item>
 		<item>
-			<key>doorButton</key>
-			<listText>Rotating Door Button</listText>
+			<key>lDoorButton</key>
+			<listText>Left Draft Shield Rotate Button</listText>
+			<descriptionText>Buttons used to rotate the motorized balance door to the open and closed positions.</descriptionText>
+		</item>
+		<item>
+			<key>rDoorButton</key>
+			<listText>Right Draft Shield Rotate Button</listText>
 			<descriptionText>Buttons used to rotate the motorized balance door to the open and closed positions.</descriptionText>
 		</item>
 		<item>
