@@ -169,6 +169,7 @@ public class FamiliarizeManager : MonoBehaviour {
 
 		// Highlight Button in List View
 		ToggleListViewButtonHighLight( newSelection.dictionaryKey, true );
+		familiarizeDictionary[newSelection.dictionaryKey].button.checkBox.enabled = true;
 
 		// Update Description View text
 		UIManager.s_instance.descriptionViewText.text = familiarizeDictionary[newSelection.dictionaryKey].descriptionViewText;
