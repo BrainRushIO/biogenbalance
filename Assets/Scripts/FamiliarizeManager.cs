@@ -162,8 +162,6 @@ public class FamiliarizeManager : MonoBehaviour {
 		} else {
 			Debug.LogError( "Could not find dictionary entry for key: "+ searchKey );
 		}
-		//TODO figure out if something should go here
-
 	}
 
 	private void SelectFamiliarizeObject( FamiliarizeObject newSelection ) {
@@ -175,6 +173,7 @@ public class FamiliarizeManager : MonoBehaviour {
 		// Update Description View text
 		UIManager.s_instance.descriptionViewText.text = familiarizeDictionary[newSelection.dictionaryKey].descriptionViewText;
 
+		// Selecting of new object and starting camera transition
 		selectedObject = newSelection;
 		currentCameraPivot = selectedObject.cameraPivot;
 		currentCameraStartPos = selectedObject.cameraStartPosition;
@@ -224,7 +223,7 @@ public class FamiliarizeManager : MonoBehaviour {
 			yield return null;
 			elapsedTime = Time.time-startTime;
 		}
-		orbitCam.pivotParent.rotation = Quaternion.identity;
+		orbitCam.pivotParent.LookAt( orbitCam.transform );
 		orbitCam.transform.parent = orbitCam.pivotParent;
 
 		sceneCamera.transform.position = currentCameraStartPos.position;
