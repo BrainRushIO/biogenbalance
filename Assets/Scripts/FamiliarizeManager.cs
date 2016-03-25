@@ -149,6 +149,9 @@ public class FamiliarizeManager : MonoBehaviour {
 	}
 
 	public void SelectObjectOfKey( string searchKey ) {
+		if( isLerpingToNewPosition )
+			return;
+
 		FamiliarizeDictionaryEntry temp;
 		if( familiarizeDictionary.TryGetValue(searchKey, out temp) ) {
 			if( temp.obj != null ) {
@@ -166,7 +169,12 @@ public class FamiliarizeManager : MonoBehaviour {
 	private void SelectFamiliarizeObject( FamiliarizeObject newSelection ) {
 		ClearSelectedFamiliarizeObject( false );
 
+		// Highlight Button in List View
+		ToggleListViewButtonHighLight( newSelection.dictionaryKey, true );
+
+		// Update Description View text
 		UIManager.s_instance.descriptionViewText.text = familiarizeDictionary[newSelection.dictionaryKey].descriptionViewText;
+
 		selectedObject = newSelection;
 		currentCameraPivot = selectedObject.cameraPivot;
 		currentCameraStartPos = selectedObject.cameraStartPosition;
@@ -177,7 +185,8 @@ public class FamiliarizeManager : MonoBehaviour {
 	private void ClearSelectedFamiliarizeObject( bool slerpToDefaultPos ) {
 		if( selectedObject == null )
 			return;
-		
+
+		ToggleListViewButtonHighLight( selectedObject.dictionaryKey, false );
 		selectedObject.Deselect();
 		selectedObject = null;
 		currentCameraPivot = defaultCameraPivot;
@@ -243,5 +252,22 @@ public class FamiliarizeManager : MonoBehaviour {
 		}
 		sceneCamera.transform.LookAt( currentCameraPivot );
 		isCameraRotLerping = false;
+	}
+
+	private void ToggleListViewButtonHighLight( string key, bool toggleOn ) {
+		Button listViewButton = familiarizeDictionary[key].button.GetComponent<Button>();
+
+		if( listViewButton == null ) {
+			Debug.LogError( "Couldn't find button with key: "+ key );
+			return;
+		}
+
+		ColorBlock tempBlock = listViewButton.colors;
+		if( toggleOn ) {
+			tempBlock.normalColor = UIManager.s_instance.listViewButtonHighlightColor;
+		} else {
+			tempBlock.normalColor = UIManager.s_instance.listViewButtonNormalColor;
+		}
+		listViewButton.colors = tempBlock;
 	}
 }

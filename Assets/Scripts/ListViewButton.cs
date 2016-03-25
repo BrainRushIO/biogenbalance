@@ -18,6 +18,7 @@ public class ListViewButton : MonoBehaviour {
 	}
 
 	public void ClickedButton() {
-		FamiliarizeManager.s_instance.SelectObjectOfKey( key );
+		if( ApplicationManager.s_instance.currentApplicationMode == ApplicationManager.ApplicationMode.Familiarize )
+			FamiliarizeManager.s_instance.SelectObjectOfKey( key );
 	}
 }
