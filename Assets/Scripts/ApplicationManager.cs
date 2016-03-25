@@ -58,12 +58,12 @@ public class ApplicationManager : MonoBehaviour {
 	/// </summary>
 	/// <param name="sceneInitials">The initials that correspond to the specific scene.</param>
 	public void LoadScene( string sceneInitials ) {
-		UIManager.s_instance.ClearListView();
-
 		string newScene = scenesDictionary[sceneInitials];
+
 		if (newScene == SceneManager.GetActiveScene ().name)
 			return;
 
+		UIManager.s_instance.ClearListView();
 		SceneManager.LoadScene( newScene );
 		Debug.Log( "Loaded new scene: " + newScene );
 	}
