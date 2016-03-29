@@ -139,6 +139,11 @@ public class UIManager : MonoBehaviour {
 	}
 
 	public void ClearListView() {
+		// Reset the scroll bars to 0. The scroll bar component is found in the grandfather of the listViewContentParent
+		listViewContentParent.parent.parent.GetComponent<ScrollRect>().verticalScrollbar.value = 1f;
+		listViewContentParent.parent.parent.GetComponent<ScrollRect>().horizontalScrollbar.value = 0f;;
+
+		// Remove children
 		listViewContentParent.DetachChildren();
 	}
 }
