@@ -14,6 +14,9 @@ public class FamiliarizeManager : MonoBehaviour {
 	public static FamiliarizeManager s_instance;
 
 	public enum FamiliarizeModule { MicroBalance, SemiMicroBalance }
+	/// <summary>
+	/// The type of the module. Set publicly in inspector.
+	/// </summary>
 	public FamiliarizeModule moduleType = FamiliarizeModule.MicroBalance;
 
 	public Camera sceneCamera;
@@ -56,9 +59,12 @@ public class FamiliarizeManager : MonoBehaviour {
 	}
 
 	void Update () {
-		#region Input
+		#region PointerInput
+		// Inupt is disbaled if camera is lerping
 		if( !isLerpingToNewPosition ) {
+			// Finishing click
 			if ( Input.GetMouseButtonUp(0) ) {
+				// If we started and finished a click on an item, then interact with it
 				if( hasClickedDownOnItem && !isDragging ) {
 					Ray ray = sceneCamera.ScreenPointToRay(Input.mousePosition);
 					RaycastHit hit;
@@ -71,16 +77,17 @@ public class FamiliarizeManager : MonoBehaviour {
 							SelectFamiliarizeObject( clickedObject );
 						}
 					}
-				} else if( !isDragging && !ApplicationManager.s_instance.userIsInteractingWithUI ) {
+				} else if( !isDragging && !ApplicationManager.s_instance.userIsInteractingWithUI ) { // If we clicked away from any objects in the 3D Scene View, clear selection
 					ClearSelectedFamiliarizeObject( true );
 				}
 
 				hasClickedDownOnItem = false;
 				isDragging = false;
 			}
-
+			// Pointer clicking is disabled if user is hovering over GUI
 			if( ApplicationManager.s_instance.userIsInteractingWithUI )
 				return;
+			// Starting a click
 			if ( Input.GetMouseButtonDown(0) ){
 				Ray ray = sceneCamera.ScreenPointToRay(Input.mousePosition);
 				RaycastHit hit;

@@ -8,7 +8,7 @@ public class OrbitCamera : MonoBehaviour {
 	public float scrollSpeed= 1;
 	public float minDistance = 1;
 	public float maxDistance = 8;
-	public bool canRotate = true, canZoom = true;
+	public bool canRotate = true, canZoom = true, canPan = true;
 
 	private Vector3 lastMousePos;
 
