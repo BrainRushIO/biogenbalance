@@ -83,23 +83,132 @@ Note: Always refer to your balance’s User Manual to find its specifications.</
 	</chooseBalance>
 	<prepareBalance>
 		<popupWindow>
+			<!-- Add text to popup -->
 			<text></text>
 		</popupWindow>
 		<step>
+			<listText>Calibration Label</listText>
+			<descriptionText></descriptionText>
 		</step>
+		<section>
+			<listText>Level Balance</listText>
+			<step>
+				<listText>Bubble Level</listText>
+				<descriptionText>The bubble level lets you know if your balance is on a level surface. The balance is leveled when the air bubble is within the circle drawn on the center of the glass.</descriptionText>
+			</step>
+			<step>
+				<listText>Leveling Screws</listText>
+				<descriptionText>In the case that the balance is not level, twist these screws to raise or lower the balance corners. Shifting the height of the balance’s individual corners levels the balance.</descriptionText>
+			</step>
+			<step>
+				<listText>Adjusting the Screws</listText>
+				<descriptionText>From back here it is possible to adjust the leveling screws while having a clear view of the bubble level.</descriptionText>
+			</step>
+		</section>
+		<section>
+			<listText>Clean Balance</listText>
+			<step>
+				<listText>Problem Areas</listText>
+				<descriptionText>Dirty and grime accumulates on the weigh pan and the few mechanisms under it.</descriptionText>
+			</step>
+			<step>
+				<listText>Importance of Cleaning</listText>
+				<descriptionText>If left uncleaned for a prolonged amount of time, the balance’s reading will begin to suffer.</descriptionText>
+			</step>
+			<step>
+				<listText>Tools to Use When Cleaning</listText>
+				<descriptionText>A brush and water or alcohol is used to clean these components.</descriptionText>
+			</step>
+		</section>
 	</prepareBalance>
 	<calibrateBalance>
 		<popupWindow>
-			<text></text>
+			<text>Welcome to the Acquire - Balance Calibration Module. In this module, we will help you learn about the calibration procedure the balances. By the end of this lesson, you will understand how to perform calibration of a balance.</text>
 		</popupWindow>
 		<step>
+			<listText>Turn Balance</listText>
+			<descriptionText>First, turn on the balance using the on/off button.</descriptionText>
+		</step>
+		<section>
+			<listText>Perform Weight Check</listText>
+			<step>
+				<listText>Intro</listText>
+				<descriptionText>It is important to perform a weight check every time you use a balance to ensure that the readings you are recording are correct.</descriptionText>
+			</step>
+			<step>
+				<listText>Activate Calibration Mode</listText>
+				<descriptionText>To enter Calibration Mode, hold the tare button down till you hear a beep.
+
+Note: Different balances enter Calibration Mode in different ways. Refer to your specific balance’s user manual.
+Show user 200g calibration weight
+</descriptionText>
+			</step>
+			<step>
+				<listText>The Calibration Weight</listText>
+				<descriptionText>This is a calibration weight. It is used when calibrating a balance to ensure that the balance is in a working condition.</descriptionText>
+			</step>
+			<step>
+				<listText>Open Door</listText>
+				<descriptionText>If the door isn't already open, open it to gain access to the weighing chamber.</descriptionText>
+			</step>
+			<step>
+				<listText>Place the Weight</listText>
+				<descriptionText>Place the calibration weight on the weighing pan.</descriptionText>
+			</step>
+			<step>
+				<listText>Close Door</listText>
+				<descriptionText>Close the door. This keeps wind drafts from affecting the balance reading. The door are also referred to as "Draft Shields".</descriptionText>
+			</step>
+			<step>
+				<listText>Wait for Reading to Stabilize</listText>
+				<descriptionText>Wait 10 seconds until the balance beeps. Congratulations your balance is now calibrated!</descriptionText>
+			</step>
+			<step>
+				<listText>Remove Calibration Weight</listText>
+				<descriptionText>Remove the calibration weight from the weigh pan.</descriptionText>
+			</step>
+		</section>
+		<step>
+			<listText>Add Weight Container</listText>
+			<descriptionText>Some materials will require a weight container to hold them while using the balance. Place the weight container on the weigh pan.</descriptionText>
+		</step>
+		<step>
+			<listText>Make Sure Door is Closed</listText>
+			<descriptionText>Make sure the door is closed to ensure a proper reading!</descriptionText>
+		</step>
+		<step>
+			<listText>Tare</listText>
+			<descriptionText>Tare out the weight container before adding the weighing material.</descriptionText>
 		</step>
 	</calibrateBalance>
 	<useBalance>
 		<popupWindow>
+			<!-- Need text for this popup. -->
 			<text></text>
 		</popupWindow>
 		<step>
+			<listText>Open Door</listText>
+			<descriptionText>Open the draft shield door.</descriptionText>
+		</step>
+		<step>
+			<listText>Add Desired Material</listText>
+			<descriptionText>Add desired material to the weight container.</descriptionText>
+		</step>
+		<step>
+			<listText>Make Sure Door is Closed</listText>
+			<descriptionText>Make sure the draft shield door is closed.</descriptionText>
+		</step>
+		<step>
+			<listText>Wait for Reading to Stabilize</listText>
+			<descriptionText>The readout display will not give the correct weight after the material is added. You must wait until the numbers stop fluctuating to consider the reading valid.</descriptionText>
+		</step>
+		<step>
+			<listText>Record Weight</listText>
+			<descriptionText>Record the weight on the readout display.</descriptionText>
+		</step>
+		<step>
+			<listText>Note: On Hygiene</listText>
+			<descriptionText>It is standard procedure and a common courtesy to clean the balance after use if any spills occurred during operation.</descriptionText>
 		</step>
 	</useBalance>
 </content>
