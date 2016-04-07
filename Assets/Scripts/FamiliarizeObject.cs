@@ -20,7 +20,7 @@ public class FamiliarizeObject : MonoBehaviour {
 			appendedEntry.obj = this;
 			FamiliarizeManager.s_instance.familiarizeDictionary[dictionaryKey] = appendedEntry;
 
-			bubbleText.text = FamiliarizeManager.s_instance.familiarizeDictionary[dictionaryKey].listViewText;
+			bubbleText.text = FamiliarizeManager.s_instance.familiarizeDictionary[dictionaryKey].uiText.listViewText;
 		} else {
 			Debug.LogWarning( gameObject.name +"'s FamiliarizeObject couldn't find its key in the Dictionary. Key:" +dictionaryKey );
 		}

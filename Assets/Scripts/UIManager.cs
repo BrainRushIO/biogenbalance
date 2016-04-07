@@ -2,6 +2,10 @@
 using System.Collections;
 using UnityEngine.UI;
 
+public struct ListViewDescriptionViewTextPair {
+	public string listViewText, descriptionViewText;
+}
+
 public class UIManager : MonoBehaviour {
 	public static UIManager s_instance;
 

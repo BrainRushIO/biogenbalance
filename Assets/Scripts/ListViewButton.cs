@@ -5,12 +5,13 @@ using UnityEngine.UI;
 public class ListViewButton : MonoBehaviour {
 
 	public string key;
+	public int listIndex;
 	public Text childText;
 	public Toggle checkBox;
 
 	void Start() {
 		if( FamiliarizeManager.s_instance.familiarizeDictionary.ContainsKey( key ) ) {
-			FamiliarizeDictionaryEntry appendedEntry =  FamiliarizeManager.s_instance.familiarizeDictionary[key];
+			FamiliarizeDictionaryEntry appendedEntry = FamiliarizeManager.s_instance.familiarizeDictionary[key];
 			appendedEntry.button = this;
 			FamiliarizeManager.s_instance.familiarizeDictionary[key] = appendedEntry;
 		} else {
@@ -21,5 +22,7 @@ public class ListViewButton : MonoBehaviour {
 	public void ClickedButton() {
 		if( ApplicationManager.s_instance.currentApplicationMode == ApplicationManager.ApplicationMode.Familiarize )
 			FamiliarizeManager.s_instance.SelectObjectOfKey( key );
+//		if( ApplicationManager.s_instance.currentApplicationMode == ApplicationManager.ApplicationMode.Acquire )
+//			AcquireManager.s_instance.GoToStep( listIndex );
 	}
 }

@@ -5,7 +5,8 @@ using UnityEngine.UI;
 using System.Xml;
 
 public struct FamiliarizeDictionaryEntry {
-	public string listViewText, descriptionViewText;
+	public ListViewDescriptionViewTextPair uiText;
+	//public string listViewText, descriptionViewText;
 	public ListViewButton button;
 	public FamiliarizeObject obj;
 }
@@ -122,8 +123,10 @@ public class FamiliarizeManager : MonoBehaviour {
 
 		foreach( XmlNode item in itemList ) {
 			FamiliarizeDictionaryEntry newEntry = new FamiliarizeDictionaryEntry();
-			newEntry.listViewText = item.SelectSingleNode( "listText" ).InnerText;
-			newEntry.descriptionViewText = item.SelectSingleNode( "descriptionText" ).InnerText;
+//			newEntry.listViewText = item.SelectSingleNode( "listText" ).InnerText;
+//			newEntry.descriptionViewText = item.SelectSingleNode( "descriptionText" ).InnerText;
+			newEntry.uiText.listViewText = item.SelectSingleNode( "listText" ).InnerText;
+			newEntry.uiText.descriptionViewText = item.SelectSingleNode( "descriptionText" ).InnerText;
 			newEntry.button = null;
 			newEntry.obj = null;
 
@@ -145,7 +148,7 @@ public class FamiliarizeManager : MonoBehaviour {
 		foreach(  KeyValuePair<string, FamiliarizeDictionaryEntry> entry in familiarizeDictionary ) {
 			KeyValuePair<string, FamiliarizeDictionaryEntry> appendedEntry = entry;
 			ListViewButton newListViewButton = Instantiate( defaultListViewButton ).GetComponent<ListViewButton>();
-			newListViewButton.childText.text = entry.Value.listViewText;
+			newListViewButton.childText.text = entry.Value.uiText.listViewText;
 			newListViewButton.key = appendedEntry.Key;
 			FamiliarizeDictionaryEntry appendedValue = appendedEntry.Value;
 			appendedValue.button = newListViewButton;
@@ -179,7 +182,7 @@ public class FamiliarizeManager : MonoBehaviour {
 		familiarizeDictionary[newSelection.dictionaryKey].button.checkBox.isOn = true;
 
 		// Update Description View text
-		UIManager.s_instance.descriptionViewText.text = familiarizeDictionary[newSelection.dictionaryKey].descriptionViewText;
+		UIManager.s_instance.descriptionViewText.text = familiarizeDictionary[newSelection.dictionaryKey].uiText.descriptionViewText;
 
 		// Selecting of new object and starting camera transition
 		selectedObject = newSelection;
