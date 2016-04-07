@@ -55,26 +55,28 @@ public class AcquireManager : MonoBehaviour {
 		switch( moduleType ) 
 		{
 		case AcquireModule.Choose:
-			path = "choose";
+			path = "chooseBalance";
 			break;
 		case AcquireModule.Calibrate:
-			path = "calibrate";
+			path = "calibrateBalance";
 			break;
 		case AcquireModule.Prepare:
-			path = "prepare";
+			path = "prepareBalance";
 			break;
 		case AcquireModule.Use:
-			path = "use";
+			path = "useBalance";
 			break;
 		}
 
 		XmlNodeList stepList = xmlFamiliarizeContent.SelectSingleNode( "/content/"+ path  ).ChildNodes;
 
+		//TODO Include content pulled from the <popup> node.
+		//TODO Make this algorithm call the PopulateListFromNewParent method
 		int currentContext = 0;
 		foreach( XmlNode item in stepList ) {
 			AcquireStepListEntry newEntry = new AcquireStepListEntry();
 
-			switch( item.Value )
+			switch( item.Name )
 			{
 			case "step":
 				newEntry.isSectionParent = false;
@@ -89,8 +91,11 @@ public class AcquireManager : MonoBehaviour {
 				acquireStepList.Add( newEntry );
 				PouplateListFromNewParent( item, ref currentContext );
 				break;
+			case "popupWindow":
+				break;
 			default:
-				Debug.LogError( "Unrecognized XmlNode value. Program doesn't support value of :" + item.Value );
+				if( item.Name != "listText" )
+					Debug.LogError( "Unrecognized XmlNode value. Program doesn't support value of :" + item.Name );
 				break;
 			}
 		}
@@ -101,7 +106,28 @@ public class AcquireManager : MonoBehaviour {
 		context++;
 		XmlNodeList stepList = parentNode.ChildNodes;
 		foreach( XmlNode item in stepList ) {
-			
+			AcquireStepListEntry newEntry = new AcquireStepListEntry();
+
+			switch( item.Name )
+			{
+			case "step":
+				newEntry.isSectionParent = false;
+				newEntry.context = context;
+				newEntry.uiText.listViewText = item.SelectSingleNode( "listText" ).InnerText;
+				newEntry.uiText.descriptionViewText = item.SelectSingleNode( "descriptionText" ).InnerText;
+				acquireStepList.Add( newEntry );
+				break;
+			case "section":
+				newEntry.isSectionParent = true;
+				newEntry.uiText.listViewText = item.SelectSingleNode( "listText" ).InnerText;
+				acquireStepList.Add( newEntry );
+				PouplateListFromNewParent( item, ref context );
+				break;
+			default:
+				if( item.Name != "listText" )
+					Debug.LogError( "Unrecognized XmlNode value. Program doesn't support value of :" + item.Name );
+				break;
+			}
 		}
 		context--;
 	}
