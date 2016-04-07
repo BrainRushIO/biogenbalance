@@ -46,7 +46,7 @@ public class FamiliarizeManager : MonoBehaviour {
 		if( s_instance == null ) {
 			s_instance = this;
 			InitializeFamiliarizeDictionary();
-			InitializeListView();
+			InitializeFamiliarizeListView();
 		} else {
 			Debug.LogWarning( "Destroying duplicate Familiarize Manager" );
 			DestroyImmediate( gameObject );
@@ -54,6 +54,7 @@ public class FamiliarizeManager : MonoBehaviour {
 	}
 
 	void Start() {
+		ApplicationManager.s_instance.currentMouseMode = ApplicationManager.MouseMode.Pointer;
 		UIManager.s_instance.ToggleToolsActive( false, false, false, false );
 		orbitCam = sceneCamera.GetComponent<OrbitCamera>();
 		UIManager.s_instance.descriptionViewText.text = defaultDescViewText;
@@ -133,7 +134,7 @@ public class FamiliarizeManager : MonoBehaviour {
 		Debug.Log( "Created dictionary." );
 	}
 
-	private void InitializeListView() {
+	private void InitializeFamiliarizeListView() {
 		int familiarizeDictionaryCount = familiarizeDictionary.Count;
 
 		// Setting the height of the list view to match the amount of buttons i will add to it.

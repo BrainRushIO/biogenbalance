@@ -27,11 +27,15 @@ public class AcquireManager : MonoBehaviour {
 	/// </summary>
 	private int currentStepIndex = 0;
 
+	[Header("UI")]
+	public Button defaultListViewButton;
+	public RectTransform defaultListViewSectionTitle;
 
 	void Awake() {
 		if( s_instance == null ) {
 			s_instance = this;
 			InitializeAcquireStepList();
+			InitializeAcquireListView();
 		} else {
 			Debug.LogWarning( "Destroying duplicate Acquire Manager." );
 			DestroyImmediate( this.gameObject );
@@ -39,7 +43,8 @@ public class AcquireManager : MonoBehaviour {
 	}
 
 	void Start () {
-	
+		ApplicationManager.s_instance.currentMouseMode = ApplicationManager.MouseMode.Pointer;
+		UIManager.s_instance.ToggleToolsActive( false, false, false, false );
 	}
 
 	void Update () {
@@ -119,6 +124,7 @@ public class AcquireManager : MonoBehaviour {
 				break;
 			case "section":
 				newEntry.isSectionParent = true;
+				newEntry.context = context;
 				newEntry.uiText.listViewText = item.SelectSingleNode( "listText" ).InnerText;
 				acquireStepList.Add( newEntry );
 				PouplateListFromNewParent( item, ref context );
@@ -130,5 +136,37 @@ public class AcquireManager : MonoBehaviour {
 			}
 		}
 		context--;
+	}
+
+	private void InitializeAcquireListView() {
+		int acquireListCount = acquireStepList.Count;
+
+		// Setting the height of the list view to match the amount of buttons I will add to it.
+		RectTransform listViewVerticalLayoutGroup = UIManager.s_instance.listViewContentParent;
+		Vector2 newWidthHeight = listViewVerticalLayoutGroup.sizeDelta;
+		newWidthHeight.x = defaultListViewButton.GetComponent<RectTransform>().sizeDelta.x;
+		newWidthHeight.y = defaultListViewButton.GetComponent<RectTransform>().sizeDelta.y * acquireListCount;
+		listViewVerticalLayoutGroup.sizeDelta = newWidthHeight;
+
+		// Creating new buttons out the dictionary and stuffing them in the vertical layout group
+		for( int i = 0; i < acquireListCount; i++ ) {
+			AcquireStepListEntry temp = acquireStepList[i];
+
+			string contextIndentation = "";
+			for( int j = 0; j < temp.context; j++ )
+				contextIndentation += "\t\t";
+
+			Debug.Log( temp.context );
+			
+			if( temp.isSectionParent ) {
+				ListViewButton newListViewSectionTitle = Instantiate( defaultListViewSectionTitle ).GetComponent<ListViewButton>();
+				newListViewSectionTitle.transform.SetParent(listViewVerticalLayoutGroup, false );
+				newListViewSectionTitle.childText.text = contextIndentation + temp.uiText.listViewText;
+			} else {
+				ListViewButton newListViewButton = Instantiate( defaultListViewButton ).GetComponent<ListViewButton>();
+				newListViewButton.transform.SetParent(listViewVerticalLayoutGroup, false );
+				newListViewButton.childText.text = contextIndentation + temp.uiText.listViewText;
+			}
+		}
 	}
 }
