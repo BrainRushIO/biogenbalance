@@ -123,8 +123,6 @@ public class FamiliarizeManager : MonoBehaviour {
 
 		foreach( XmlNode item in itemList ) {
 			FamiliarizeDictionaryEntry newEntry = new FamiliarizeDictionaryEntry();
-//			newEntry.listViewText = item.SelectSingleNode( "listText" ).InnerText;
-//			newEntry.descriptionViewText = item.SelectSingleNode( "descriptionText" ).InnerText;
 			newEntry.uiText.listViewText = item.SelectSingleNode( "listText" ).InnerText;
 			newEntry.uiText.descriptionViewText = item.SelectSingleNode( "descriptionText" ).InnerText;
 			newEntry.button = null;
