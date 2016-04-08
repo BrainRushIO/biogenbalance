@@ -105,43 +105,17 @@ public class AcquireManager : MonoBehaviour {
 			path = "useBalance";
 			break;
 		}
-
-		XmlNodeList stepList = xmlFamiliarizeContent.SelectSingleNode( "/content/"+ path  ).ChildNodes;
+			
+		XmlNode parentNode = xmlFamiliarizeContent.SelectSingleNode( "/content/"+ path  );
 
 		//TODO Include content pulled from the <popup> node.
 		//TODO Make this algorithm call the PopulateListFromNewParent method
 		int currentContext = 0;
-		foreach( XmlNode item in stepList ) {
-			AcquireStepListEntry newEntry = new AcquireStepListEntry();
-
-			switch( item.Name )
-			{
-			case "step":
-				newEntry.isSectionParent = false;
-				newEntry.context = currentContext;
-				newEntry.uiText.listViewText = acquireStepList.Count.ToString() + item.SelectSingleNode( "listText" ).InnerText;
-				newEntry.uiText.descriptionViewText = item.SelectSingleNode( "descriptionText" ).InnerText;
-				acquireStepList.Add( newEntry );
-				break;
-			case "section":
-				newEntry.isSectionParent = true;
-				newEntry.uiText.listViewText = acquireStepList.Count.ToString() + item.SelectSingleNode( "listText" ).InnerText;
-				acquireStepList.Add( newEntry );
-				PouplateListFromNewParent( item, ref currentContext );
-				break;
-			case "popupWindow":
-				break;
-			default:
-				if( item.Name != "listText" )
-					Debug.LogError( "Unrecognized XmlNode value. Program doesn't support value of :" + item.Name );
-				break;
-			}
-		}
+		PouplateListFromNewParent( parentNode, ref currentContext );
 		Debug.Log( "Created Acquire Step List." );
 	}
 
 	private void PouplateListFromNewParent( XmlNode parentNode, ref int context ) {
-		context++;
 		XmlNodeList stepList = parentNode.ChildNodes;
 		foreach( XmlNode item in stepList ) {
 			AcquireStepListEntry newEntry = new AcquireStepListEntry();
@@ -160,7 +134,10 @@ public class AcquireManager : MonoBehaviour {
 				newEntry.context = context;
 				newEntry.uiText.listViewText = acquireStepList.Count.ToString() + item.SelectSingleNode( "listText" ).InnerText;
 				acquireStepList.Add( newEntry );
+
+				context++;
 				PouplateListFromNewParent( item, ref context );
+				context--;
 				break;
 			default:
 				if( item.Name != "listText" )
@@ -168,7 +145,6 @@ public class AcquireManager : MonoBehaviour {
 				break;
 			}
 		}
-		context--;
 	}
 
 	private void InitializeAcquireListView() {
