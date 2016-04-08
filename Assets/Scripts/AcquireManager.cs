@@ -13,7 +13,7 @@ public struct AcquireStepListEntry {
 public class AcquireManager : MonoBehaviour {
 	public static AcquireManager s_instance;
 
-	public enum AcquireModule { Choose, Calibrate, Prepare, Use }
+	public enum AcquireModule { Choose, Prepare, Calibrate, Use }
 	/// <summary>
 	/// The type of the module. Set publicly in inspector.
 	/// </summary>
@@ -48,7 +48,40 @@ public class AcquireManager : MonoBehaviour {
 	}
 
 	void Update () {
-	
+		switch( currentStepIndex )
+		{
+		default:
+			break;
+		}
+	}
+
+	public void GoToNextStep() {
+		currentStepIndex++;
+		while ( currentStepIndex < acquireStepList.Count && acquireStepList[currentStepIndex].isSectionParent )
+			currentStepIndex++;
+
+		if( currentStepIndex >= acquireStepList.Count ) {
+			Debug.LogWarning( "Current step index outside of list bounds." );
+			return;
+		}
+
+		GoToStep(currentStepIndex);
+	}
+
+	public void GoToStep( int stepIndex ) {
+		ResetInputsAndObjects();
+		currentStepIndex = stepIndex;
+
+
+		switch( stepIndex )
+		{
+		default:
+			break;
+		}
+	}
+
+	private void ResetInputsAndObjects() {
+		
 	}
 
 	private void InitializeAcquireStepList() {
@@ -144,7 +177,7 @@ public class AcquireManager : MonoBehaviour {
 		// Setting the height of the list view to match the amount of buttons I will add to it.
 		RectTransform listViewVerticalLayoutGroup = UIManager.s_instance.listViewContentParent;
 		Vector2 newWidthHeight = listViewVerticalLayoutGroup.sizeDelta;
-		newWidthHeight.x = defaultListViewButton.GetComponent<RectTransform>().sizeDelta.x;
+		//newWidthHeight.x = defaultListViewButton.GetComponent<RectTransform>().sizeDelta.x;
 		newWidthHeight.y = defaultListViewButton.GetComponent<RectTransform>().sizeDelta.y * acquireListCount;
 		listViewVerticalLayoutGroup.sizeDelta = newWidthHeight;
 
@@ -154,7 +187,7 @@ public class AcquireManager : MonoBehaviour {
 
 			string contextIndentation = "";
 			for( int j = 0; j < temp.context; j++ )
-				contextIndentation += "\t\t";
+				contextIndentation += "\t";
 
 			Debug.Log( temp.context );
 			
