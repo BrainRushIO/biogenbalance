@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using System.Xml;
 
-public struct AcquireStepListEntry {
+public struct StepsListEntry {
 	public bool isSectionParent;
 	public int context;
 	public ListViewDescriptionViewTextPair uiText;
@@ -19,7 +19,7 @@ public class AcquireManager : MonoBehaviour {
 	/// </summary>
 	public AcquireModule moduleType = AcquireModule.Choose;
 
-	public List<AcquireStepListEntry> acquireStepList;
+	public List<StepsListEntry> acquireStepList;
 	public TextAsset acquireContentXML;
 	private bool DebugShowListViewIndex = false;
 
@@ -87,7 +87,7 @@ public class AcquireManager : MonoBehaviour {
 	}
 
 	private void InitializeAcquireStepList() {
-		acquireStepList = new List<AcquireStepListEntry>();
+		acquireStepList = new List<StepsListEntry>();
 		XmlDocument xmlFamiliarizeContent = new XmlDocument();
 		xmlFamiliarizeContent.LoadXml( acquireContentXML.text );
 
@@ -120,7 +120,7 @@ public class AcquireManager : MonoBehaviour {
 	private void PouplateListFromNewParent( XmlNode parentNode, ref int context ) {
 		XmlNodeList stepList = parentNode.ChildNodes;
 		foreach( XmlNode item in stepList ) {
-			AcquireStepListEntry newEntry = new AcquireStepListEntry();
+			StepsListEntry newEntry = new StepsListEntry();
 
 			string debugIndex = "";
 			if( DebugShowListViewIndex )
@@ -167,7 +167,7 @@ public class AcquireManager : MonoBehaviour {
 
 		// Creating new buttons out the dictionary and stuffing them in the vertical layout group
 		for( int i = 0; i < acquireListCount; i++ ) {
-			AcquireStepListEntry temp = acquireStepList[i];
+			StepsListEntry temp = acquireStepList[i];
 
 			string contextIndentation = "";
 			for( int j = 0; j < temp.context; j++ )
