@@ -24,7 +24,7 @@ public class ListViewButton : MonoBehaviour {
 	public void ClickedButton() {
 		if( ApplicationManager.s_instance.currentApplicationMode == ApplicationManager.ApplicationMode.Familiarize )
 			FamiliarizeManager.s_instance.SelectObjectOfKey( key );
-//		if( ApplicationManager.s_instance.currentApplicationMode == ApplicationManager.ApplicationMode.Acquire )
-//			AcquireManager.s_instance.GoToStep( listIndex );
+		if( ApplicationManager.s_instance.currentApplicationMode == ApplicationManager.ApplicationMode.Acquire )
+			AcquireManager.s_instance.GoToStep( listIndex );
 	}
 }

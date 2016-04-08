@@ -150,4 +150,12 @@ public class UIManager : MonoBehaviour {
 		// Remove children
 		listViewContentParent.DetachChildren();
 	}
+
+	/// <summary>
+	/// Toggles the side panel on.
+	/// </summary>
+	/// <param name="toggleOn">If set to <c>true</c> toggle Side Panel on.</param>
+	public void ToggleSidePanelOn( bool toggleOn ) {
+		
+	}
 }

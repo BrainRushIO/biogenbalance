@@ -139,9 +139,11 @@ public class AcquireManager : MonoBehaviour {
 				PouplateListFromNewParent( item, ref context );
 				context--;
 				break;
+			case "listText":
+			case "popupWindow":
+				break;
 			default:
-				if( item.Name != "listText" )
-					Debug.LogError( "Unrecognized XmlNode value. Program doesn't support value of :" + item.Name );
+				Debug.LogError( "Unrecognized XmlNode value. Program doesn't support value of :" + item.Name );
 				break;
 			}
 		}
@@ -169,10 +171,12 @@ public class AcquireManager : MonoBehaviour {
 			
 			if( temp.isSectionParent ) {
 				ListViewButton newListViewSectionTitle = Instantiate( defaultListViewSectionTitle ).GetComponent<ListViewButton>();
+				newListViewSectionTitle.listIndex = i;
 				newListViewSectionTitle.transform.SetParent(listViewVerticalLayoutGroup, false );
 				newListViewSectionTitle.childText.text = contextIndentation + temp.uiText.listViewText;
 			} else {
 				ListViewButton newListViewButton = Instantiate( defaultListViewButton ).GetComponent<ListViewButton>();
+				newListViewButton.listIndex = i;
 				newListViewButton.transform.SetParent(listViewVerticalLayoutGroup, false );
 				newListViewButton.childText.text = contextIndentation + temp.uiText.listViewText;
 			}
