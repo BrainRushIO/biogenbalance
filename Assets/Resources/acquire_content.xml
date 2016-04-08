@@ -126,7 +126,7 @@ Note: Always refer to your balance’s User Manual to find its specifications.</
 			<text>Welcome to the Acquire - Balance Calibration Module. In this module, we will help you learn about the calibration procedure the balances. By the end of this lesson, you will understand how to perform calibration of a balance.</text>
 		</popupWindow>
 		<step>
-			<listText>Turn Balance</listText>
+			<listText>Turn Balance On</listText>
 			<descriptionText>First, turn on the balance using the on/off button.</descriptionText>
 		</step>
 		<section>

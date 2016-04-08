@@ -119,13 +119,13 @@ public class AcquireManager : MonoBehaviour {
 			case "step":
 				newEntry.isSectionParent = false;
 				newEntry.context = currentContext;
-				newEntry.uiText.listViewText = item.SelectSingleNode( "listText" ).InnerText;
+				newEntry.uiText.listViewText = acquireStepList.Count.ToString() + item.SelectSingleNode( "listText" ).InnerText;
 				newEntry.uiText.descriptionViewText = item.SelectSingleNode( "descriptionText" ).InnerText;
 				acquireStepList.Add( newEntry );
 				break;
 			case "section":
 				newEntry.isSectionParent = true;
-				newEntry.uiText.listViewText = item.SelectSingleNode( "listText" ).InnerText;
+				newEntry.uiText.listViewText = acquireStepList.Count.ToString() + item.SelectSingleNode( "listText" ).InnerText;
 				acquireStepList.Add( newEntry );
 				PouplateListFromNewParent( item, ref currentContext );
 				break;
@@ -151,14 +151,14 @@ public class AcquireManager : MonoBehaviour {
 			case "step":
 				newEntry.isSectionParent = false;
 				newEntry.context = context;
-				newEntry.uiText.listViewText = item.SelectSingleNode( "listText" ).InnerText;
+				newEntry.uiText.listViewText = acquireStepList.Count.ToString() + item.SelectSingleNode( "listText" ).InnerText;
 				newEntry.uiText.descriptionViewText = item.SelectSingleNode( "descriptionText" ).InnerText;
 				acquireStepList.Add( newEntry );
 				break;
 			case "section":
 				newEntry.isSectionParent = true;
 				newEntry.context = context;
-				newEntry.uiText.listViewText = item.SelectSingleNode( "listText" ).InnerText;
+				newEntry.uiText.listViewText = acquireStepList.Count.ToString() + item.SelectSingleNode( "listText" ).InnerText;
 				acquireStepList.Add( newEntry );
 				PouplateListFromNewParent( item, ref context );
 				break;
