@@ -158,4 +158,15 @@ public class UIManager : MonoBehaviour {
 	public void ToggleSidePanelOn( bool toggleOn ) {
 		
 	}
+
+	public void UpdateDescriptionViewText( string newText ) {
+		if( newText != null ) {
+			descriptionViewText.transform.parent.parent.parent.GetComponent<ScrollRect>().verticalScrollbar.value = 1f;
+			descriptionViewText.text = newText;
+		} else {
+			Debug.LogWarning( "UpdateDescriptionViewText() received a null string." );
+		}
+	}
+
+	//TODO create a method that sets the values of the list and description views scrollbars
 }

@@ -21,6 +21,7 @@ public class AcquireManager : MonoBehaviour {
 
 	public List<AcquireStepListEntry> acquireStepList;
 	public TextAsset acquireContentXML;
+	private bool DebugShowListViewIndex = false;
 
 	/// <summary>
 	/// The current step in the module.
@@ -72,16 +73,17 @@ public class AcquireManager : MonoBehaviour {
 		ResetInputsAndObjects();
 		currentStepIndex = stepIndex;
 
-
 		switch( stepIndex )
 		{
 		default:
 			break;
 		}
+
+		UIManager.s_instance.UpdateDescriptionViewText( acquireStepList[stepIndex].uiText.descriptionViewText);
 	}
 
 	private void ResetInputsAndObjects() {
-		
+		UIManager.s_instance.UpdateDescriptionViewText( "" );
 	}
 
 	private void InitializeAcquireStepList() {
@@ -120,19 +122,23 @@ public class AcquireManager : MonoBehaviour {
 		foreach( XmlNode item in stepList ) {
 			AcquireStepListEntry newEntry = new AcquireStepListEntry();
 
+			string debugIndex = "";
+			if( DebugShowListViewIndex )
+				debugIndex = acquireStepList.Count.ToString();
+
 			switch( item.Name )
 			{
 			case "step":
 				newEntry.isSectionParent = false;
 				newEntry.context = context;
-				newEntry.uiText.listViewText = acquireStepList.Count.ToString() + item.SelectSingleNode( "listText" ).InnerText;
+				newEntry.uiText.listViewText = debugIndex + item.SelectSingleNode( "listText" ).InnerText;
 				newEntry.uiText.descriptionViewText = item.SelectSingleNode( "descriptionText" ).InnerText;
 				acquireStepList.Add( newEntry );
 				break;
 			case "section":
 				newEntry.isSectionParent = true;
 				newEntry.context = context;
-				newEntry.uiText.listViewText = acquireStepList.Count.ToString() + item.SelectSingleNode( "listText" ).InnerText;
+				newEntry.uiText.listViewText = debugIndex + item.SelectSingleNode( "listText" ).InnerText;
 				acquireStepList.Add( newEntry );
 
 				context++;
@@ -166,8 +172,6 @@ public class AcquireManager : MonoBehaviour {
 			string contextIndentation = "";
 			for( int j = 0; j < temp.context; j++ )
 				contextIndentation += "\t";
-
-			Debug.Log( temp.context );
 			
 			if( temp.isSectionParent ) {
 				ListViewButton newListViewSectionTitle = Instantiate( defaultListViewSectionTitle ).GetComponent<ListViewButton>();

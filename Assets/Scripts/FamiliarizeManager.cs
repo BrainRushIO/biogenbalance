@@ -57,7 +57,7 @@ public class FamiliarizeManager : MonoBehaviour {
 		ApplicationManager.s_instance.currentMouseMode = ApplicationManager.MouseMode.Pointer;
 		UIManager.s_instance.ToggleToolsActive( false, false, false, false );
 		orbitCam = sceneCamera.GetComponent<OrbitCamera>();
-		UIManager.s_instance.descriptionViewText.text = defaultDescViewText;
+		UIManager.s_instance.UpdateDescriptionViewText( defaultDescViewText );
 	}
 
 	void Update () {
@@ -181,7 +181,7 @@ public class FamiliarizeManager : MonoBehaviour {
 		familiarizeDictionary[newSelection.dictionaryKey].button.checkBox.isOn = true;
 
 		// Update Description View text
-		UIManager.s_instance.descriptionViewText.text = familiarizeDictionary[newSelection.dictionaryKey].uiText.descriptionViewText;
+		UIManager.s_instance.UpdateDescriptionViewText( familiarizeDictionary[newSelection.dictionaryKey].uiText.descriptionViewText );
 
 		// Selecting of new object and starting camera transition
 		selectedObject = newSelection;
@@ -202,7 +202,7 @@ public class FamiliarizeManager : MonoBehaviour {
 		currentCameraStartPos = defaultCameraStartTransform;
 
 		if( slerpToDefaultPos ) {
-			UIManager.s_instance.descriptionViewText.text = defaultDescViewText;
+			UIManager.s_instance.UpdateDescriptionViewText( defaultDescViewText );
 			StartCameraTransition();
 		}
 	}
