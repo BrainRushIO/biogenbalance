@@ -171,6 +171,12 @@ public class AcquireManager : MonoBehaviour {
 				PouplateListFromNewParent( item, ref context, ref currentIndex );
 				context--;
 				break;
+			case "moduleTitle":
+				newEntry.isSectionParent = true;
+				newEntry.context = 0;
+				newEntry.uiText.listViewText = item.InnerText;
+				acquireStepList.Add( newEntry );
+				break;
 			case "listText":
 			case "popupWindow":
 				break;
@@ -193,6 +199,15 @@ public class AcquireManager : MonoBehaviour {
 
 		// Creating new buttons out the dictionary and stuffing them in the vertical layout group
 		for( int i = 0; i < acquireListCount; i++ ) {
+			// Index 0 is special because it is the title for our list view
+			if( i == 0 ) {
+				ListViewButton newListViewSectionTitle = Instantiate( UIManager.s_instance.defaultListViewModuleTitle ).GetComponent<ListViewButton>();
+				newListViewSectionTitle.listIndex = 0;
+				newListViewSectionTitle.transform.SetParent(listViewVerticalLayoutGroup, false );
+				newListViewSectionTitle.childText.text = acquireStepList[0].uiText.listViewText;
+				continue;
+			}
+
 			StepsListEntry temp = acquireStepList[i];
 
 			string contextIndentation = "";
