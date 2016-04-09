@@ -15,22 +15,19 @@
 				<listText>Specifications</listText>
 				<descriptionText>As said before, Microbalances are a lot more precise than Semi-Microbalances. They are more sensitive but they can support less weight than their counterpart. This microbalance has a Weight Capacity 5g (grams) and a Precision of 1µg (microgram) = 0.000001 grams.</descriptionText>
 			</step>
-			<section>
-				<listText>Hardware</listText>
-				<step>
-					<listText>Body</listText>
-					<descriptionText>Microbalances are usually made up of two body parts. One of them is the terminal you use when inputting information, the other holds the pan and all the sensitive mechanisms to weigh objects. These are connected via a cable.</descriptionText>
-				</step>
-				<step>
-					<listText>Draft Shield</listText>
-					<descriptionText>Microbalances also feature draft shields. They encapsulate the weighing chamber where the weighing pan and weighing materials are located. Draft shields prevent wind drafts from altering measurements. The draft shield on this balance is one that rotates and is controlled by buttons on the terminal.</descriptionText>
-				</step>
-			</section>
 			<step>
 				<listText>Models</listText>
 				<descriptionText>The balance displayed is the Sartorius ME5. Depending on the balance being used, it will have a different Weight Capacity, and Precision.
 
 Note: Always refer to your balance’s User Manual to find its specifications.</descriptionText>
+			</step>
+			<step>
+				<listText>Body</listText>
+				<descriptionText>Microbalances are usually made up of two body parts. One of them is the terminal you use when inputting information, the other holds the pan and all the sensitive mechanisms to weigh objects. These are connected via a cable.</descriptionText>
+			</step>
+			<step>
+				<listText>Draft Shield</listText>
+				<descriptionText>Microbalances also feature draft shields. They encapsulate the weighing chamber where the weighing pan and weighing materials are located. Draft shields prevent wind drafts from altering measurements. The draft shield on this balance is one that rotates and is controlled by buttons on the terminal.</descriptionText>
 			</step>
 		</section>
 		<section>
@@ -43,8 +40,12 @@ Note: Always refer to your balance’s User Manual to find its specifications.</
 				<listText>Specifications</listText>
 				<descriptionText>Semi-Microbalances can weigh objects that are a lot more massive that the Microbalance. They trade off some precision for higher weight yield. This semi-microbalance has a Weight Capacity 210g (grams) and a Precision of 0.0001g (grams).</descriptionText>
 			</step>
-			<section>
-				<listText>Hardware</listText>
+			<step>
+				<listText>Models</listText>
+				<descriptionText>The balance displayed is the Sartorius AZ214. Depending on the balance being used, it will have a different Weight Capacity, and Precision.
+
+Note: Always refer to your balance’s User Manual to find its specifications.</descriptionText>
+			</step>
 				<step>
 					<listText>Body</listText>
 					<descriptionText>Semi-Microbalances consists of only one body part that houses both the weighing mechanisms and the user terminal.</descriptionText>
@@ -53,20 +54,13 @@ Note: Always refer to your balance’s User Manual to find its specifications.</
 					<listText>Draft Shield</listText>
 					<descriptionText>Semi-Microbalances also feature draft shields. They encapsulate the weighing chamber where the weighing pan and weighing materials are located. Draft shields prevent wind drafts from altering measurements. The draft shield on this balance consist of sliding doors that are manipulated by using the handles.</descriptionText>
 				</step>
-			</section>
-			<step>
-				<listText>Models</listText>
-				<descriptionText>The balance displayed is the Sartorius AZ214. Depending on the balance being used, it will have a different Weight Capacity, and Precision.
-
-Note: Always refer to your balance’s User Manual to find its specifications.</descriptionText>
-			</step>
 		</section>
-		<step>
-			<listText>Weights</listText>
-			<descriptionText>This is a calibration weight. There are many shapes and sizes but we will be using these for our examples and calibration. These weights have their mass engraved on the face of their top side</descriptionText>
-		</step>
 		<section>
 			<listText>Choosing a Balance</listText>
+			<step>
+				<listText>Weights</listText>
+				<descriptionText>This is a calibration weight. There are many shapes and sizes but we will be using these for our examples and calibration. These weights have their mass engraved on the face of their top side</descriptionText>
+			</step>
 			<step>
 				<listText>Determining What Balance to Choose</listText>
 				<descriptionText>Trying to weigh something that is larger than the balance’s maximum weight can damage its components so you must use a balance with a higher weight yield. If you are given a material and told to weigh a certain amount of it, you would choose the balance that can support the weight and give you the most accurate measurement.</descriptionText>

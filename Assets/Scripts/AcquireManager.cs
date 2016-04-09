@@ -21,7 +21,7 @@ public class AcquireManager : MonoBehaviour {
 
 	public List<StepsListEntry> acquireStepList;
 	public TextAsset acquireContentXML;
-	private bool DebugShowListViewIndex = false;
+	private bool showListViewIndex = true;
 
 	/// <summary>
 	/// The current step in the module.
@@ -46,6 +46,9 @@ public class AcquireManager : MonoBehaviour {
 	void Start () {
 		ApplicationManager.s_instance.currentMouseMode = ApplicationManager.MouseMode.Pointer;
 		UIManager.s_instance.ToggleToolsActive( false, false, false, false );
+		//GoToStep( 1 );
+		currentStepIndex = -1;
+		GoToNextStep();
 	}
 
 	void Update () {
@@ -79,10 +82,16 @@ public class AcquireManager : MonoBehaviour {
 			break;
 		}
 
+		ListViewButton newListViewButtonSelection = UIManager.s_instance.listViewContentParent.GetChild(currentStepIndex).GetComponent<ListViewButton>();
 		UIManager.s_instance.UpdateDescriptionViewText( acquireStepList[stepIndex].uiText.descriptionViewText);
+		newListViewButtonSelection.GetComponent<Button>().interactable = true;
+		newListViewButtonSelection.childText.color = Color.white;
+		newListViewButtonSelection.checkBox.isOn = true;
+		ToggleListViewButtonHighLight( currentStepIndex, true );
 	}
 
 	private void ResetInputsAndObjects() {
+		ToggleListViewButtonHighLight( currentStepIndex, false );
 		UIManager.s_instance.UpdateDescriptionViewText( "" );
 	}
 
@@ -113,36 +122,38 @@ public class AcquireManager : MonoBehaviour {
 		//TODO Include content pulled from the <popup> node.
 		//TODO Make this algorithm call the PopulateListFromNewParent method
 		int currentContext = 0;
-		PouplateListFromNewParent( parentNode, ref currentContext );
+		int currentIndex = 1;
+		PouplateListFromNewParent( parentNode, ref currentContext, ref currentIndex );
 		Debug.Log( "Created Acquire Step List." );
 	}
 
-	private void PouplateListFromNewParent( XmlNode parentNode, ref int context ) {
+	private void PouplateListFromNewParent( XmlNode parentNode, ref int context, ref int currentIndex ) {
 		XmlNodeList stepList = parentNode.ChildNodes;
 		foreach( XmlNode item in stepList ) {
 			StepsListEntry newEntry = new StepsListEntry();
 
-			string debugIndex = "";
-			if( DebugShowListViewIndex )
-				debugIndex = acquireStepList.Count.ToString();
+			string shownStepIndex = "";
+			if( showListViewIndex )
+				shownStepIndex = currentIndex.ToString() + ". ";
 
 			switch( item.Name )
 			{
 			case "step":
 				newEntry.isSectionParent = false;
 				newEntry.context = context;
-				newEntry.uiText.listViewText = debugIndex + item.SelectSingleNode( "listText" ).InnerText;
+				newEntry.uiText.listViewText = shownStepIndex + item.SelectSingleNode( "listText" ).InnerText;
 				newEntry.uiText.descriptionViewText = item.SelectSingleNode( "descriptionText" ).InnerText;
 				acquireStepList.Add( newEntry );
+				currentIndex++;
 				break;
 			case "section":
 				newEntry.isSectionParent = true;
 				newEntry.context = context;
-				newEntry.uiText.listViewText = debugIndex + item.SelectSingleNode( "listText" ).InnerText;
+				newEntry.uiText.listViewText = item.SelectSingleNode( "listText" ).InnerText;
 				acquireStepList.Add( newEntry );
 
 				context++;
-				PouplateListFromNewParent( item, ref context );
+				PouplateListFromNewParent( item, ref context, ref currentIndex );
 				context--;
 				break;
 			case "listText":
@@ -170,20 +181,40 @@ public class AcquireManager : MonoBehaviour {
 			StepsListEntry temp = acquireStepList[i];
 
 			string contextIndentation = "";
-			for( int j = 0; j < temp.context; j++ )
-				contextIndentation += "\t";
+			for( int j = 1; j < temp.context; j++ )
+				contextIndentation += ( temp.isSectionParent ) ? "\t   " : "\t";
 			
 			if( temp.isSectionParent ) {
 				ListViewButton newListViewSectionTitle = Instantiate( defaultListViewSectionTitle ).GetComponent<ListViewButton>();
 				newListViewSectionTitle.listIndex = i;
 				newListViewSectionTitle.transform.SetParent(listViewVerticalLayoutGroup, false );
-				newListViewSectionTitle.childText.text = contextIndentation + temp.uiText.listViewText;
+				newListViewSectionTitle.childText.text = /*contextIndentation + contextIndentation +*/ temp.uiText.listViewText;
 			} else {
 				ListViewButton newListViewButton = Instantiate( defaultListViewButton ).GetComponent<ListViewButton>();
 				newListViewButton.listIndex = i;
 				newListViewButton.transform.SetParent(listViewVerticalLayoutGroup, false );
 				newListViewButton.childText.text = contextIndentation + temp.uiText.listViewText;
+				newListViewButton.childText.color = Color.grey;
+				newListViewButton.GetComponent<Button>().interactable = false;
 			}
 		}
+	}
+
+	private void ToggleListViewButtonHighLight( int index, bool toggleOn ) {
+		Button listViewButton =	UIManager.s_instance.listViewContentParent.GetChild(index).GetComponent<Button>();
+
+		if( listViewButton == null ) {
+			//TODO This error is called when the first item is clicked because it is trying to toggleOff a selected object that doesn't exist. We're going to set the first click and selection anyways so don't mind.
+			Debug.LogError( "Couldn't find button with key: "+ index );
+			return;
+		}
+
+		ColorBlock tempBlock = listViewButton.colors;
+		if( toggleOn ) {
+			tempBlock.normalColor = UIManager.s_instance.listViewButtonHighlightColor;
+		} else {
+			tempBlock.normalColor = UIManager.s_instance.listViewButtonNormalColor;
+		}
+		listViewButton.colors = tempBlock;
 	}
 }
