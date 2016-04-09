@@ -29,7 +29,7 @@ public class UIManager : MonoBehaviour {
 	public RectTransform sidePanel;
 	public RectTransform listViewContentParent;
 	public Text descriptionViewText;
-	public RectTransform defaultListViewModuleTitle;
+	public RectTransform defaultListViewModuleTitle, defaultListViewButton, defaultListViewSectionTitle;
 	public Color listViewButtonNormalColor, listViewButtonHighlightColor;
 
 	[Header("Tools")]
@@ -152,7 +152,7 @@ public class UIManager : MonoBehaviour {
 		// Remove children
 		listViewContentParent.DetachChildren();
 	}
-
+	
 	/// <summary>
 	/// Toggles the side panel on.
 	/// </summary>

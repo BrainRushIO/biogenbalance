@@ -21,15 +21,14 @@ public class AcquireManager : MonoBehaviour {
 
 	public List<StepsListEntry> acquireStepList;
 	public TextAsset acquireContentXML;
-	private bool showListViewIndex = true;
 
 	/// <summary>
 	/// The current step in the module.
 	/// </summary>
 	private int currentStepIndex = 0;
+	private bool showListViewIndex = true;
 
 	[Header("UI")]
-	public Button defaultListViewButton;
 	public RectTransform defaultListViewSectionTitle;
 
 	void Awake() {
@@ -194,7 +193,7 @@ public class AcquireManager : MonoBehaviour {
 		RectTransform listViewVerticalLayoutGroup = UIManager.s_instance.listViewContentParent;
 		Vector2 newWidthHeight = listViewVerticalLayoutGroup.sizeDelta;
 		//newWidthHeight.x = defaultListViewButton.GetComponent<RectTransform>().sizeDelta.x;
-		newWidthHeight.y = defaultListViewButton.GetComponent<RectTransform>().sizeDelta.y * acquireListCount;
+		newWidthHeight.y = UIManager.s_instance.defaultListViewButton.GetComponent<RectTransform>().sizeDelta.y * acquireListCount;
 		listViewVerticalLayoutGroup.sizeDelta = newWidthHeight;
 
 		// Creating new buttons out the dictionary and stuffing them in the vertical layout group
@@ -220,7 +219,7 @@ public class AcquireManager : MonoBehaviour {
 				newListViewSectionTitle.transform.SetParent(listViewVerticalLayoutGroup, false );
 				newListViewSectionTitle.childText.text = /*contextIndentation + contextIndentation +*/ temp.uiText.listViewText;
 			} else {
-				ListViewButton newListViewButton = Instantiate( defaultListViewButton ).GetComponent<ListViewButton>();
+				ListViewButton newListViewButton = Instantiate( UIManager.s_instance.defaultListViewButton ).GetComponent<ListViewButton>();
 				newListViewButton.listIndex = i;
 				newListViewButton.transform.SetParent(listViewVerticalLayoutGroup, false );
 				newListViewButton.childText.text = contextIndentation + temp.uiText.listViewText;

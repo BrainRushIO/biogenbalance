@@ -39,8 +39,8 @@ public class ApplicationManager : MonoBehaviour {
 		scenesDictionary.Add( "F1", "F1_SemiMicroBalance" );
 		scenesDictionary.Add( "F2", "F2_MicroBalance" );
 		scenesDictionary.Add( "A1", "A1_ChooseBalance" );
-		scenesDictionary.Add( "A2", "A2_BalanceCalibration" );
-		scenesDictionary.Add( "A3", "A3_PreparingBalance" );
+		scenesDictionary.Add( "A2", "A2_PreparingBalance" );
+		scenesDictionary.Add( "A3", "A3_BalanceCalibration" );
 		scenesDictionary.Add( "A4", "A4_UseBalance" );
 		scenesDictionary.Add( "P1", "P1_ChooseBalance" );
 		scenesDictionary.Add( "P2", "P2_BalanceCalibration" );
@@ -83,6 +83,7 @@ public class ApplicationManager : MonoBehaviour {
 		}
 
 		UIManager.s_instance.ClearListView();
+		UIManager.s_instance.UpdateDescriptionViewText( "" );
 		SceneManager.LoadScene( newScene );
 		Debug.Log( "Loaded new scene: " + newScene );
 	}
