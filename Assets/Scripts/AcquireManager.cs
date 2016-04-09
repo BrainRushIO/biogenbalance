@@ -59,7 +59,6 @@ public class AcquireManager : MonoBehaviour {
 			break;
 		}
 
-		UpdateNextButton();
 	}
 
 	private void UpdateNextButton() {
@@ -92,12 +91,17 @@ public class AcquireManager : MonoBehaviour {
 			break;
 		}
 
+		// Update UI Text
+		UIManager.s_instance.UpdateDescriptionViewText( acquireStepList[stepIndex].uiText.descriptionViewText );
+		// Get our new selected list view button, change its text white, set it interactable, and check its checkbox.
 		ListViewButton newListViewButtonSelection = UIManager.s_instance.listViewContentParent.GetChild(currentStepIndex).GetComponent<ListViewButton>();
-		UIManager.s_instance.UpdateDescriptionViewText( acquireStepList[stepIndex].uiText.descriptionViewText);
 		newListViewButtonSelection.GetComponent<Button>().interactable = true;
 		newListViewButtonSelection.childText.color = Color.white;
 		newListViewButtonSelection.checkBox.isOn = true;
+
+		// Highlight button and check if the next button should appear or disappear.
 		ToggleListViewButtonHighLight( currentStepIndex, true );
+		UpdateNextButton();
 	}
 
 	private void ResetInputsAndObjects() {
