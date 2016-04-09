@@ -29,6 +29,7 @@ public class UIManager : MonoBehaviour {
 	public RectTransform sidePanel;
 	public RectTransform listViewContentParent;
 	public Text descriptionViewText;
+	public RectTransform defaultListViewModuleTitle;
 	public Color listViewButtonNormalColor, listViewButtonHighlightColor;
 
 	[Header("Tools")]
