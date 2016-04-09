@@ -58,6 +58,7 @@ public class FamiliarizeManager : MonoBehaviour {
 		UIManager.s_instance.ToggleToolsActive( false, false, false, false );
 		orbitCam = sceneCamera.GetComponent<OrbitCamera>();
 		UIManager.s_instance.UpdateDescriptionViewText( defaultDescViewText );
+		UIManager.s_instance.nextButton.gameObject.SetActive( false );
 	}
 
 	void Update () {

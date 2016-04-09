@@ -49,6 +49,7 @@ public class AcquireManager : MonoBehaviour {
 		//GoToStep( 1 );
 		currentStepIndex = -1;
 		GoToNextStep();
+		UIManager.s_instance.nextButton.gameObject.SetActive( true );
 	}
 
 	void Update () {
@@ -57,6 +58,15 @@ public class AcquireManager : MonoBehaviour {
 		default:
 			break;
 		}
+
+		UpdateNextButton();
+	}
+
+	private void UpdateNextButton() {
+		if( currentStepIndex >= acquireStepList.Count-1 )
+			UIManager.s_instance.nextButton.gameObject.SetActive( false );
+		else 
+			UIManager.s_instance.nextButton.gameObject.SetActive( true );
 	}
 
 	public void GoToNextStep() {
@@ -91,7 +101,8 @@ public class AcquireManager : MonoBehaviour {
 	}
 
 	private void ResetInputsAndObjects() {
-		ToggleListViewButtonHighLight( currentStepIndex, false );
+		for( int i = 0; i < UIManager.s_instance.listViewContentParent.childCount; i++ )
+			ToggleListViewButtonHighLight( i, false );
 		UIManager.s_instance.UpdateDescriptionViewText( "" );
 	}
 
@@ -201,6 +212,9 @@ public class AcquireManager : MonoBehaviour {
 	}
 
 	private void ToggleListViewButtonHighLight( int index, bool toggleOn ) {
+		if( acquireStepList[index].isSectionParent )
+			return;
+
 		Button listViewButton =	UIManager.s_instance.listViewContentParent.GetChild(index).GetComponent<Button>();
 
 		if( listViewButton == null ) {

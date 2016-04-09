@@ -19,6 +19,7 @@ public class UIManager : MonoBehaviour {
 	public Button validateButton;
 	public Button progressButton;
 	public Button settingsButton;
+	public Button nextButton;
 	public RectTransform familiarizeDropdownItems,
 				acquireDropdownItems,
 				practiceDropdownItems;
