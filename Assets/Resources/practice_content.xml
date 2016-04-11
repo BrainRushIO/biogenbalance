@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+
+<content>
+	<chooseBalance>
+		<popupWindow>
+			<text></text>
+		</popupWindow>
+		<step>
+			<listText>Test Weight</listText>
+			<descriptionText>Study the weight and remember how much it weighs.</descriptionText>
+		</step>
+		<step>
+			<listText>Choose the Balance</listText>
+			<descriptionText>We use a balance’s maximum weight capacity and its precision when determining which is the right choice.
+This Microbalance has a maximum weight capacity of 5g and a precision of 1µg.
+This Semi-MicroBalance has a maximum weight capacity of 210g and a precision of 0.0001g.</descriptionText>
+		</step>
+	</chooseBalance>
+	<prepareBalance>
+		<popupWindow>
+			<text></text>
+		</popupWindow>
+		<step>
+			<listText>Get into Leveling Position</listText>
+			<descriptionText>Click the button behind the balance to assume the balance leveling position.</descriptionText>
+		</step>
+		<step>
+			<listText>Level the Balance</listText>
+			<descriptionText>Use the leveling screws to raise and lower the balance sides until the balance is level.</descriptionText>
+		</step>
+	</prepareBalance>
+	<calibrateBalance>
+		<popupWindow>
+			<text></text>
+		</popupWindow>
+		<step>
+			<listText>Balance Face</listText>
+			<descriptionText>Click the button in front of the balance to access the balance’s face buttons.</descriptionText>
+		</step>
+		<step>
+			<listText>Turn Balance On</listText>
+			<descriptionText>Use the power button to turn on the balance.</descriptionText>
+		</step>
+		<section>
+			<listText>Perform WeightCheck</listText>
+		</section>
+		<step>
+			<listText>Activate Calibration Mode</listText>
+			<descriptionText>Press and hold the tare button for a number of seconds until the readout display asks for weight.</descriptionText>
+		</step>
+		<step>
+			<listText>Open Door</listText>
+			<descriptionText>You must have the door open to place the weight on the weigh pan.</descriptionText>
+		</step>
+		<step>
+			<listText>Place Calibration Weight</listText>
+			<descriptionText>Select the weight by clicking it and place it on the weigh pan by clicking on the weigh pan.</descriptionText>
+		</step>
+		<step>
+			<listText>Close Door</listText>
+			<descriptionText>Make sure the draft shield door is closed before proceeding.</descriptionText>
+		</step>
+		<step>
+			<listText>Wait for Beep</listText>
+			<descriptionText>Wait 10 seconds for the balance to beep to confirm that it is calibrated.</descriptionText>
+		</step>
+		<step>
+			<listText>Remove Calibration Weight</listText>
+			<descriptionText>Wait 10 seconds for the balance to beep to confirm that it is calibrated.</descriptionText>
+		</step>
+	</calibrateBalance>
+	<useBalance>
+		<popupWindow>
+			<text></text>
+		</popupWindow>
+		<step>
+			<listText>Add Weight Container</listText>
+			<descriptionText>Place the weight container on the weigh pan.</descriptionText>
+		</step>
+		<step>
+			<listText>Close Door</listText>
+			<descriptionText>Make sure the draft shield door is closed before proceeding.</descriptionText>
+		</step>
+		<step>
+			<listText>Tare</listText>
+			<descriptionText>Press the Tare button to remove the weight container’s weight from the reading.</descriptionText>
+		</step>
+		<step>
+			<listText>Open Door</listText>
+			<descriptionText>Make sure the draft shield door is open.</descriptionText>
+		</step>
+		<step>
+			<listText>Add Desired Material</listText>
+			<descriptionText>Click on the desired material to select it. Once selected click on the weight container to add the material to the container.</descriptionText>
+		</step>
+		<step>
+			<listText>Close Door</listText>
+			<descriptionText>Make sure that the draft shield door is closed to get an accurate reading.</descriptionText>
+		</step>
+		<step>
+			<listText>Wait for Stable Reading</listText>
+			<descriptionText>Wait for the reading to stabilize.</descriptionText>
+		</step>
+		<step>
+			<listText>Record Weight</listText>
+			<descriptionText>Record the weight.</descriptionText>
+		</step>
+	</useBalance>
+	<completeCourse>
+		<popupWindow>
+			<text></text>
+		</popupWindow>
+		<step>
+			<listText>Get into Leveling Position</listText>
+			<descriptionText>Click the button behind the balance to assume the balance leveling position.</descriptionText>
+		</step>
+		<step>
+			<listText>Level the Balance</listText>
+			<descriptionText>Use the leveling screws to raise and lower the balance sides until the balance is level.</descriptionText>
+		</step>
+		<step>
+			<listText>Balance Face</listText>
+			<descriptionText>Click the button in front of the balance to access the balance’s face buttons.</descriptionText>
+		</step>
+		<step>
+			<listText>Turn Balance On</listText>
+			<descriptionText>Use the power button to turn on the balance.</descriptionText>
+		</step>
+		<section>
+			<listText>Perform WeightCheck</listText>
+		</section>
+		<step>
+			<listText>Activate Calibration Mode</listText>
+			<descriptionText>Press and hold the tare button for a number of seconds until the readout display asks for weight.</descriptionText>
+		</step>
+		<step>
+			<listText>Open Door</listText>
+			<descriptionText>You must have the door open to place the weight on the weigh pan.</descriptionText>
+		</step>
+		<step>
+			<listText>Place Calibration Weight</listText>
+			<descriptionText>Select the weight by clicking it and place it on the weigh pan by clicking on the weigh pan.</descriptionText>
+		</step>
+		<step>
+			<listText>Close Door</listText>
+			<descriptionText>Make sure the draft shield door is closed before proceeding.</descriptionText>
+		</step>
+		<step>
+			<listText>Wait for Beep</listText>
+			<descriptionText>Wait 10 seconds for the balance to beep to confirm that it is calibrated.</descriptionText>
+		</step>
+		<step>
+			<listText>Remove Calibration Weight</listText>
+			<descriptionText>Wait 10 seconds for the balance to beep to confirm that it is calibrated.</descriptionText>
+		</step>
+		<step>
+			<listText>Add Weight Container</listText>
+			<descriptionText>Place the weight container on the weigh pan.</descriptionText>
+		</step>
+		<step>
+			<listText>Close Door</listText>
+			<descriptionText>Make sure the draft shield door is closed before proceeding.</descriptionText>
+		</step>
+		<step>
+			<listText>Tare</listText>
+			<descriptionText>Press the Tare button to remove the weight container’s weight from the reading.</descriptionText>
+		</step>
+		<step>
+			<listText>Open Door</listText>
+			<descriptionText>Make sure the draft shield door is open.</descriptionText>
+		</step>
+		<step>
+			<listText>Add Desired Material</listText>
+			<descriptionText>Click on the desired material to select it. Once selected click on the weight container to add the material to the container.</descriptionText>
+		</step>
+		<step>
+			<listText>Close Door</listText>
+			<descriptionText>Make sure that the draft shield door is closed to get an accurate reading.</descriptionText>
+		</step>
+		<step>
+			<listText>Wait for Stable Reading</listText>
+			<descriptionText>Wait for the reading to stabilize.</descriptionText>
+		</step>
+		<step>
+			<listText>Record Weight</listText>
+			<descriptionText>Record the weight.</descriptionText>
+		</step>
+	</completeCourse>
+</content>

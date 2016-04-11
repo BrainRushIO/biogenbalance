@@ -136,9 +136,7 @@ Note: Always refer to your balance’s User Manual to find its specifications.</
 				<listText>Activate Calibration Mode</listText>
 				<descriptionText>To enter Calibration Mode, hold the tare button down till you hear a beep.
 
-Note: Different balances enter Calibration Mode in different ways. Refer to your specific balance’s user manual.
-Show user 200g calibration weight
-</descriptionText>
+Note: Different balances enter Calibration Mode in different ways. Refer to your specific balance’s user manual.</descriptionText>
 			</step>
 			<step>
 				<listText>The Calibration Weight</listText>
@@ -164,7 +162,18 @@ Show user 200g calibration weight
 				<listText>Remove Calibration Weight</listText>
 				<descriptionText>Remove the calibration weight from the weigh pan.</descriptionText>
 			</step>
+			<step>
+				<listText>Calibration Finished</listText>
+				<descriptionText>The balance has been calibrated. Calibration is not required for the rest of the time the balance will be used this session.</descriptionText>
+			</step>
 		</section>
+	</calibrateBalance>
+	<useBalance>
+		<moduleTitle>Using the Balance</moduleTitle>
+		<popupWindow>
+			<!-- Need text for this popup. -->
+			<text></text>
+		</popupWindow>
 		<step>
 			<listText>Add Weight Container</listText>
 			<descriptionText>Some materials will require a weight container to hold them while using the balance. Place the weight container on the weigh pan.</descriptionText>
@@ -177,13 +186,6 @@ Show user 200g calibration weight
 			<listText>Tare</listText>
 			<descriptionText>Tare out the weight container before adding the weighing material.</descriptionText>
 		</step>
-	</calibrateBalance>
-	<useBalance>
-		<moduleTitle>Using the Balance</moduleTitle>
-		<popupWindow>
-			<!-- Need text for this popup. -->
-			<text></text>
-		</popupWindow>
 		<step>
 			<listText>Open Door</listText>
 			<descriptionText>Open the draft shield door.</descriptionText>
