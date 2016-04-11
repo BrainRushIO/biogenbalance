@@ -28,9 +28,11 @@ public class UIManager : MonoBehaviour {
 	[Header("Side Bar")]
 	public RectTransform sidePanel;
 	public RectTransform listViewContentParent;
+	public Scrollbar listViewVerticalScrollbar, listViewHorizontalScrollbar, descriptionViewScrollbar;
 	public Text descriptionViewText;
 	public RectTransform defaultListViewModuleTitle, defaultListViewButton, defaultListViewSectionTitle;
 	public Color listViewButtonNormalColor, listViewButtonHighlightColor;
+	public Button hintButton;
 
 	[Header("Tools")]
 	public Button pointerToolButton;
@@ -146,8 +148,8 @@ public class UIManager : MonoBehaviour {
 
 	public void ClearListView() {
 		// Reset the scroll bars to 0. The scroll bar component is found in the grandfather of the listViewContentParent
-		listViewContentParent.parent.parent.GetComponent<ScrollRect>().verticalScrollbar.value = 1f;
-		listViewContentParent.parent.parent.GetComponent<ScrollRect>().horizontalScrollbar.value = 0f;;
+		UpdateListViewVerticalScrollbarValue( 0f );
+		UpdateListViewHorizontalScrollbarValue( 0f );
 
 		// Remove children
 		listViewContentParent.DetachChildren();
@@ -163,12 +165,22 @@ public class UIManager : MonoBehaviour {
 
 	public void UpdateDescriptionViewText( string newText ) {
 		if( newText != null ) {
-			descriptionViewText.transform.parent.parent.parent.GetComponent<ScrollRect>().verticalScrollbar.value = 1f;
+			UpdateDescriptionViewScrollbarValue( 0f );
 			descriptionViewText.text = newText;
 		} else {
 			Debug.LogWarning( "UpdateDescriptionViewText() received a null string." );
 		}
 	}
 
-	//TODO create a method that sets the values of the list and description views scrollbars
+	public void UpdateListViewVerticalScrollbarValue( float percentage ) {
+		listViewVerticalScrollbar.value = 1f - percentage;
+	}
+
+	public void UpdateListViewHorizontalScrollbarValue( float percentage ) {
+		listViewHorizontalScrollbar.value = percentage;
+	}
+
+	public void UpdateDescriptionViewScrollbarValue( float percentage ) {
+		descriptionViewScrollbar.value = 1f - percentage;
+	}
 }

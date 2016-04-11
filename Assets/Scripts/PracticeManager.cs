@@ -114,7 +114,7 @@ public class PracticeManager : MonoBehaviour {
 		}
 	}
 
-	private void InitializeAcquireListView() {
+	private void InitializePracticeListView() {
 		int acquireListCount = practiceStepList.Count;
 
 		// Setting the height of the list view to match the amount of buttons I will add to it.
@@ -176,5 +176,15 @@ public class PracticeManager : MonoBehaviour {
 			tempBlock.normalColor = UIManager.s_instance.listViewButtonNormalColor;
 		}
 		listViewButton.colors = tempBlock;
+
+		if( toggleOn ) { 
+			if( index > 3 ) {	
+				UIManager.s_instance.UpdateListViewVerticalScrollbarValue( (index+1) / (float)UIManager.s_instance.listViewContentParent.childCount );
+			} else {
+				UIManager.s_instance.UpdateListViewVerticalScrollbarValue( 0f );
+			}
+
+			UIManager.s_instance.UpdateListViewHorizontalScrollbarValue( 0f );
+		}
 	}
 }
