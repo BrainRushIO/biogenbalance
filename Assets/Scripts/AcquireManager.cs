@@ -248,5 +248,15 @@ public class AcquireManager : MonoBehaviour {
 			tempBlock.normalColor = UIManager.s_instance.listViewButtonNormalColor;
 		}
 		listViewButton.colors = tempBlock;
+
+		if( toggleOn ) { 
+			if( index > 3 ) {	
+				UIManager.s_instance.UpdateListViewVerticalScrollbarValue( (index+1) / (float)UIManager.s_instance.listViewContentParent.childCount );
+			} else {
+				UIManager.s_instance.UpdateListViewVerticalScrollbarValue( 0f );
+			}
+
+			UIManager.s_instance.UpdateListViewHorizontalScrollbarValue( 0f );
+		}
 	}
 }
