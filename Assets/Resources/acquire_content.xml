@@ -8,73 +8,73 @@
 		</popupWindow>
 		<section>
 			<listText>Microbalance</listText>
-			<step>
-				<listText>Intro</listText>
-				<descriptionText>This a Microbalance, it is the more sensitive of the two balances we will be using. Because it is extremely sensitive, it is used to weight materials with its precision in the fractions of a milligram. It is made up of two hardware components: one for user input and the other to weigh materials.</descriptionText>
-			</step>
-			<step>
-				<listText>Specifications</listText>
-				<descriptionText>As said before, Microbalances are a lot more precise than Semi-Microbalances. They are more sensitive but they can support less weight than their counterpart. This microbalance has a Weight Capacity 5g (grams) and a Precision of 1µg (microgram) = 0.000001 grams.</descriptionText>
-			</step>
-			<step>
-				<listText>Models</listText>
-				<descriptionText>The balance displayed is the Sartorius ME5. Depending on the balance being used, it will have a different Weight Capacity, and Precision.
+		</section>
+		<step>
+			<listText>Intro</listText>
+			<descriptionText>This a Microbalance, it is the more sensitive of the two balances we will be using. Because it is extremely sensitive, it is used to weight materials with its precision in the fractions of a milligram. It is made up of two hardware components: one for user input and the other to weigh materials.</descriptionText>
+		</step>
+		<step>
+			<listText>Specifications</listText>
+			<descriptionText>As said before, Microbalances are a lot more precise than Semi-Microbalances. They are more sensitive but they can support less weight than their counterpart. This microbalance has a Weight Capacity 5g (grams) and a Precision of 1µg (microgram) = 0.000001 grams.</descriptionText>
+		</step>
+		<step>
+			<listText>Models</listText>
+			<descriptionText>The balance displayed is the Sartorius ME5. Depending on the balance being used, it will have a different Weight Capacity, and Precision.
 
 Note: Always refer to your balance’s User Manual to find its specifications.</descriptionText>
-			</step>
+		</step>
+		<step>
+			<listText>Body</listText>
+			<descriptionText>Microbalances are usually made up of two body parts. One of them is the terminal you use when inputting information, the other holds the pan and all the sensitive mechanisms to weigh objects. These are connected via a cable.</descriptionText>
+		</step>
+		<step>
+			<listText>Draft Shield</listText>
+			<descriptionText>Microbalances also feature draft shields. They encapsulate the weighing chamber where the weighing pan and weighing materials are located. Draft shields prevent wind drafts from altering measurements. The draft shield on this balance is one that rotates and is controlled by buttons on the terminal.</descriptionText>
+		</step>
+		<section>
+			<listText>Semi-Microbalance</listText>
+		</section>
+		<step>
+			<listText>Intro</listText>
+			<descriptionText>This a Semi-Microbalance, it is used to weigh objects of more mass than the ones weighed on a Microbalance.</descriptionText>
+		</step>
+		<step>
+			<listText>Specifications</listText>
+			<descriptionText>Semi-Microbalances can weigh objects that are a lot more massive that the Microbalance. They trade off some precision for higher weight yield. This semi-microbalance has a Weight Capacity 210g (grams) and a Precision of 0.0001g (grams).</descriptionText>
+		</step>
+		<step>
+			<listText>Models</listText>
+			<descriptionText>The balance displayed is the Sartorius AZ214. Depending on the balance being used, it will have a different Weight Capacity, and Precision.
+
+Note: Always refer to your balance’s User Manual to find its specifications.</descriptionText>
+		</step>
 			<step>
 				<listText>Body</listText>
-				<descriptionText>Microbalances are usually made up of two body parts. One of them is the terminal you use when inputting information, the other holds the pan and all the sensitive mechanisms to weigh objects. These are connected via a cable.</descriptionText>
+				<descriptionText>Semi-Microbalances consists of only one body part that houses both the weighing mechanisms and the user terminal.</descriptionText>
 			</step>
 			<step>
 				<listText>Draft Shield</listText>
-				<descriptionText>Microbalances also feature draft shields. They encapsulate the weighing chamber where the weighing pan and weighing materials are located. Draft shields prevent wind drafts from altering measurements. The draft shield on this balance is one that rotates and is controlled by buttons on the terminal.</descriptionText>
+				<descriptionText>Semi-Microbalances also feature draft shields. They encapsulate the weighing chamber where the weighing pan and weighing materials are located. Draft shields prevent wind drafts from altering measurements. The draft shield on this balance consist of sliding doors that are manipulated by using the handles.</descriptionText>
 			</step>
-		</section>
-		<section>
-			<listText>Semi-Microbalance</listText>
-			<step>
-				<listText>Intro</listText>
-				<descriptionText>This a Semi-Microbalance, it is used to weigh objects of more mass than the ones weighed on a Microbalance.</descriptionText>
-			</step>
-			<step>
-				<listText>Specifications</listText>
-				<descriptionText>Semi-Microbalances can weigh objects that are a lot more massive that the Microbalance. They trade off some precision for higher weight yield. This semi-microbalance has a Weight Capacity 210g (grams) and a Precision of 0.0001g (grams).</descriptionText>
-			</step>
-			<step>
-				<listText>Models</listText>
-				<descriptionText>The balance displayed is the Sartorius AZ214. Depending on the balance being used, it will have a different Weight Capacity, and Precision.
-
-Note: Always refer to your balance’s User Manual to find its specifications.</descriptionText>
-			</step>
-				<step>
-					<listText>Body</listText>
-					<descriptionText>Semi-Microbalances consists of only one body part that houses both the weighing mechanisms and the user terminal.</descriptionText>
-				</step>
-				<step>
-					<listText>Draft Shield</listText>
-					<descriptionText>Semi-Microbalances also feature draft shields. They encapsulate the weighing chamber where the weighing pan and weighing materials are located. Draft shields prevent wind drafts from altering measurements. The draft shield on this balance consist of sliding doors that are manipulated by using the handles.</descriptionText>
-				</step>
-		</section>
 		<section>
 			<listText>Choosing a Balance</listText>
-			<step>
-				<listText>Weights</listText>
-				<descriptionText>This is a calibration weight. There are many shapes and sizes but we will be using these for our examples and calibration. These weights have their mass engraved on the face of their top side</descriptionText>
-			</step>
-			<step>
-				<listText>Determining What Balance to Choose</listText>
-				<descriptionText>Trying to weigh something that is larger than the balance’s maximum weight can damage its components so you must use a balance with a higher weight yield. If you are given a material and told to weigh a certain amount of it, you would choose the balance that can support the weight and give you the most accurate measurement.</descriptionText>
-			</step>
-			<step>
-				<listText>Scenario</listText>
-				<descriptionText>This is a 20g weight. Which would be the correct balance to weigh this material? Press “Next” to find out.</descriptionText>
-			</step>
-			<step>
-				<listText>Correct Balance</listText>
-				<descriptionText>The correct balance would be the Semi-Microbalance. A microbalance cannot support anything over 5g in weight so using that one is out of the question. The Semi-Microbalance can support up to 210g so it is the only viable option.</descriptionText>
-			</step>
 		</section>
+		<step>
+			<listText>Weights</listText>
+			<descriptionText>This is a calibration weight. There are many shapes and sizes but we will be using these for our examples and calibration. These weights have their mass engraved on the face of their top side</descriptionText>
+		</step>
+		<step>
+			<listText>Determining What Balance to Choose</listText>
+			<descriptionText>Trying to weigh something that is larger than the balance’s maximum weight can damage its components so you must use a balance with a higher weight yield. If you are given a material and told to weigh a certain amount of it, you would choose the balance that can support the weight and give you the most accurate measurement.</descriptionText>
+		</step>
+		<step>
+			<listText>Scenario</listText>
+			<descriptionText>This is a 20g weight. Which would be the correct balance to weigh this material? Press “Next” to find out.</descriptionText>
+		</step>
+		<step>
+			<listText>Correct Balance</listText>
+			<descriptionText>The correct balance would be the Semi-Microbalance. A microbalance cannot support anything over 5g in weight so using that one is out of the question. The Semi-Microbalance can support up to 210g so it is the only viable option.</descriptionText>
+		</step>
 	</chooseBalance>
 	<prepareBalance>
 		<moduleTitle>Prepare the Balance</moduleTitle>
@@ -88,34 +88,34 @@ Note: Always refer to your balance’s User Manual to find its specifications.</
 		</step>
 		<section>
 			<listText>Level Balance</listText>
-			<step>
-				<listText>Bubble Level</listText>
-				<descriptionText>The bubble level lets you know if your balance is on a level surface. The balance is leveled when the air bubble is within the circle drawn on the center of the glass.</descriptionText>
-			</step>
-			<step>
-				<listText>Leveling Screws</listText>
-				<descriptionText>In the case that the balance is not level, twist these screws to raise or lower the balance corners. Shifting the height of the balance’s individual corners levels the balance.</descriptionText>
-			</step>
-			<step>
-				<listText>Adjusting the Screws</listText>
-				<descriptionText>From back here it is possible to adjust the leveling screws while having a clear view of the bubble level.</descriptionText>
-			</step>
 		</section>
+		<step>
+			<listText>Bubble Level</listText>
+			<descriptionText>The bubble level lets you know if your balance is on a level surface. The balance is leveled when the air bubble is within the circle drawn on the center of the glass.</descriptionText>
+		</step>
+		<step>
+			<listText>Leveling Screws</listText>
+			<descriptionText>In the case that the balance is not level, twist these screws to raise or lower the balance corners. Shifting the height of the balance’s individual corners levels the balance.</descriptionText>
+		</step>
+		<step>
+			<listText>Adjusting the Screws</listText>
+			<descriptionText>From back here it is possible to adjust the leveling screws while having a clear view of the bubble level.</descriptionText>
+		</step>
 		<section>
 			<listText>Clean Balance</listText>
-			<step>
-				<listText>Problem Areas</listText>
-				<descriptionText>Dirty and grime accumulates on the weigh pan and the few mechanisms under it.</descriptionText>
-			</step>
-			<step>
-				<listText>Importance of Cleaning</listText>
-				<descriptionText>If left uncleaned for a prolonged amount of time, the balance’s reading will begin to suffer.</descriptionText>
-			</step>
-			<step>
-				<listText>Tools to Use When Cleaning</listText>
-				<descriptionText>A brush and water or alcohol is used to clean these components.</descriptionText>
-			</step>
 		</section>
+		<step>
+			<listText>Problem Areas</listText>
+			<descriptionText>Dirty and grime accumulates on the weigh pan and the few mechanisms under it.</descriptionText>
+		</step>
+		<step>
+			<listText>Importance of Cleaning</listText>
+			<descriptionText>If left uncleaned for a prolonged amount of time, the balance’s reading will begin to suffer.</descriptionText>
+		</step>
+		<step>
+			<listText>Tools to Use When Cleaning</listText>
+			<descriptionText>A brush and water or alcohol is used to clean these components.</descriptionText>
+		</step>
 	</prepareBalance>
 	<calibrateBalance>
 		<moduleTitle>Calibrate the Balance</moduleTitle>
@@ -128,45 +128,45 @@ Note: Always refer to your balance’s User Manual to find its specifications.</
 		</step>
 		<section>
 			<listText>Perform Weight Check</listText>
-			<step>
-				<listText>Intro</listText>
-				<descriptionText>It is important to perform a weight check every time you use a balance to ensure that the readings you are recording are correct.</descriptionText>
-			</step>
-			<step>
-				<listText>Activate Calibration Mode</listText>
-				<descriptionText>To enter Calibration Mode, hold the tare button down till you hear a beep.
+		</section>
+		<step>
+			<listText>Intro</listText>
+			<descriptionText>It is important to perform a weight check every time you use a balance to ensure that the readings you are recording are correct.</descriptionText>
+		</step>
+		<step>
+			<listText>Activate Calibration Mode</listText>
+			<descriptionText>To enter Calibration Mode, hold the tare button down till you hear a beep.
 
 Note: Different balances enter Calibration Mode in different ways. Refer to your specific balance’s user manual.</descriptionText>
-			</step>
-			<step>
-				<listText>The Calibration Weight</listText>
-				<descriptionText>This is a calibration weight. It is used when calibrating a balance to ensure that the balance is in a working condition.</descriptionText>
-			</step>
-			<step>
-				<listText>Open Door</listText>
-				<descriptionText>If the door isn't already open, open it to gain access to the weighing chamber.</descriptionText>
-			</step>
-			<step>
-				<listText>Place the Weight</listText>
-				<descriptionText>Place the calibration weight on the weighing pan.</descriptionText>
-			</step>
-			<step>
-				<listText>Close Door</listText>
-				<descriptionText>Close the door. This keeps wind drafts from affecting the balance reading. The door are also referred to as "Draft Shields".</descriptionText>
-			</step>
-			<step>
-				<listText>Wait for Reading to Stabilize</listText>
-				<descriptionText>Wait 10 seconds until the balance beeps. Congratulations your balance is now calibrated!</descriptionText>
-			</step>
-			<step>
-				<listText>Remove Calibration Weight</listText>
-				<descriptionText>Remove the calibration weight from the weigh pan.</descriptionText>
-			</step>
-			<step>
-				<listText>Calibration Finished</listText>
-				<descriptionText>The balance has been calibrated. Calibration is not required for the rest of the time the balance will be used this session.</descriptionText>
-			</step>
-		</section>
+		</step>
+		<step>
+			<listText>The Calibration Weight</listText>
+			<descriptionText>This is a calibration weight. It is used when calibrating a balance to ensure that the balance is in a working condition.</descriptionText>
+		</step>
+		<step>
+			<listText>Open Door</listText>
+			<descriptionText>If the door isn't already open, open it to gain access to the weighing chamber.</descriptionText>
+		</step>
+		<step>
+			<listText>Place the Weight</listText>
+			<descriptionText>Place the calibration weight on the weighing pan.</descriptionText>
+		</step>
+		<step>
+			<listText>Close Door</listText>
+			<descriptionText>Close the door. This keeps wind drafts from affecting the balance reading. The door are also referred to as "Draft Shields".</descriptionText>
+		</step>
+		<step>
+			<listText>Wait for Reading to Stabilize</listText>
+			<descriptionText>Wait 10 seconds until the balance beeps. Congratulations your balance is now calibrated!</descriptionText>
+		</step>
+		<step>
+			<listText>Remove Calibration Weight</listText>
+			<descriptionText>Remove the calibration weight from the weigh pan.</descriptionText>
+		</step>
+		<step>
+			<listText>Calibration Finished</listText>
+			<descriptionText>The balance has been calibrated. Calibration is not required for the rest of the time the balance will be used this session.</descriptionText>
+		</step>
 	</calibrateBalance>
 	<useBalance>
 		<moduleTitle>Using the Balance</moduleTitle>
