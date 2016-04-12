@@ -82,7 +82,7 @@ public class PracticeManager : MonoBehaviour {
 			{
 			case "step":
 				newEntry.isSectionParent = false;
-				newEntry.context = context;
+				newEntry.stepIndex = context;
 				newEntry.uiText.listViewText = shownStepIndex + item.SelectSingleNode( "listText" ).InnerText;
 				newEntry.uiText.descriptionViewText = item.SelectSingleNode( "descriptionText" ).InnerText;
 				practiceStepList.Add( newEntry );
@@ -90,7 +90,7 @@ public class PracticeManager : MonoBehaviour {
 				break;
 			case "section":
 				newEntry.isSectionParent = true;
-				newEntry.context = context;
+				newEntry.stepIndex = context;
 				newEntry.uiText.listViewText = item.SelectSingleNode( "listText" ).InnerText;
 				practiceStepList.Add( newEntry );
 
@@ -100,7 +100,7 @@ public class PracticeManager : MonoBehaviour {
 				break;
 			case "moduleTitle":
 				newEntry.isSectionParent = true;
-				newEntry.context = 0;
+				newEntry.stepIndex = 0;
 				newEntry.uiText.listViewText = item.InnerText;
 				practiceStepList.Add( newEntry );
 				break;
@@ -138,7 +138,7 @@ public class PracticeManager : MonoBehaviour {
 			StepsListEntry temp = practiceStepList[i];
 
 			string contextIndentation = "";
-			for( int j = 1; j < temp.context; j++ )
+			for( int j = 1; j < temp.stepIndex; j++ )
 				contextIndentation += ( temp.isSectionParent ) ? "\t   " : "\t";
 
 			if( temp.isSectionParent ) {

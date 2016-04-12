@@ -6,7 +6,7 @@ using System.Xml;
 
 public struct StepsListEntry {
 	public bool isSectionParent;
-	public int context;
+	public int stepIndex;
 	public ListViewDescriptionViewTextPair uiText;
 }
 
@@ -23,7 +23,11 @@ public class AcquireManager : MonoBehaviour {
 	public TextAsset acquireContentXML;
 
 	/// <summary>
-	/// The current step in the module.
+	/// The submodule manager. Submodules control the logic for different module types: e.g. Choose, Prepare, Calibrate, Use
+	/// </summary>
+	private BaseAcquireSubmodule submoduleManager;
+	/// <summary>
+	/// The current step in the module. This differs from the stepIndex in StepsListEntry because it accounts for Section elements in the ListView. This is more like the sibling index for the ListViewContentParent's children.
 	/// </summary>
 	private int currentStepIndex = 0;
 	private bool showListViewIndex = true;
@@ -45,19 +49,11 @@ public class AcquireManager : MonoBehaviour {
 	void Start () {
 		ApplicationManager.s_instance.currentMouseMode = ApplicationManager.MouseMode.Pointer;
 		UIManager.s_instance.ToggleToolsActive( false, false, false, false );
+		submoduleManager = BaseAcquireSubmodule.s_instance;
 		//GoToStep( 1 );
 		currentStepIndex = -1;
 		GoToNextStep();
 		UIManager.s_instance.nextButton.gameObject.SetActive( true );
-	}
-
-	void Update () {
-		switch( currentStepIndex )
-		{
-		default:
-			break;
-		}
-
 	}
 
 	private void UpdateNextButton() {
@@ -80,33 +76,32 @@ public class AcquireManager : MonoBehaviour {
 		GoToStep(currentStepIndex);
 	}
 
-	public void GoToStep( int stepIndex ) {
-		ResetInputsAndObjects();
-		currentStepIndex = stepIndex;
-
-		switch( stepIndex )
-		{
-		default:
-			break;
-		}
-
+	public void GoToStep( int newStepIndex ) {
+		ResetSceneObjects();
+		currentStepIndex = newStepIndex;
+		
 		// Update UI Text
-		UIManager.s_instance.UpdateDescriptionViewText( acquireStepList[stepIndex].uiText.descriptionViewText );
+		UIManager.s_instance.UpdateDescriptionViewText( acquireStepList[currentStepIndex].uiText.descriptionViewText );
+		// Update scene
+		submoduleManager.UpdateSceneContents( acquireStepList[currentStepIndex].stepIndex );
+
 		// Get our new selected list view button, change its text white, set it interactable, and check its checkbox.
 		ListViewButton newListViewButtonSelection = UIManager.s_instance.listViewContentParent.GetChild(currentStepIndex).GetComponent<ListViewButton>();
 		newListViewButtonSelection.GetComponent<Button>().interactable = true;
 		newListViewButtonSelection.childText.color = Color.white;
 		newListViewButtonSelection.checkBox.isOn = true;
 
-		// Highlight button and check if the next button should appear or disappear.
+		// Highlight button and check if the "Next" button should appear or disappear.
 		ToggleListViewButtonHighLight( currentStepIndex, true );
 		UpdateNextButton();
 	}
 
-	private void ResetInputsAndObjects() {
+	private void ResetSceneObjects() {
 		for( int i = 0; i < UIManager.s_instance.listViewContentParent.childCount; i++ )
 			ToggleListViewButtonHighLight( i, false );
 		UIManager.s_instance.UpdateDescriptionViewText( "" );
+
+		submoduleManager.ResetScene();
 	}
 
 	private void InitializeAcquireStepList() {
@@ -134,14 +129,19 @@ public class AcquireManager : MonoBehaviour {
 		XmlNode parentNode = xmlFamiliarizeContent.SelectSingleNode( "/content/"+ path  );
 
 		//TODO Include content pulled from the <popup> node.
-		//TODO Make this algorithm call the PopulateListFromNewParent method
 		int currentContext = 0;
 		int currentIndex = 1;
 		PouplateListFromNewParent( parentNode, ref currentContext, ref currentIndex );
 		Debug.Log( "Created Acquire Step List." );
 	}
 
-	private void PouplateListFromNewParent( XmlNode parentNode, ref int context, ref int currentIndex ) {
+	/// <summary>
+	/// Pouplates the list from new parent node.
+	/// </summary>
+	/// <param name="parentNode">Parent node.</param>
+	/// <param name="newStepIndex">Step index stored in the Entry struct. This is used to find the corresponding scene in the AcquireModuleManager.</param>
+	/// <param name="currentIndex">Number used solely to display the a number next to the name of the step in the List View.</param>
+	private void PouplateListFromNewParent( XmlNode parentNode, ref int newStepIndex, ref int currentIndex ) {
 		XmlNodeList stepList = parentNode.ChildNodes;
 		foreach( XmlNode item in stepList ) {
 			StepsListEntry newEntry = new StepsListEntry();
@@ -154,25 +154,24 @@ public class AcquireManager : MonoBehaviour {
 			{
 			case "step":
 				newEntry.isSectionParent = false;
-				newEntry.context = context;
+				newEntry.stepIndex = newStepIndex;
 				newEntry.uiText.listViewText = shownStepIndex + item.SelectSingleNode( "listText" ).InnerText;
 				newEntry.uiText.descriptionViewText = item.SelectSingleNode( "descriptionText" ).InnerText;
 				acquireStepList.Add( newEntry );
 				currentIndex++;
+				newStepIndex++;
 				break;
 			case "section":
 				newEntry.isSectionParent = true;
-				newEntry.context = context;
+				newEntry.stepIndex = -1;
 				newEntry.uiText.listViewText = item.SelectSingleNode( "listText" ).InnerText;
 				acquireStepList.Add( newEntry );
 
-				context++;
-				PouplateListFromNewParent( item, ref context, ref currentIndex );
-				context--;
+				PouplateListFromNewParent( item, ref newStepIndex, ref currentIndex );
 				break;
 			case "moduleTitle":
 				newEntry.isSectionParent = true;
-				newEntry.context = 0;
+				newEntry.stepIndex = -1;
 				newEntry.uiText.listViewText = item.InnerText;
 				acquireStepList.Add( newEntry );
 				break;
@@ -208,10 +207,6 @@ public class AcquireManager : MonoBehaviour {
 			}
 
 			StepsListEntry temp = acquireStepList[i];
-
-			string contextIndentation = "";
-			for( int j = 1; j < temp.context; j++ )
-				contextIndentation += ( temp.isSectionParent ) ? "\t   " : "\t";
 			
 			if( temp.isSectionParent ) {
 				ListViewButton newListViewSectionTitle = Instantiate( defaultListViewSectionTitle ).GetComponent<ListViewButton>();
@@ -222,7 +217,7 @@ public class AcquireManager : MonoBehaviour {
 				ListViewButton newListViewButton = Instantiate( UIManager.s_instance.defaultListViewButton ).GetComponent<ListViewButton>();
 				newListViewButton.listIndex = i;
 				newListViewButton.transform.SetParent(listViewVerticalLayoutGroup, false );
-				newListViewButton.childText.text = contextIndentation + temp.uiText.listViewText;
+				newListViewButton.childText.text = temp.uiText.listViewText;
 				newListViewButton.childText.color = Color.grey;
 				newListViewButton.GetComponent<Button>().interactable = false;
 			}
