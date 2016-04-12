@@ -22,13 +22,15 @@ public class OrbitCamera : MonoBehaviour {
 
 		// Handle draggin camera
 		if( canRotate ) {
-			if ( FamiliarizeManager.s_instance.isDragging == false && Input.GetMouseButton (0) && Mathf.Abs((Input.mousePosition-lastMousePos).magnitude) > 2f ) {
-				FamiliarizeManager.s_instance.isDragging = true;
-			}
-			if( FamiliarizeManager.s_instance.isDragging ) {
-				pivotParent.transform.RotateAround (pivotParent.position, pivotParent.up, Input.GetAxis ("Mouse X") * dragSpeed);
-				pivotParent.transform.RotateAround (pivotParent.position, pivotParent.right, Input.GetAxis ("Mouse Y") * dragSpeed);
-				transform.LookAt (pivotParent);
+			if( ApplicationManager.s_instance.currentApplicationMode == ApplicationManager.ApplicationMode.Familiarize ) {
+				if ( FamiliarizeManager.s_instance.isDragging == false && Input.GetMouseButton (0) && Mathf.Abs((Input.mousePosition-lastMousePos).magnitude) > 2f ) {
+					FamiliarizeManager.s_instance.isDragging = true;
+				}
+				if( FamiliarizeManager.s_instance.isDragging ) {
+					pivotParent.transform.RotateAround (pivotParent.position, pivotParent.up, Input.GetAxis ("Mouse X") * dragSpeed);
+					pivotParent.transform.RotateAround (pivotParent.position, pivotParent.right, Input.GetAxis ("Mouse Y") * dragSpeed);
+					transform.LookAt (pivotParent);
+				}
 			}
 		}
 

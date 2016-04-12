@@ -7,7 +7,7 @@ using System.Collections.Generic;
 /// </summary>
 public abstract class BaseAcquireModuleStep : MonoBehaviour {
 
-	public Transform cameraPosition, cameraPivot;
+	public Transform cameraPosition;
 
 	protected Dictionary<string, bool> objectToggles;
 
