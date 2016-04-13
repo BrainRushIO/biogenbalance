@@ -32,6 +32,7 @@ public class AcquireManager : MonoBehaviour {
 	/// </summary>
 	private int currentStepIndex = 0;
 	private bool showListViewIndex = true;
+	private bool isLerpingToNewPosition = false;
 
 	[Header("UI")]
 	public RectTransform defaultListViewSectionTitle;
@@ -264,12 +265,28 @@ public class AcquireManager : MonoBehaviour {
 			Debug.LogError( "Submodule manager is null" );
 			yield break;
 		}
-			
-		Debug.Log( "I'm still in here" );
-		Transform newCamPos = submoduleManager.GetStepCameraTransform( acquireStepList[currentStepIndex].stepIndex );
-		sceneCamera.transform.position = newCamPos.position;
-		sceneCamera.transform.rotation = newCamPos.rotation;
+
+		yield return LerpToNewCamPos( submoduleManager.GetStepCameraTransform(acquireStepList[currentStepIndex].stepIndex ) );
+		Debug.LogWarning( "Done lerping" );
 		submoduleManager.UpdateSceneContents( acquireStepList[currentStepIndex].stepIndex );
-		yield return null;
+	}
+
+	private IEnumerator LerpToNewCamPos( Transform targetTransform ) {
+		isLerpingToNewPosition = true;
+		float elapsedTime = 0f;
+		float lerpTime = 0.8f;
+		float startTime = Time.time;
+		Vector3 startPos = sceneCamera.transform.position;
+		Quaternion startRot = sceneCamera.transform.rotation;
+
+		while( elapsedTime < lerpTime ) {
+			sceneCamera.transform.position = Vector3.Lerp( startPos, targetTransform.position, elapsedTime/lerpTime );
+			sceneCamera.transform.rotation = Quaternion.Lerp( startRot, targetTransform.rotation, elapsedTime/lerpTime );
+			yield return null;
+			elapsedTime = Time.time-startTime;
+		}
+		sceneCamera.transform.position = targetTransform.position;
+		sceneCamera.transform.rotation = targetTransform.rotation;
+		isLerpingToNewPosition = false;
 	}
 }
