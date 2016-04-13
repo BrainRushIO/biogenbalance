@@ -51,11 +51,13 @@ public class AcquireManager : MonoBehaviour {
 	void Start () {
 		ApplicationManager.s_instance.currentMouseMode = ApplicationManager.MouseMode.Pointer;
 		UIManager.s_instance.ToggleToolsActive( false, false, false, false );
+		UIManager.s_instance.ToggleSidePanel( true );
+		UIManager.s_instance.nextButton.gameObject.SetActive( true );
 		submoduleManager = BaseAcquireSubmodule.s_instance;
+
 		//GoToStep( 1 );
 		currentStepIndex = -1;
 		GoToNextStep();
-		UIManager.s_instance.nextButton.gameObject.SetActive( true );
 	}
 
 	private void UpdateNextButton() {

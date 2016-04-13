@@ -34,18 +34,13 @@ public class PracticeManager : MonoBehaviour {
 	void Start () {
 		ApplicationManager.s_instance.ChangeMouseMode( (int)ApplicationManager.MouseMode.Pointer );
 		UIManager.s_instance.ToggleToolsActive( true, true, true, true );
-	}
-
-	void Update () {
-		switch( currentStepIndex )
-		{
-		default:
-			break;
-		}
+		UIManager.s_instance.ToggleSidePanel( false );
+		UIManager.s_instance.nextButton.gameObject.SetActive( true );
 	}
 
 	public void PressedHintButton() {
-		UIManager.s_instance.ToggleSidePanelOn( true );
+		Debug.LogWarning("Hint");
+		UIManager.s_instance.ToggleSidePanel( true );
 	}
 
 	public void GoToNextStep() {
@@ -78,6 +73,7 @@ public class PracticeManager : MonoBehaviour {
 		for( int i = 0; i < UIManager.s_instance.listViewContentParent.childCount; i++ )
 			ToggleListViewItemHighLight( i, false );
 		UIManager.s_instance.UpdateDescriptionViewText( "" );
+		UIManager.s_instance.ToggleSidePanel( false );
 
 //		//TODO Remove this if 
 //		if( submoduleManager != null )

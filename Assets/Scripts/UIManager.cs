@@ -154,14 +154,6 @@ public class UIManager : MonoBehaviour {
 		// Remove children
 		listViewContentParent.DetachChildren();
 	}
-	
-	/// <summary>
-	/// Toggles the side panel on.
-	/// </summary>
-	/// <param name="toggleOn">If set to <c>true</c> toggle Side Panel on.</param>
-	public void ToggleSidePanelOn( bool toggleOn ) {
-		
-	}
 
 	public void UpdateDescriptionViewText( string newText ) {
 		if( newText != null ) {
@@ -182,5 +174,18 @@ public class UIManager : MonoBehaviour {
 
 	public void UpdateDescriptionViewScrollbarValue( float percentage ) {
 		descriptionViewScrollbar.value = 1f - percentage;
+	}
+
+	/// <summary>
+	/// Toggles the side panel to appear or disappear.
+	/// </summary>
+	/// <param name="toggleOn">If set to <c>true</c> toggle on.</param>
+	public void ToggleSidePanel( bool toggleOn ) {
+		CanvasGroup cG = sidePanel.GetComponent<CanvasGroup>();
+		cG.alpha = ( toggleOn ) ? 1f : 0f;
+		cG.interactable = toggleOn;
+		cG.blocksRaycasts = toggleOn;
+
+		sidePanel.GetComponent<UIBoundsTrigger>().active = toggleOn;
 	}
 }
