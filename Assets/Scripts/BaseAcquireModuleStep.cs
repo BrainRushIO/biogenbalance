@@ -12,6 +12,9 @@ public abstract class BaseAcquireModuleStep : MonoBehaviour {
 	protected Dictionary<string, bool> objectToggles;
 
 	protected virtual void Start() {
+		if( cameraPosition == null )
+			Debug.LogWarning( "The AcquireModuleStep on "+ gameObject.name + " is missing a cameraPosition." );
+
 		objectToggles = new Dictionary<string, bool>();
 	}
 

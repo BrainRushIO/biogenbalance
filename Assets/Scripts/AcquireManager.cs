@@ -19,6 +19,7 @@ public class AcquireManager : MonoBehaviour {
 	/// </summary>
 	public AcquireModule moduleType = AcquireModule.Choose;
 
+	public Camera sceneCamera;
 	public List<StepsListEntry> acquireStepList;
 	public TextAsset acquireContentXML;
 
@@ -82,7 +83,11 @@ public class AcquireManager : MonoBehaviour {
 		
 		// Update UI Text
 		UIManager.s_instance.UpdateDescriptionViewText( acquireStepList[currentStepIndex].uiText.descriptionViewText );
+
 		// Update scene
+		Transform newCamPos = submoduleManager.GetStepCameraTransform( acquireStepList[currentStepIndex].stepIndex );
+		sceneCamera.transform.position = newCamPos.position;
+		sceneCamera.transform.rotation = newCamPos.rotation;
 		submoduleManager.UpdateSceneContents( acquireStepList[currentStepIndex].stepIndex );
 
 		// Get our new selected list view button, change its text white, set it interactable, and check its checkbox.
