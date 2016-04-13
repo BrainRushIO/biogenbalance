@@ -16,8 +16,10 @@ public class AcquirePrepareModuleStep : BaseAcquireModuleStep {
 		switch( index )
 		{
 		default:
-			Debug.LogError( "Cannot execute step logic for index "+ index +". Index out of range." );
+			//Debug.Log( "No step logic for this index." );
 			break;
 		}
+
+		//		Debug.LogError( "Cannot execute step logic for index "+ index +". Index out of range." );
 	}
 }
