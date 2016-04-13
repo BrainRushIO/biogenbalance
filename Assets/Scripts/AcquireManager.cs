@@ -85,13 +85,7 @@ public class AcquireManager : MonoBehaviour {
 		UIManager.s_instance.UpdateDescriptionViewText( acquireStepList[currentStepIndex].uiText.descriptionViewText );
 
 		// Update scene
-		//TODO Remove this if and put this in a function
-		if( submoduleManager != null ) {
-			Transform newCamPos = submoduleManager.GetStepCameraTransform( acquireStepList[currentStepIndex].stepIndex );
-			sceneCamera.transform.position = newCamPos.position;
-			sceneCamera.transform.rotation = newCamPos.rotation;
-			submoduleManager.UpdateSceneContents( acquireStepList[currentStepIndex].stepIndex );
-		}
+		StartCoroutine( InitializeNextStep() );
 
 		// Get our new selected list view button, change its text white, set it interactable, and check its checkbox.
 		ListViewButton newListViewButtonSelection = UIManager.s_instance.listViewContentParent.GetChild(currentStepIndex).GetComponent<ListViewButton>();
@@ -263,5 +257,19 @@ public class AcquireManager : MonoBehaviour {
 
 			UIManager.s_instance.UpdateListViewHorizontalScrollbarValue( 0f );
 		}
+	}
+
+	private IEnumerator InitializeNextStep() {
+		if( submoduleManager == null ) {
+			Debug.LogError( "Submodule manager is null" );
+			yield break;
+		}
+			
+		Debug.Log( "I'm still in here" );
+		Transform newCamPos = submoduleManager.GetStepCameraTransform( acquireStepList[currentStepIndex].stepIndex );
+		sceneCamera.transform.position = newCamPos.position;
+		sceneCamera.transform.rotation = newCamPos.rotation;
+		submoduleManager.UpdateSceneContents( acquireStepList[currentStepIndex].stepIndex );
+		yield return null;
 	}
 }
