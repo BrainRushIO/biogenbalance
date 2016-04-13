@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 
-public class AcquireChooseModuleStep : BaseAcquireModuleStep {
+public class AcquirePrepareModuleStep : BaseAcquireModuleStep {
 
 	protected override void Start () {
 		base.Start();

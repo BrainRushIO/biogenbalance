@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AcquireChooseBalanceManager : BaseAcquireSubmodule {
+public class AcquirePrepareBalanceManager : BaseAcquireSubmodule {
 
 	protected override void Init() {
 		base.Init();
