@@ -115,6 +115,9 @@ This Semi-MicroBalance has a maximum weight capacity of 210g and a precision of 
 		<popupWindow>
 			<text></text>
 		</popupWindow>
+		<section>
+			<listText>Preparing the Balance</listText>
+		</section>
 		<step>
 			<listText>Get into Leveling Position</listText>
 			<descriptionText>Click the button behind the balance to assume the balance leveling position.</descriptionText>
@@ -158,6 +161,9 @@ This Semi-MicroBalance has a maximum weight capacity of 210g and a precision of 
 			<listText>Remove Calibration Weight</listText>
 			<descriptionText>Wait 10 seconds for the balance to beep to confirm that it is calibrated.</descriptionText>
 		</step>
+		<section>
+			<listText>Using the Balance</listText>
+		</section>
 		<step>
 			<listText>Add Weight Container</listText>
 			<descriptionText>Place the weight container on the weigh pan.</descriptionText>
