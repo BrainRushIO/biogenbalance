@@ -260,6 +260,13 @@ public class AcquireManager : MonoBehaviour {
 		}
 	}
 
+	public void ClickedNextButton() {
+		if( isLerpingToNewPosition )
+			return;
+		
+		GoToNextStep();
+	}
+
 	private IEnumerator InitializeNextStep() {
 		if( submoduleManager == null ) {
 			Debug.LogError( "Submodule manager is null" );
@@ -267,7 +274,6 @@ public class AcquireManager : MonoBehaviour {
 		}
 
 		yield return LerpToNewCamPos( submoduleManager.GetStepCameraTransform(acquireStepList[currentStepIndex].stepIndex ) );
-		Debug.LogWarning( "Done lerping" );
 		submoduleManager.UpdateSceneContents( acquireStepList[currentStepIndex].stepIndex );
 	}
 
