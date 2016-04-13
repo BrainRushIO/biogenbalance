@@ -11,7 +11,7 @@ public class NextButton : MonoBehaviour {
 				AcquireManager.s_instance.ClickedNextButton();
 				break;
 			case ApplicationManager.ApplicationMode.Practice:
-				PracticeManager.s_instance.GoToNextStep();
+				PracticeManager.s_instance.ClickedNextButton();
 				break;
 			}
 		}

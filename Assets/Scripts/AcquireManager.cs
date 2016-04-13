@@ -59,6 +59,7 @@ public class AcquireManager : MonoBehaviour {
 	}
 
 	private void UpdateNextButton() {
+		// Sets the next button off only if we are on the last step.
 		if( currentStepIndex >= acquireStepList.Count-1 )
 			UIManager.s_instance.nextButton.gameObject.SetActive( false );
 		else 
@@ -136,7 +137,7 @@ public class AcquireManager : MonoBehaviour {
 		//TODO Include content pulled from the <popup> node.
 		int currentContext = 0;
 		int currentIndex = 1;
-		PouplateListFromNewParent( parentNode, ref currentContext, ref currentIndex );
+		PopulateListFromNewParent( parentNode, ref currentContext, ref currentIndex );
 		Debug.Log( "Created Acquire Step List." );
 	}
 
@@ -146,7 +147,7 @@ public class AcquireManager : MonoBehaviour {
 	/// <param name="parentNode">Parent node.</param>
 	/// <param name="newStepIndex">Step index stored in the Entry struct. This is used to find the corresponding scene in the AcquireModuleManager.</param>
 	/// <param name="currentIndex">Number used solely to display the a number next to the name of the step in the List View.</param>
-	private void PouplateListFromNewParent( XmlNode parentNode, ref int newStepIndex, ref int currentIndex ) {
+	private void PopulateListFromNewParent( XmlNode parentNode, ref int newStepIndex, ref int currentIndex ) {
 		XmlNodeList stepList = parentNode.ChildNodes;
 		foreach( XmlNode item in stepList ) {
 			StepsListEntry newEntry = new StepsListEntry();
@@ -172,7 +173,7 @@ public class AcquireManager : MonoBehaviour {
 				newEntry.uiText.listViewText = item.SelectSingleNode( "listText" ).InnerText;
 				acquireStepList.Add( newEntry );
 
-				PouplateListFromNewParent( item, ref newStepIndex, ref currentIndex );
+				PopulateListFromNewParent( item, ref newStepIndex, ref currentIndex );
 				break;
 			case "moduleTitle":
 				newEntry.isSectionParent = true;

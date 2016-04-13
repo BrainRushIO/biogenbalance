@@ -6,7 +6,7 @@ public class ListViewButton : MonoBehaviour {
 
 	public string key;
 	public int listIndex;
-	public int stepIndex;
+//	public int stepIndex;
 	public Text childText;
 	public Toggle checkBox;
 

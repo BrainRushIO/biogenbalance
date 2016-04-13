@@ -2,6 +2,7 @@
 
 <content>
 	<chooseBalance>
+		<moduleTitle>Choose Balance</moduleTitle>
 		<popupWindow>
 			<text></text>
 		</popupWindow>
@@ -17,6 +18,7 @@ This Semi-MicroBalance has a maximum weight capacity of 210g and a precision of 
 		</step>
 	</chooseBalance>
 	<prepareBalance>
+		<moduleTitle>Prepare the Balance</moduleTitle>
 		<popupWindow>
 			<text></text>
 		</popupWindow>
@@ -30,6 +32,7 @@ This Semi-MicroBalance has a maximum weight capacity of 210g and a precision of 
 		</step>
 	</prepareBalance>
 	<calibrateBalance>
+		<moduleTitle>Calibrate the Balance</moduleTitle>
 		<popupWindow>
 			<text></text>
 		</popupWindow>
@@ -70,6 +73,7 @@ This Semi-MicroBalance has a maximum weight capacity of 210g and a precision of 
 		</step>
 	</calibrateBalance>
 	<useBalance>
+		<moduleTitle>Using the Balance</moduleTitle>
 		<popupWindow>
 			<text></text>
 		</popupWindow>
@@ -107,6 +111,7 @@ This Semi-MicroBalance has a maximum weight capacity of 210g and a precision of 
 		</step>
 	</useBalance>
 	<completeCourse>
+		<moduleTitle>Full Course</moduleTitle>
 		<popupWindow>
 			<text></text>
 		</popupWindow>
