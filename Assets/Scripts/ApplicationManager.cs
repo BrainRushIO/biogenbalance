@@ -85,7 +85,7 @@ public class ApplicationManager : MonoBehaviour {
 		UIManager.s_instance.ClearListView();
 		UIManager.s_instance.UpdateDescriptionViewText( "" );
 		SceneManager.LoadScene( newScene );
-		Debug.Log( "Loaded new scene: " + newScene );
+//		Debug.Log( "Loaded new scene: " + newScene );
 	}
 
 	public void ChangeMouseMode( int newMouseMode ) {
