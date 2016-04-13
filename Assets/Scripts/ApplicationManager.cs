@@ -43,8 +43,8 @@ public class ApplicationManager : MonoBehaviour {
 		scenesDictionary.Add( "A3", "A3_BalanceCalibration" );
 		scenesDictionary.Add( "A4", "A4_UseBalance" );
 		scenesDictionary.Add( "P1", "P1_ChooseBalance" );
-		scenesDictionary.Add( "P2", "P2_BalanceCalibration" );
-		scenesDictionary.Add( "P3", "P3_PreparingBalance" );
+		scenesDictionary.Add( "P2", "P2_PreparingBalance" );
+		scenesDictionary.Add( "P3", "P3_BalanceCalibration" );
 		scenesDictionary.Add( "P4", "P4_UseBalance" );
 		scenesDictionary.Add( "P5", "P5_Full" );
 		scenesDictionary.Add( "V1", "V1_Validate" );
