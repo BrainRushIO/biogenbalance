@@ -9,7 +9,7 @@ public class ApplicationManager : MonoBehaviour {
 	public enum ApplicationMode { Intro, Familiarize, Acquire, Practice, Validate, Progress, Settings }
 	public ApplicationMode currentApplicationMode = ApplicationMode.Familiarize;
 
-	public enum MouseMode { Pointer, Rotate, Pan }
+	public enum MouseMode { Pointer, Rotate, Pan, Forceps }
 	public MouseMode currentMouseMode = MouseMode.Pointer;
 
 	private Dictionary<string, string> scenesDictionary;
