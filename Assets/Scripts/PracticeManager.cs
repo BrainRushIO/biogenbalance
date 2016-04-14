@@ -41,7 +41,7 @@ public class PracticeManager : MonoBehaviour {
 		ApplicationManager.s_instance.ChangeMouseMode( (int)ApplicationManager.MouseMode.Pointer );
 		UIManager.s_instance.ToggleToolsActive( true, true, true, true );
 		UIManager.s_instance.ToggleSidePanel( false, false );
-		UIManager.s_instance.nextButton.gameObject.SetActive( true );
+		//UIManager.s_instance.nextButton.gameObject.SetActive( true );
 		submoduleManager = BasePracticeSubmodule.s_instance;
 		orbitCam = sceneCamera.GetComponent<OrbitCamera>();
 
@@ -115,6 +115,9 @@ public class PracticeManager : MonoBehaviour {
 		ResetInputsAndObjects();
 		currentStepIndex = stepIndex;
 
+		// Update scene
+		StartCoroutine( InitializeNextStep() );
+
 		// Get our new selected list view button, change its text white, set it interactable, and check its checkbox.
 		ListViewButton newListViewButtonSelection = UIManager.s_instance.listViewContentParent.GetChild(currentStepIndex).GetComponent<ListViewButton>();
 		newListViewButtonSelection.childText.color = Color.white;
@@ -122,6 +125,17 @@ public class PracticeManager : MonoBehaviour {
 
 		UIManager.s_instance.UpdateDescriptionViewText( "Hint: " + practiceStepList[stepIndex].uiText.descriptionViewText );
 		ToggleListViewItemHighLight( stepIndex, true );
+	}
+
+	private IEnumerator InitializeNextStep() {
+		if( submoduleManager == null ) {
+			Debug.LogError( "Submodule manager is null" );
+			yield break;
+		}
+
+		// TODO Check if next step requires lerping to
+		//yield return LerpToNewCamPos( submoduleManager.GetStepCameraTransform(acquireStepList[currentStepIndex].stepIndex ) );
+		submoduleManager.UpdateSceneContents( practiceStepList[currentStepIndex].stepIndex );
 	}
 
 	public void ResetInputsAndObjects() {

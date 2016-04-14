@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PracticeChooseBalanceManager : BasePracticeSubmodule {
 
-	public Camera balanceCamera;
+	public GameObject step1, step2;
 
 	public bool selectedMicrobalance = false, selectedSemiMicroBalance = false;
 
@@ -11,10 +11,19 @@ public class PracticeChooseBalanceManager : BasePracticeSubmodule {
 		switch( stepIndex )
 		{
 		case 0:
-			balanceCamera.gameObject.SetActive( true );
+			step1.SetActive( true );
+			step2.SetActive( false );
+			ApplicationManager.s_instance.ChangeMouseMode( (int)ApplicationManager.MouseMode.Rotate );
+			UIManager.s_instance.ToggleSidePanel( true, false );
+			UIManager.s_instance.ToggleToolsActive( false, true, false, false );
+			UIManager.s_instance.nextButton.gameObject.SetActive( true );
 			break;
 		case 1:
-			balanceCamera.gameObject.SetActive( false );
+			step1.SetActive( false );
+			step2.SetActive( true );
+			ApplicationManager.s_instance.ChangeMouseMode( (int)ApplicationManager.MouseMode.Pointer );
+			UIManager.s_instance.ToggleToolsActive( true, true, false, false );
+			UIManager.s_instance.nextButton.gameObject.SetActive( false );
 			break;
 		}
 	}
@@ -60,5 +69,23 @@ public class PracticeChooseBalanceManager : BasePracticeSubmodule {
 	}
 
 	public override void ClickedOnObject( SelectableObject clickedOnObject ) {
+	}
+
+	/// <summary>
+	/// Clicked the semi microbalance button in the UI.
+	/// </summary>
+	public void ClickedSemiMicrobalance() {
+		selectedMicrobalance = false;
+		selectedSemiMicroBalance = true;
+		CheckAnswer();
+	}
+
+	/// <summary>
+	/// Clicked the microbalance button in the UI.
+	/// </summary>
+	public void ClickedMicrobalance() {
+		selectedMicrobalance = true;
+		selectedSemiMicroBalance = false;
+		CheckAnswer();
 	}
 }
