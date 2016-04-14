@@ -1,13 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 
 public abstract class BaseAcquireSubmodule : MonoBehaviour {
 	public static BaseAcquireSubmodule s_instance;
 
 	public BaseAcquireModuleStep[] moduleSteps;
 
-	protected  Dictionary<string, bool> inputs;
+	protected  bool[] inputs;
 
 	void Awake() {
 		if( s_instance == null ) {

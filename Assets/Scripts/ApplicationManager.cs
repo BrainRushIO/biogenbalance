@@ -98,6 +98,4 @@ public class ApplicationManager : MonoBehaviour {
 		if( UIManager.s_instance.messageWindow != null )
 			UIManager.s_instance.messageWindow.gameObject.SetActive( false );
 	}
-
-
 }

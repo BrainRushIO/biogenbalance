@@ -55,7 +55,7 @@ public class AcquireManager : MonoBehaviour {
 		UIManager.s_instance.nextButton.gameObject.SetActive( true );
 		submoduleManager = BaseAcquireSubmodule.s_instance;
 
-		//GoToStep( 1 );
+		//FIXME Replace this with the popup window logic
 		currentStepIndex = -1;
 		GoToNextStep();
 	}
