@@ -2,12 +2,42 @@
 using System.Collections;
 
 public class PracticeChooseBalanceManager : BasePracticeSubmodule {
-	
-	public override void UpdateSceneContents( int stepIndex ) {
-		//TODO Get init data from step at given index. execute logic depending on data.
 
-		// Have steps execute specific step logic if they have it
-		moduleSteps[stepIndex].ExecuteStepLogic();
+	public Camera balanceCamera;
+
+	public bool selectedMicrobalance = false, selectedSemiMicroBalance = false;
+
+	public override void UpdateSceneContents( int stepIndex ) {
+		switch( stepIndex )
+		{
+		case 0:
+			balanceCamera.gameObject.SetActive( true );
+			break;
+		case 1:
+			balanceCamera.gameObject.SetActive( false );
+			break;
+		}
+	}
+
+	public void CheckAnswer() {
+		if( selectedSemiMicroBalance && !selectedMicrobalance ) {
+			Debug.LogWarning( "YAY YOU WIN." );
+		} else {
+			PracticeManager.s_instance.PressedHintButton();
+		}
+	}
+
+	public void SelectBalance( int balance ) {
+		// SemiMicrobalance
+		if( balance == 0 ) {
+			selectedSemiMicroBalance = true; 
+			selectedMicrobalance = false;
+		}
+		// MicroBalance
+		else {
+			selectedSemiMicroBalance = false; 
+			selectedMicrobalance = true;
+		}
 	}
 
 	/// <summary>

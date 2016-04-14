@@ -23,7 +23,7 @@ public abstract class BasePracticeSubmodule : MonoBehaviour {
 		selectedObject = SelectableObject.SelectableObjectType.None;
 
 		if( moduleSteps == null || moduleSteps.Length == 0) {
-			Debug.LogError( "Could not find any children under BaseAcquireModule named: " + gameObject.name );
+			Debug.LogWarning( "Could not find any children under BaseAcquireModule named: " + gameObject.name );
 		}
 	}
 
