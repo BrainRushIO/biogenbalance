@@ -17,9 +17,9 @@ public class PracticeManager : MonoBehaviour {
 	public ListViewButton defaultListViewText;
 	public TextAsset practiceContentXML;
 
+	private BasePracticeSubmodule submoduleManager;
 	private List<StepsListEntry> practiceStepList;
 	private OrbitCamera orbitCam;
-	private SelectableObject.SelectableObjectType selectedObject;
 	private int currentStepIndex = 0;
 	private bool showListViewIndex = true;
 	private bool isLerpingToNewPosition = false;
@@ -42,8 +42,8 @@ public class PracticeManager : MonoBehaviour {
 		UIManager.s_instance.ToggleToolsActive( true, true, true, true );
 		UIManager.s_instance.ToggleSidePanel( false, false );
 		UIManager.s_instance.nextButton.gameObject.SetActive( true );
+		submoduleManager = BasePracticeSubmodule.s_instance;
 		orbitCam = sceneCamera.GetComponent<OrbitCamera>();
-		selectedObject = SelectableObject.SelectableObjectType.None;
 
 		currentStepIndex = -1;
 		GoToNextStep();
@@ -62,16 +62,17 @@ public class PracticeManager : MonoBehaviour {
 				Ray ray = sceneCamera.ScreenPointToRay(Input.mousePosition);
 				RaycastHit hit;
 				if ( Physics.Raycast(ray, out hit) ) {
-					if ( hit.transform.gameObject.tag == "Animatable" ) {
-						hit.transform.gameObject.GetComponent<Animator> ().SetTrigger ("Clicked");
-					}
+//					if ( hit.transform.gameObject.tag == "Animatable" ) {
+//						hit.transform.gameObject.GetComponent<Animator> ().SetTrigger ("Clicked");
+//					}
 					SelectableObject clickedObject = hit.transform.GetComponent<SelectableObject>();
 					if( clickedObject != null ) {
-						SelectObject( clickedObject );
+						submoduleManager.ClickedOnObject( clickedObject );
 					}
 				}
 			} else if( !isDragging && !ApplicationManager.s_instance.userIsInteractingWithUI ) { // If we clicked away from any objects in the 3D Scene View, clear selection
-				ClearSelectedObject( true );
+				
+				submoduleManager.ClearSelectedObject( true );
 			}
 
 			hasClickedDownOnItem = false;
@@ -287,17 +288,5 @@ public class PracticeManager : MonoBehaviour {
 	/// </summary>
 	public void ClickedNextButton() {
 		GoToNextStep();
-	}
-
-	private void SelectObject( SelectableObject newSelection ) {
-		ClearSelectedObject( false );
-	}
-
-	private void ClearSelectedObject( bool slerpToDefaultPos ) {
-		if( selectedObject == SelectableObject.SelectableObjectType.None )
-			return;
-
-
-		selectedObject = SelectableObject.SelectableObjectType.None;
 	}
 }
