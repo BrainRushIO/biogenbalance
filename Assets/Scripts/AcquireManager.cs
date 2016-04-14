@@ -19,6 +19,7 @@ public class AcquireManager : MonoBehaviour {
 	/// </summary>
 	public AcquireModule moduleType = AcquireModule.Choose;
 
+	public Camera sceneCamera;
 	public List<StepsListEntry> acquireStepList;
 	public TextAsset acquireContentXML;
 
@@ -31,6 +32,7 @@ public class AcquireManager : MonoBehaviour {
 	/// </summary>
 	private int currentStepIndex = 0;
 	private bool showListViewIndex = true;
+	private bool isLerpingToNewPosition = false;
 
 	[Header("UI")]
 	public RectTransform defaultListViewSectionTitle;
@@ -47,16 +49,19 @@ public class AcquireManager : MonoBehaviour {
 	}
 
 	void Start () {
-		ApplicationManager.s_instance.currentMouseMode = ApplicationManager.MouseMode.Pointer;
+		ApplicationManager.s_instance.ChangeMouseMode( 0 );
 		UIManager.s_instance.ToggleToolsActive( false, false, false, false );
+		UIManager.s_instance.ToggleSidePanel( true, false );
+		UIManager.s_instance.nextButton.gameObject.SetActive( true );
 		submoduleManager = BaseAcquireSubmodule.s_instance;
-		//GoToStep( 1 );
+
+		//FIXME Replace this with the popup window logic
 		currentStepIndex = -1;
 		GoToNextStep();
-		UIManager.s_instance.nextButton.gameObject.SetActive( true );
 	}
 
 	private void UpdateNextButton() {
+		// Sets the next button off only if we are on the last step.
 		if( currentStepIndex >= acquireStepList.Count-1 )
 			UIManager.s_instance.nextButton.gameObject.SetActive( false );
 		else 
@@ -82,8 +87,9 @@ public class AcquireManager : MonoBehaviour {
 		
 		// Update UI Text
 		UIManager.s_instance.UpdateDescriptionViewText( acquireStepList[currentStepIndex].uiText.descriptionViewText );
+
 		// Update scene
-		submoduleManager.UpdateSceneContents( acquireStepList[currentStepIndex].stepIndex );
+		StartCoroutine( InitializeNextStep() );
 
 		// Get our new selected list view button, change its text white, set it interactable, and check its checkbox.
 		ListViewButton newListViewButtonSelection = UIManager.s_instance.listViewContentParent.GetChild(currentStepIndex).GetComponent<ListViewButton>();
@@ -101,7 +107,9 @@ public class AcquireManager : MonoBehaviour {
 			ToggleListViewButtonHighLight( i, false );
 		UIManager.s_instance.UpdateDescriptionViewText( "" );
 
-		submoduleManager.ResetScene();
+		//TODO Remove this if 
+		if( submoduleManager != null )
+			submoduleManager.ResetScene();
 	}
 
 	private void InitializeAcquireStepList() {
@@ -131,7 +139,7 @@ public class AcquireManager : MonoBehaviour {
 		//TODO Include content pulled from the <popup> node.
 		int currentContext = 0;
 		int currentIndex = 1;
-		PouplateListFromNewParent( parentNode, ref currentContext, ref currentIndex );
+		PopulateListFromNewParent( parentNode, ref currentContext, ref currentIndex );
 		Debug.Log( "Created Acquire Step List." );
 	}
 
@@ -141,7 +149,7 @@ public class AcquireManager : MonoBehaviour {
 	/// <param name="parentNode">Parent node.</param>
 	/// <param name="newStepIndex">Step index stored in the Entry struct. This is used to find the corresponding scene in the AcquireModuleManager.</param>
 	/// <param name="currentIndex">Number used solely to display the a number next to the name of the step in the List View.</param>
-	private void PouplateListFromNewParent( XmlNode parentNode, ref int newStepIndex, ref int currentIndex ) {
+	private void PopulateListFromNewParent( XmlNode parentNode, ref int newStepIndex, ref int currentIndex ) {
 		XmlNodeList stepList = parentNode.ChildNodes;
 		foreach( XmlNode item in stepList ) {
 			StepsListEntry newEntry = new StepsListEntry();
@@ -167,7 +175,7 @@ public class AcquireManager : MonoBehaviour {
 				newEntry.uiText.listViewText = item.SelectSingleNode( "listText" ).InnerText;
 				acquireStepList.Add( newEntry );
 
-				PouplateListFromNewParent( item, ref newStepIndex, ref currentIndex );
+				PopulateListFromNewParent( item, ref newStepIndex, ref currentIndex );
 				break;
 			case "moduleTitle":
 				newEntry.isSectionParent = true;
@@ -253,5 +261,41 @@ public class AcquireManager : MonoBehaviour {
 
 			UIManager.s_instance.UpdateListViewHorizontalScrollbarValue( 0f );
 		}
+	}
+
+	public void ClickedNextButton() {
+		if( isLerpingToNewPosition )
+			return;
+		
+		GoToNextStep();
+	}
+
+	private IEnumerator InitializeNextStep() {
+		if( submoduleManager == null ) {
+			Debug.LogError( "Submodule manager is null" );
+			yield break;
+		}
+
+		yield return LerpToNewCamPos( submoduleManager.GetStepCameraTransform(acquireStepList[currentStepIndex].stepIndex ) );
+		submoduleManager.UpdateSceneContents( acquireStepList[currentStepIndex].stepIndex );
+	}
+
+	private IEnumerator LerpToNewCamPos( Transform targetTransform ) {
+		isLerpingToNewPosition = true;
+		float elapsedTime = 0f;
+		float lerpTime = 0.8f;
+		float startTime = Time.time;
+		Vector3 startPos = sceneCamera.transform.position;
+		Quaternion startRot = sceneCamera.transform.rotation;
+
+		while( elapsedTime < lerpTime ) {
+			sceneCamera.transform.position = Vector3.Lerp( startPos, targetTransform.position, elapsedTime/lerpTime );
+			sceneCamera.transform.rotation = Quaternion.Lerp( startRot, targetTransform.rotation, elapsedTime/lerpTime );
+			yield return null;
+			elapsedTime = Time.time-startTime;
+		}
+		sceneCamera.transform.position = targetTransform.position;
+		sceneCamera.transform.rotation = targetTransform.rotation;
+		isLerpingToNewPosition = false;
 	}
 }

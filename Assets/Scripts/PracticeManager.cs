@@ -7,15 +7,30 @@ using System.Xml;
 public class PracticeManager : MonoBehaviour {
 	public static PracticeManager s_instance;
 
-	public ListViewButton defaultListViewText;
+	public enum PracticeModule { Choose, Prepare, Calibrate, Use, FullCourse }
+	/// <summary>
+	/// The type of the module. Set publicly in inspector.
+	/// </summary>
+	public PracticeModule moduleType = PracticeModule.Choose;
 
+	public Camera sceneCamera;
+	public ListViewButton defaultListViewText;
+	public TextAsset practiceContentXML;
+	public bool isDragging = false;
+
+	private BasePracticeSubmodule submoduleManager;
 	private List<StepsListEntry> practiceStepList;
+	private OrbitCamera orbitCam;
 	private int currentStepIndex = 0;
 	private bool showListViewIndex = true;
+	private bool isLerpingToNewPosition = false;
+	private bool hasClickedDownOnItem = false;
 
 	void Awake() {
 		if( s_instance == null ) {
 			s_instance = this;
+			InitializePracticeStepList();
+			InitializeAcquireListView();
 		} else {
 			Debug.LogWarning( "Destroying duplicate Practice Manager." );
 			DestroyImmediate( this.gameObject );
@@ -25,18 +40,62 @@ public class PracticeManager : MonoBehaviour {
 	void Start () {
 		ApplicationManager.s_instance.ChangeMouseMode( (int)ApplicationManager.MouseMode.Pointer );
 		UIManager.s_instance.ToggleToolsActive( true, true, true, true );
+		UIManager.s_instance.ToggleSidePanel( false, false );
+		UIManager.s_instance.nextButton.gameObject.SetActive( true );
+		submoduleManager = BasePracticeSubmodule.s_instance;
+		orbitCam = sceneCamera.GetComponent<OrbitCamera>();
+
+		currentStepIndex = -1;
+		GoToNextStep();
 	}
 
-	void Update () {
-		switch( currentStepIndex )
-		{
-		default:
-			break;
+	void Update() {
+		#region PointerInput
+		// Inupt is disbaled if camera is lerping
+		if( isLerpingToNewPosition )
+			return;
+		
+		// Finishing click
+		if ( Input.GetMouseButtonUp(0) ) {
+			// If we started and finished a click on an item, then interact with it
+			if( hasClickedDownOnItem && !isDragging && ApplicationManager.s_instance.currentMouseMode == ApplicationManager.MouseMode.Pointer ) {
+				Ray ray = sceneCamera.ScreenPointToRay(Input.mousePosition);
+				RaycastHit hit;
+				if ( Physics.Raycast(ray, out hit) ) {
+//					if ( hit.transform.gameObject.tag == "Animatable" ) {
+//						hit.transform.gameObject.GetComponent<Animator> ().SetTrigger ("Clicked");
+//					}
+					SelectableObject clickedObject = hit.transform.GetComponent<SelectableObject>();
+					if( clickedObject != null ) {
+						submoduleManager.ClickedOnObject( clickedObject );
+					}
+				}
+			} else if( !isDragging && !ApplicationManager.s_instance.userIsInteractingWithUI ) { // If we clicked away from any objects in the 3D Scene View, clear selection
+				submoduleManager.ClearSelectedObject( true );
+			}
+
+			hasClickedDownOnItem = false;
+			isDragging = false;
 		}
+
+		// Pointer clicking is disabled if user is hovering over GUI
+		if( ApplicationManager.s_instance.userIsInteractingWithUI )
+			return;
+		// Starting a click
+		if ( Input.GetMouseButtonDown(0) && ApplicationManager.s_instance.currentMouseMode == ApplicationManager.MouseMode.Pointer ){
+			Ray ray = sceneCamera.ScreenPointToRay(Input.mousePosition);
+			RaycastHit hit;
+			if ( Physics.Raycast(ray, out hit) ){
+				if ( hit.transform.gameObject.tag == "Animatable" || hit.transform.gameObject.tag == "Selectable" ) {
+					hasClickedDownOnItem = true;
+				}
+			}
+		}
+		#endregion
 	}
 
 	public void PressedHintButton() {
-		UIManager.s_instance.ToggleSidePanelOn( true );
+		UIManager.s_instance.ToggleSidePanel( true, true );
 	}
 
 	public void GoToNextStep() {
@@ -56,20 +115,67 @@ public class PracticeManager : MonoBehaviour {
 		ResetInputsAndObjects();
 		currentStepIndex = stepIndex;
 
-		switch( stepIndex )
-		{
-		default:
-			break;
-		}
+		// Get our new selected list view button, change its text white, set it interactable, and check its checkbox.
+		ListViewButton newListViewButtonSelection = UIManager.s_instance.listViewContentParent.GetChild(currentStepIndex).GetComponent<ListViewButton>();
+		newListViewButtonSelection.childText.color = Color.white;
+		newListViewButtonSelection.checkBox.isOn = true;
 
-		UIManager.s_instance.UpdateDescriptionViewText( practiceStepList[stepIndex].uiText.descriptionViewText);
+		UIManager.s_instance.UpdateDescriptionViewText( "Hint: " + practiceStepList[stepIndex].uiText.descriptionViewText );
+		ToggleListViewItemHighLight( stepIndex, true );
 	}
 
 	public void ResetInputsAndObjects() {
+		for( int i = 0; i < UIManager.s_instance.listViewContentParent.childCount; i++ )
+			ToggleListViewItemHighLight( i, false );
+		UIManager.s_instance.UpdateDescriptionViewText( "" );
+		UIManager.s_instance.ToggleSidePanel( false, false );
+
+//		//TODO Remove this if 
+//		if( submoduleManager != null )
+//			submoduleManager.ResetScene();
+	}
+	
+	private void InitializePracticeStepList() {
+		practiceStepList = new List<StepsListEntry>();
+		XmlDocument xmlFamiliarizeContent = new XmlDocument();
+		xmlFamiliarizeContent.LoadXml( practiceContentXML.text );
 		
+		string path = "";
+		switch( moduleType ) 
+		{
+		case PracticeModule.Choose:
+			path = "chooseBalance";
+			break;
+		case PracticeModule.Calibrate:
+			path = "calibrateBalance";
+			break;
+		case PracticeModule.Prepare:
+			path = "prepareBalance";
+			break;
+		case PracticeModule.Use:
+			path = "useBalance";
+			break;
+		case PracticeModule.FullCourse:
+			path = "completeCourse";
+			break;
+		}
+		
+		XmlNode parentNode = xmlFamiliarizeContent.SelectSingleNode( "/content/"+ path  );
+		
+		//TODO Include content pulled from the <popup> node.
+		int currentContext = 0;
+		int currentIndex = 1;
+		PopulateListFromNewParent( parentNode, ref currentContext, ref currentIndex );
+		Debug.Log( "Created Practice Step List." );
 	}
 
-	private void PouplateListFromNewParent( XmlNode parentNode, ref int context, ref int currentIndex ) {
+	/// <summary>
+	/// Pouplates the list from new parent node.
+	/// </summary>
+	/// <param name="parentNode">Parent node.</param>
+	/// <param name="newStepIndex">Step index stored in the Entry struct. This is used to find the corresponding scene in the PracticeModuleManager.</param>
+	/// <param name="currentIndex">Number used solely to display the a number next to the name of the step in the List View.</param>
+	private void PopulateListFromNewParent( XmlNode parentNode, ref int newStepIndex, ref int currentIndex ) {
 		XmlNodeList stepList = parentNode.ChildNodes;
 		foreach( XmlNode item in stepList ) {
 			StepsListEntry newEntry = new StepsListEntry();
@@ -82,25 +188,22 @@ public class PracticeManager : MonoBehaviour {
 			{
 			case "step":
 				newEntry.isSectionParent = false;
-				newEntry.stepIndex = context;
+				newEntry.stepIndex = newStepIndex;
 				newEntry.uiText.listViewText = shownStepIndex + item.SelectSingleNode( "listText" ).InnerText;
 				newEntry.uiText.descriptionViewText = item.SelectSingleNode( "descriptionText" ).InnerText;
 				practiceStepList.Add( newEntry );
 				currentIndex++;
+				newStepIndex++;
 				break;
 			case "section":
 				newEntry.isSectionParent = true;
-				newEntry.stepIndex = context;
+				newEntry.stepIndex = -1;
 				newEntry.uiText.listViewText = item.SelectSingleNode( "listText" ).InnerText;
 				practiceStepList.Add( newEntry );
-
-				context++;
-				PouplateListFromNewParent( item, ref context, ref currentIndex );
-				context--;
 				break;
 			case "moduleTitle":
 				newEntry.isSectionParent = true;
-				newEntry.stepIndex = 0;
+				newEntry.stepIndex = -1;
 				newEntry.uiText.listViewText = item.InnerText;
 				practiceStepList.Add( newEntry );
 				break;
@@ -114,18 +217,18 @@ public class PracticeManager : MonoBehaviour {
 		}
 	}
 
-	private void InitializePracticeListView() {
-		int acquireListCount = practiceStepList.Count;
+	private void InitializeAcquireListView() {
+		int practiceListCount = practiceStepList.Count;
 
 		// Setting the height of the list view to match the amount of buttons I will add to it.
 		RectTransform listViewVerticalLayoutGroup = UIManager.s_instance.listViewContentParent;
 		Vector2 newWidthHeight = listViewVerticalLayoutGroup.sizeDelta;
 		//newWidthHeight.x = defaultListViewButton.GetComponent<RectTransform>().sizeDelta.x;
-		newWidthHeight.y = UIManager.s_instance.defaultListViewButton.GetComponent<RectTransform>().sizeDelta.y * acquireListCount;
+		newWidthHeight.y = UIManager.s_instance.defaultListViewButton.GetComponent<RectTransform>().sizeDelta.y * practiceListCount;
 		listViewVerticalLayoutGroup.sizeDelta = newWidthHeight;
 
 		// Creating new buttons out the dictionary and stuffing them in the vertical layout group
-		for( int i = 0; i < acquireListCount; i++ ) {
+		for( int i = 0; i < practiceListCount; i++ ) {
 			// Index 0 is special because it is the title for our list view
 			if( i == 0 ) {
 				ListViewButton newListViewSectionTitle = Instantiate( UIManager.s_instance.defaultListViewModuleTitle ).GetComponent<ListViewButton>();
@@ -137,45 +240,36 @@ public class PracticeManager : MonoBehaviour {
 
 			StepsListEntry temp = practiceStepList[i];
 
-			string contextIndentation = "";
-			for( int j = 1; j < temp.stepIndex; j++ )
-				contextIndentation += ( temp.isSectionParent ) ? "\t   " : "\t";
-
 			if( temp.isSectionParent ) {
 				ListViewButton newListViewSectionTitle = Instantiate( UIManager.s_instance.defaultListViewSectionTitle ).GetComponent<ListViewButton>();
 				newListViewSectionTitle.listIndex = i;
 				newListViewSectionTitle.transform.SetParent(listViewVerticalLayoutGroup, false );
 				newListViewSectionTitle.childText.text = /*contextIndentation + contextIndentation +*/ temp.uiText.listViewText;
 			} else {
-				ListViewButton newListViewButton = Instantiate( UIManager.s_instance.defaultListViewButton ).GetComponent<ListViewButton>();
+				ListViewButton newListViewButton = Instantiate( defaultListViewText ).GetComponent<ListViewButton>();
 				newListViewButton.listIndex = i;
 				newListViewButton.transform.SetParent(listViewVerticalLayoutGroup, false );
-				newListViewButton.childText.text = contextIndentation + temp.uiText.listViewText;
-				newListViewButton.childText.color = Color.grey;
-				newListViewButton.GetComponent<Button>().interactable = false;
+				newListViewButton.childText.text = temp.uiText.listViewText;
+				newListViewButton.childText.color = new Color( 0f, 0f, 0f, 0f );
 			}
 		}
 	}
 
-	private void ToggleListViewButtonHighLight( int index, bool toggleOn ) {
+	private void ToggleListViewItemHighLight( int index, bool toggleOn ) {
+		// Section parents don't highlight. Only the items under them.
 		if( practiceStepList[index].isSectionParent )
 			return;
 
-		Button listViewButton =	UIManager.s_instance.listViewContentParent.GetChild(index).GetComponent<Button>();
+		Image listViewTextImage = UIManager.s_instance.listViewContentParent.GetChild(index).GetComponent<Image>();
 
-		if( listViewButton == null ) {
+		if( listViewTextImage == null ) {
 			//TODO This error is called when the first item is clicked because it is trying to toggleOff a selected object that doesn't exist. We're going to set the first click and selection anyways so don't mind.
-			Debug.LogError( "Couldn't find button with key: "+ index );
+			Debug.LogError( "Couldn't find item with index: "+ index );
 			return;
 		}
 
-		ColorBlock tempBlock = listViewButton.colors;
-		if( toggleOn ) {
-			tempBlock.normalColor = UIManager.s_instance.listViewButtonHighlightColor;
-		} else {
-			tempBlock.normalColor = UIManager.s_instance.listViewButtonNormalColor;
-		}
-		listViewButton.colors = tempBlock;
+		// Toggle highlight color if we are toggling on.
+		listViewTextImage.color = ( toggleOn ) ? UIManager.s_instance.listViewButtonHighlightColor : UIManager.s_instance.listViewButtonNormalColor;
 
 		if( toggleOn ) { 
 			if( index > 3 ) {	
@@ -186,5 +280,12 @@ public class PracticeManager : MonoBehaviour {
 
 			UIManager.s_instance.UpdateListViewHorizontalScrollbarValue( 0f );
 		}
+	}
+
+	/// <summary>
+	/// Called in the occurence that the "Next" UI button is clicked.
+	/// </summary>
+	public void ClickedNextButton() {
+		GoToNextStep();
 	}
 }

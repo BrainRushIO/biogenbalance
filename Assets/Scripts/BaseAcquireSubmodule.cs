@@ -1,23 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 
-public class BaseAcquireSubmodule : MonoBehaviour {
+public abstract class BaseAcquireSubmodule : MonoBehaviour {
 	public static BaseAcquireSubmodule s_instance;
 
 	public BaseAcquireModuleStep[] moduleSteps;
 
-	protected  Dictionary<string, bool> inputs;
+	protected  bool[] inputs;
 
 	void Awake() {
 		if( s_instance == null ) {
 			s_instance = this;
+			Init();
 		} else {
 			Debug.LogWarning( "Deleting duplicate BaseAcquireModule named " + gameObject.name );
 		}
 	}
 
-	protected virtual void Start () {
+	protected virtual void Init () {
 		moduleSteps = GetComponentsInChildren<BaseAcquireModuleStep>();
 
 		if( moduleSteps == null || moduleSteps.Length == 0) {
@@ -25,13 +25,23 @@ public class BaseAcquireSubmodule : MonoBehaviour {
 		}
 	}
 
-	public virtual void UpdateSceneContents( int stepIndex ) {
-	}
+	public abstract void UpdateSceneContents( int stepIndex );
 
 	/// <summary>
 	/// Resets the scene objects to their default position.
 	/// </summary>
-	public virtual void ResetScene() {
-		
+	public abstract void ResetScene();
+
+	public Transform GetStepCameraTransform( int stepIndex ) {
+		if( moduleSteps == null ) {
+			Debug.LogError( "No list of module steps exists." );
+			return null;
+		}
+		if( stepIndex >= moduleSteps.Length ) {
+			Debug.LogError( "Provided index out of range." );
+			return null;
+		}
+
+		return moduleSteps[stepIndex].cameraPosition;
 	}
 }

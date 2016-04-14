@@ -9,14 +9,6 @@ public class AcquireChooseModuleStep : BaseAcquireModuleStep {
 	}
 
 	/// <summary>
-	/// Returns the dictionary containing the bools for toggling on and off objects in the scene.
-	/// </summary>
-	/// <returns>The step init data.</returns>
-	public override Dictionary<string, bool> GetStepInitData() {
-		return new Dictionary<string, bool>();
-	}
-
-	/// <summary>
 	/// Executes the step logic. This is called from the Submodule Manager. Any logic that can't be expressed via simple bool toggles goes here. The index is the sibling index of this object.
 	/// </summary>
 	public override void ExecuteStepLogic() {
@@ -25,8 +17,10 @@ public class AcquireChooseModuleStep : BaseAcquireModuleStep {
 		switch( index )
 		{
 		default:
-			Debug.LogError( "Cannot execute step logic for index "+ index +". Index out of range." );
+//			Debug.Log( "No step logic for this index." );
 			break;
 		}
+
+//		Debug.LogError( "Cannot execute step logic for index "+ index +". Index out of range." );
 	}
 }

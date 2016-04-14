@@ -8,10 +8,10 @@ public class NextButton : MonoBehaviour {
 			switch( ApplicationManager.s_instance.currentApplicationMode )
 			{
 			case ApplicationManager.ApplicationMode.Acquire:
-				AcquireManager.s_instance.GoToNextStep();
+				AcquireManager.s_instance.ClickedNextButton();
 				break;
 			case ApplicationManager.ApplicationMode.Practice:
-				PracticeManager.s_instance.GoToNextStep();
+				PracticeManager.s_instance.ClickedNextButton();
 				break;
 			}
 		}

@@ -54,11 +54,12 @@ public class FamiliarizeManager : MonoBehaviour {
 	}
 
 	void Start() {
-		ApplicationManager.s_instance.currentMouseMode = ApplicationManager.MouseMode.Pointer;
+		ApplicationManager.s_instance.ChangeMouseMode( 0 );
 		UIManager.s_instance.ToggleToolsActive( false, false, false, false );
 		orbitCam = sceneCamera.GetComponent<OrbitCamera>();
 		UIManager.s_instance.UpdateDescriptionViewText( defaultDescViewText );
 		UIManager.s_instance.nextButton.gameObject.SetActive( false );
+		UIManager.s_instance.ToggleSidePanel( true, false );
 	}
 
 	void Update () {

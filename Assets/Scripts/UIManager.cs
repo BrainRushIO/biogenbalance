@@ -154,14 +154,6 @@ public class UIManager : MonoBehaviour {
 		// Remove children
 		listViewContentParent.DetachChildren();
 	}
-	
-	/// <summary>
-	/// Toggles the side panel on.
-	/// </summary>
-	/// <param name="toggleOn">If set to <c>true</c> toggle Side Panel on.</param>
-	public void ToggleSidePanelOn( bool toggleOn ) {
-		
-	}
 
 	public void UpdateDescriptionViewText( string newText ) {
 		if( newText != null ) {
@@ -182,5 +174,36 @@ public class UIManager : MonoBehaviour {
 
 	public void UpdateDescriptionViewScrollbarValue( float percentage ) {
 		descriptionViewScrollbar.value = 1f - percentage;
+	}
+
+	/// <summary>
+	/// Toggles the side panel to appear or disappear.
+	/// </summary>
+	/// <param name="toggleOn">If set to <c>true</c> toggle on.</param>
+	public void ToggleSidePanel( bool toggleOn, bool lerpTransition ) {
+		CanvasGroup cG = sidePanel.GetComponent<CanvasGroup>();
+		if( lerpTransition ) 
+			StartCoroutine( LerpSidePanelAlpha( toggleOn, 0.15f, cG ) );
+		else
+			cG.alpha = ( toggleOn ) ? 1f : 0f;
+		
+		cG.interactable = toggleOn;
+		cG.blocksRaycasts = toggleOn;
+
+		sidePanel.GetComponent<UIBoundsTrigger>().active = toggleOn;
+	}
+
+	private IEnumerator LerpSidePanelAlpha( bool zeroToOne, float duration, CanvasGroup cG ) {
+		float startVal = ( zeroToOne ) ? 0f : 1f;
+		float endVal = ( zeroToOne ) ? 1f : 0f;
+		float lerpTime = 0f;
+
+		while( lerpTime < duration ) {
+			cG.alpha = Mathf.Lerp( startVal, endVal, lerpTime/duration );
+
+			yield return null;
+			lerpTime += Time.deltaTime;
+		}
+		cG.alpha = endVal;
 	}
 }
