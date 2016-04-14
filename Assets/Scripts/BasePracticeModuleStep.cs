@@ -3,6 +3,7 @@ using System.Collections;
 
 public abstract class BasePracticeModuleStep : MonoBehaviour {
 	protected bool[] objectToggles;
+	protected bool[] inputs;
 
 	protected virtual void Start() {
 	}
