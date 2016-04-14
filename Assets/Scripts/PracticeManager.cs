@@ -13,12 +13,18 @@ public class PracticeManager : MonoBehaviour {
 	/// </summary>
 	public PracticeModule moduleType = PracticeModule.Choose;
 
+	public Camera sceneCamera;
 	public ListViewButton defaultListViewText;
 	public TextAsset practiceContentXML;
 
 	private List<StepsListEntry> practiceStepList;
+	private OrbitCamera orbitCam;
+	private SelectableObject.SelectableObjectType selectedObject;
 	private int currentStepIndex = 0;
 	private bool showListViewIndex = true;
+	private bool isLerpingToNewPosition = false;
+	private bool hasClickedDownOnItem = false;
+	private bool isDragging = false;
 
 	void Awake() {
 		if( s_instance == null ) {
@@ -36,6 +42,55 @@ public class PracticeManager : MonoBehaviour {
 		UIManager.s_instance.ToggleToolsActive( true, true, true, true );
 		UIManager.s_instance.ToggleSidePanel( false, false );
 		UIManager.s_instance.nextButton.gameObject.SetActive( true );
+		orbitCam = sceneCamera.GetComponent<OrbitCamera>();
+		selectedObject = SelectableObject.SelectableObjectType.None;
+
+		currentStepIndex = -1;
+		GoToNextStep();
+	}
+
+	void Update() {
+		#region PointerInput
+		// Inupt is disbaled if camera is lerping
+		if( isLerpingToNewPosition )
+			return;
+		
+		// Finishing click
+		if ( Input.GetMouseButtonUp(0) ) {
+			// If we started and finished a click on an item, then interact with it
+			if( hasClickedDownOnItem && !isDragging ) {
+				Ray ray = sceneCamera.ScreenPointToRay(Input.mousePosition);
+				RaycastHit hit;
+				if ( Physics.Raycast(ray, out hit) ) {
+					if ( hit.transform.gameObject.tag == "Animatable" ) {
+						hit.transform.gameObject.GetComponent<Animator> ().SetTrigger ("Clicked");
+					}
+					SelectableObject clickedObject = hit.transform.GetComponent<SelectableObject>();
+					if( clickedObject != null ) {
+						SelectObject( clickedObject );
+					}
+				}
+			} else if( !isDragging && !ApplicationManager.s_instance.userIsInteractingWithUI ) { // If we clicked away from any objects in the 3D Scene View, clear selection
+				ClearSelectedObject( true );
+			}
+
+			hasClickedDownOnItem = false;
+			isDragging = false;
+		}
+		// Pointer clicking is disabled if user is hovering over GUI
+		if( ApplicationManager.s_instance.userIsInteractingWithUI )
+			return;
+		// Starting a click
+		if ( Input.GetMouseButtonDown(0) ){
+			Ray ray = sceneCamera.ScreenPointToRay(Input.mousePosition);
+			RaycastHit hit;
+			if ( Physics.Raycast(ray, out hit) ){
+				if ( hit.transform.gameObject.tag == "Animatable" || hit.transform.gameObject.tag == "Selectable" ) {
+					hasClickedDownOnItem = true;
+				}
+			}
+		}
+		#endregion
 	}
 
 	public void PressedHintButton() {
@@ -232,5 +287,17 @@ public class PracticeManager : MonoBehaviour {
 	/// </summary>
 	public void ClickedNextButton() {
 		GoToNextStep();
+	}
+
+	private void SelectObject( SelectableObject newSelection ) {
+		ClearSelectedObject( false );
+	}
+
+	private void ClearSelectedObject( bool slerpToDefaultPos ) {
+		if( selectedObject == SelectableObject.SelectableObjectType.None )
+			return;
+
+
+		selectedObject = SelectableObject.SelectableObjectType.None;
 	}
 }
