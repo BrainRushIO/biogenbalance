@@ -95,7 +95,6 @@ public class PracticeManager : MonoBehaviour {
 	}
 
 	public void PressedHintButton() {
-		Debug.LogWarning("Hint");
 		UIManager.s_instance.ToggleSidePanel( true, true );
 	}
 
