@@ -16,6 +16,7 @@ public class PracticeManager : MonoBehaviour {
 	public Camera sceneCamera;
 	public ListViewButton defaultListViewText;
 	public TextAsset practiceContentXML;
+	public bool isDragging = false;
 
 	private BasePracticeSubmodule submoduleManager;
 	private List<StepsListEntry> practiceStepList;
@@ -24,7 +25,6 @@ public class PracticeManager : MonoBehaviour {
 	private bool showListViewIndex = true;
 	private bool isLerpingToNewPosition = false;
 	private bool hasClickedDownOnItem = false;
-	private bool isDragging = false;
 
 	void Awake() {
 		if( s_instance == null ) {
@@ -58,7 +58,7 @@ public class PracticeManager : MonoBehaviour {
 		// Finishing click
 		if ( Input.GetMouseButtonUp(0) ) {
 			// If we started and finished a click on an item, then interact with it
-			if( hasClickedDownOnItem && !isDragging ) {
+			if( hasClickedDownOnItem && !isDragging && ApplicationManager.s_instance.currentMouseMode == ApplicationManager.MouseMode.Pointer ) {
 				Ray ray = sceneCamera.ScreenPointToRay(Input.mousePosition);
 				RaycastHit hit;
 				if ( Physics.Raycast(ray, out hit) ) {
@@ -71,18 +71,18 @@ public class PracticeManager : MonoBehaviour {
 					}
 				}
 			} else if( !isDragging && !ApplicationManager.s_instance.userIsInteractingWithUI ) { // If we clicked away from any objects in the 3D Scene View, clear selection
-				
 				submoduleManager.ClearSelectedObject( true );
 			}
 
 			hasClickedDownOnItem = false;
 			isDragging = false;
 		}
+
 		// Pointer clicking is disabled if user is hovering over GUI
 		if( ApplicationManager.s_instance.userIsInteractingWithUI )
 			return;
 		// Starting a click
-		if ( Input.GetMouseButtonDown(0) ){
+		if ( Input.GetMouseButtonDown(0) && ApplicationManager.s_instance.currentMouseMode == ApplicationManager.MouseMode.Pointer ){
 			Ray ray = sceneCamera.ScreenPointToRay(Input.mousePosition);
 			RaycastHit hit;
 			if ( Physics.Raycast(ray, out hit) ){

@@ -43,7 +43,6 @@ public class UIManager : MonoBehaviour {
 	public Texture2D pointerCursor,
 				rotateCursor,
 				panCursor,
-				forcepsCursor,
 				selectableItemCursor,
 				holdingItemCursor,
 				placeItemCursor;
@@ -111,16 +110,13 @@ public class UIManager : MonoBehaviour {
 		switch (ApplicationManager.s_instance.currentMouseMode) 
 		{
 		case ApplicationManager.MouseMode.Pointer:
-			Cursor.SetCursor( null, Vector2.zero, CursorMode.ForceSoftware );
+			Cursor.SetCursor( pointerCursor, Vector2.zero, CursorMode.ForceSoftware );
 			break;
 		case ApplicationManager.MouseMode.Rotate:
 			Cursor.SetCursor( rotateCursor, Vector2.zero, CursorMode.ForceSoftware );
 			break;
 		case ApplicationManager.MouseMode.Pan:
 			Cursor.SetCursor( panCursor, Vector2.zero, CursorMode.ForceSoftware );
-			break;
-		case ApplicationManager.MouseMode.Forceps:
-			Cursor.SetCursor( forcepsCursor, Vector2.zero, CursorMode.ForceSoftware );
 			break;
 		}
 	}
