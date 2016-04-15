@@ -139,17 +139,19 @@ public class PracticeManager : MonoBehaviour {
 		submoduleManager.UpdateSceneContents( practiceStepList[currentStepIndex].stepIndex );
 
 		// Check if next step requires lerping to using pivot system
-		if( submoduleManager.moduleSteps[practiceStepList[currentStepIndex].stepIndex].GetPivotPosition() != null ) {
-			currentCameraStartPos = submoduleManager.moduleSteps[practiceStepList[currentStepIndex].stepIndex].GetCameraPosition().position;
-			currentCameraPivot = submoduleManager.moduleSteps[practiceStepList[currentStepIndex].stepIndex].GetPivotPosition().position;
+		if( submoduleManager.moduleSteps.Length > 0 ) {
+			if( submoduleManager.moduleSteps[practiceStepList[currentStepIndex].stepIndex].GetPivotPosition() != null ) {
+				currentCameraStartPos = submoduleManager.moduleSteps[practiceStepList[currentStepIndex].stepIndex].GetCameraPosition().position;
+				currentCameraPivot = submoduleManager.moduleSteps[practiceStepList[currentStepIndex].stepIndex].GetPivotPosition().position;
 
-			StartCoroutine( LerpCameraLookAt() );
-			StartCoroutine( SlerpToNewCamPos() );
-		}
-		// If we have a camera position for a transform then use the transform system
-		else if ( submoduleManager.moduleSteps[practiceStepList[currentStepIndex].stepIndex].GetCameraPosition() != null ) {
-			// TODO Copy new lerp coroutine from Acquire manager
-			//yield return LerpToNewCamPos( submoduleManager.GetStepCameraTransform(acquireStepList[currentStepIndex].stepIndex ) );
+				StartCoroutine( LerpCameraLookAt() );
+				StartCoroutine( SlerpToNewCamPos() );
+			}
+			// If we have a camera position for a transform then use the transform system
+			else if ( submoduleManager.moduleSteps[practiceStepList[currentStepIndex].stepIndex].GetCameraPosition() != null ) {
+				// TODO Copy new lerp coroutine from Acquire manager
+				//yield return LerpToNewCamPos( submoduleManager.GetStepCameraTransform(acquireStepList[currentStepIndex].stepIndex ) );
+			}
 		}
 	}
 
