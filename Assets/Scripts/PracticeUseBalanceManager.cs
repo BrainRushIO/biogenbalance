@@ -18,10 +18,20 @@ public class PracticeUseBalanceManager : BasePracticeSubmodule {
 		// Set the rest to false
 		for( int i = 1; i < toggles.Length; i++ )
 			toggles[i] = false;
+
+		ReadoutDisplay readOutDisplay = ReadoutDisplay.s_instance;
+		readOutDisplay.balanceOn = true;
+		readOutDisplay.balanceCalibrated = true;
+		readOutDisplay.ToggleDisplay( true, true, false );
+		readOutDisplay.readoutNumberText.text = "0.0000";
 	}
 
 	void Update() {
 		CheckInputs();
+
+		if( ReadoutDisplay.s_instance.hasStableReading && !toggles[(int)PUToggles.ReadingStabilized] ) {
+			toggles[(int)PUToggles.ReadingStabilized] = true;
+		}
 	}
 
 	public override void UpdateSceneContents( int stepIndex ) {
@@ -36,6 +46,9 @@ public class PracticeUseBalanceManager : BasePracticeSubmodule {
 	}
 
 	public override void ClearSelectedObject( bool slerpToDefaultPos ) {
+		// HACK remove this
+		return;
+
 		if( selectedObject == SelectableObject.SelectableObjectType.None )
 			return;
 
@@ -53,6 +66,7 @@ public class PracticeUseBalanceManager : BasePracticeSubmodule {
 			if( toggles[(int)PUToggles.WeightContainerInside] ) {
 				ReadoutDisplay.s_instance.ZeroOut();
 				toggles[(int)PUToggles.BalanceTared] = true;
+				SoundtrackManager.s_instance.PlayAudioSource( SoundtrackManager.s_instance.buttonBeep );
 			}
 			break;
 
@@ -61,7 +75,7 @@ public class PracticeUseBalanceManager : BasePracticeSubmodule {
 				return;
 			// If we aren't holding an object when we click the weight, make it our selected object.
 			if( PracticeCalibrateBalanceManager.s_instance.selectedObject == SelectableObject.SelectableObjectType.None ) {
-				PracticeCalibrateBalanceManager.s_instance.selectedObject = SelectableObject.SelectableObjectType.CalibrationWeight;
+				PracticeCalibrateBalanceManager.s_instance.selectedObject = SelectableObject.SelectableObjectType.RiceContainer;
 				riceContainerOutside.GetComponent<Renderer>().materials[1].SetFloat( "_Thickness", 3.5f );
 			}
 			break;
@@ -75,7 +89,9 @@ public class PracticeUseBalanceManager : BasePracticeSubmodule {
 			//			} else if ( leftGlassDoor.GetCurrentAnimatorStateInfo(0).fullPathHash == Animator.StringToHash("Base Layer.SMB_RightGlass_Closed")/*rightDoorClosedState*/ ) {
 			//				toggles[(int)PCToggles.RDoorOpen] = true;
 			//			}
-			toggles[(int)PUToggles.RDoorOpen] = !toggles[(int)PUToggles.RDoorOpen];
+			bool newDoorOpenValue = !toggles[(int)PUToggles.RDoorOpen];
+			toggles[(int)PUToggles.RDoorOpen] = newDoorOpenValue;
+			ReadoutDisplay.s_instance.doorsAreOpen = newDoorOpenValue;
 			rightGlassDoor.GetComponent<Animator>().SetTrigger( "Clicked" );
 			SoundtrackManager.s_instance.PlayAudioSource( SoundtrackManager.s_instance.slidingDoor );
 			break;
@@ -99,6 +115,8 @@ public class PracticeUseBalanceManager : BasePracticeSubmodule {
 				toggles[(int)PUToggles.WeighContainerOutside] = false;
 				weighContainerInside.SetActive( true );
 				toggles[(int)PUToggles.WeightContainerInside] = true;
+				selectedObject = SelectableObject.SelectableObjectType.None;
+				ReadoutDisplay.s_instance.readoutNumberText.text = "9.7306";
 			}
 			break;
 		}
@@ -120,6 +138,7 @@ public class PracticeUseBalanceManager : BasePracticeSubmodule {
 		riceContainerInside.SetActive( true );
 		riceContainerInside.GetComponent<Animator>().SetTrigger( "Activate" );
 		SoundtrackManager.s_instance.PlayAudioSource( SoundtrackManager.s_instance.rice2 );
+		ReadoutDisplay.s_instance.WeighObject( 50.0244f );
 
 		float startTime = Time.time;
 		float lerpDuration = 2f;
@@ -132,7 +151,6 @@ public class PracticeUseBalanceManager : BasePracticeSubmodule {
 		riceContainerInside.SetActive( false );
 		selectedObject = SelectableObject.SelectableObjectType.None;
 		riceContainerOutside.SetActive( true );
-
 		Debug.Log( "Ended Pouring Rice." );
 	}
 }

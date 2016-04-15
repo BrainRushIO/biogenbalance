@@ -7,10 +7,12 @@ public class ReadoutDisplay : MonoBehaviour {
 
 	public Text readoutPlusText, readoutNumberText, readoutUnitsText;
 
-	private bool calibrationCoroutineStarted = false;
-	private bool turningOnCoroutineStarted = false;
-	private bool balanceOn = false;
-	private bool balanceCalibrated = false;
+	public bool calibrationCoroutineStarted = false;
+	public bool turningOnCoroutineStarted = false;
+	public bool balanceOn = false;
+	public bool balanceCalibrated = false;
+	public bool hasStableReading = false;
+	public bool doorsAreOpen = false;
 
 	void Awake() {
 		if( s_instance == null ) {
@@ -94,5 +96,35 @@ public class ReadoutDisplay : MonoBehaviour {
 
 	public void ZeroOut() {
 		readoutNumberText.text = "0.0000";
+	}
+
+	public void WeighObject( float weight ) {
+		StartCoroutine( DisplayGibberishToNumber( weight ) );
+	}
+
+	private IEnumerator DisplayGibberishToNumber( float weight ) {
+		while( doorsAreOpen ) {
+			readoutNumberText.text = Random.Range( 0f, weight+30f ).ToString("F4");
+			yield return new WaitForSeconds( 0.25f );
+		}
+
+		float startTime = Time.time;
+		float lerpTime1 = 3f;
+		float lerpTime2 = 2f;
+		float currNumber = weight;
+
+		while( lerpTime1 >= Time.time-startTime ) {
+			currNumber = Mathf.Lerp( 0f, weight+Random.Range( 1f, 3f), (Time.time-startTime)/lerpTime1 );
+			readoutNumberText.text = currNumber.ToString("F4");
+			yield return new WaitForSeconds( 0.25f );
+		}
+		startTime = Time.time;
+		while( lerpTime2 >= Time.time-startTime ) {
+			;
+			readoutNumberText.text = Mathf.Lerp( currNumber, weight, (Time.time-startTime)/lerpTime1 ).ToString("F4");
+			yield return new WaitForSeconds( 0.3f );
+		}
+		readoutNumberText.text = weight.ToString("F4");
+		hasStableReading = true;
 	}
 }

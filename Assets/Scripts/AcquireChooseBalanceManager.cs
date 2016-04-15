@@ -12,6 +12,12 @@ public class AcquireChooseBalanceManager : BaseAcquireSubmodule {
 
 		// Have steps execute specific step logic if they have it
 		moduleSteps[stepIndex].ExecuteStepLogic();
+
+		switch ( stepIndex ) {
+		case 5:
+			
+			break;
+		}
 	}
 
 	public override void ResetScene() {
