@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class AcquireCalibrateBalanceManager : BaseAcquireSubmodule {
 	public Animator rightGlass;
-	public Text plusTextObject, readoutTextObject, unitTextObject;
 	protected override void Init() {
 		base.Init();
 	}
@@ -17,36 +16,20 @@ public class AcquireCalibrateBalanceManager : BaseAcquireSubmodule {
 
 		switch (stepIndex) {
 
-		case 0:
-			StartCoroutine ( TurnOnBalance() );
+		case 0: 	
+			ReadoutDisplay.s_instance.TurnBalanceOn ();
 			break;
 
 		case 2:
-			
+			ReadoutDisplay.s_instance.balanceOn = true;
 			ReadoutDisplay.s_instance.PlayCalibrationModeAnimation ();
-			StartCoroutine (CalibrationMode ());
+			break;
+
+		case 4:
+			rightGlass.GetComponent<Animator> ().SetTrigger ("Clicked");
+			SoundtrackManager.s_instance.PlayAudioSource (SoundtrackManager.s_instance.slidingDoor);
 			break;
 		}
-	}
-
-	private IEnumerator TurnOnBalance(){
-		SoundtrackManager.s_instance.PlayAudioSource (SoundtrackManager.s_instance.buttonBeep);
-		readoutTextObject.enabled = true;
-		readoutTextObject.text = "888.8888";
-		plusTextObject.enabled = true;
-		unitTextObject.enabled = true;
-		yield return new WaitForSeconds (2f);
-		readoutTextObject.enabled = false;
-		unitTextObject.enabled = false;
-		yield return new WaitForSeconds (2f);
-		readoutTextObject.enabled = true;
-		readoutTextObject.text = "0.0000";
-		unitTextObject.enabled = true;
-
-	}
-	private IEnumerator CalibrationMode(){
-		SoundtrackManager.s_instance.PlayAudioSource (SoundtrackManager.s_instance.buttonBeep);
-
 	}
 
 	public override void ResetScene() {
