@@ -63,13 +63,6 @@ public class PracticePrepareBalanceManager : BasePracticeSubmodule {
 	}
 
 	public override void ClickedOnObject( SelectableObject clickedOnObject ) {
-		SelectableObject.SelectableObjectType clickedObjectType = clickedOnObject.objectType;
-
-		switch( clickedObjectType ) 
-		{
-		case SelectableObject.SelectableObjectType.LevelingScrews:
-			break;
-		}
 	}
 
 	public void ClickedOnPositioningButton() {

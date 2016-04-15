@@ -9,8 +9,6 @@ public abstract class BasePracticeModuleStep : MonoBehaviour {
 	protected bool[] objectToggles;
 	protected bool[] inputs;
 
-	protected virtual void Start() {
-	}
 
 	/// <summary>
 	/// Returns the dictionary containing the bools for toggling on and off objects in the scene.

@@ -36,7 +36,7 @@ public abstract class BasePracticeSubmodule : MonoBehaviour {
 	/// <summary>
 	/// Resets the scene objects to their default position.
 	/// </summary>
-	public abstract void ResetScene();
+	public virtual void ResetScene() {}
 
 	protected virtual void SelectObject( SelectableObject newSelection ) {
 		ClearSelectedObject( false );

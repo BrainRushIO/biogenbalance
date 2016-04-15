@@ -20,7 +20,7 @@ public class PracticeManager : MonoBehaviour {
 	public TextAsset practiceContentXML;
 	public bool isDragging = false;
 
-	private BasePracticeSubmodule submoduleManager;
+	public BasePracticeSubmodule submoduleManager;
 	private List<StepsListEntry> practiceStepList;
 	private Vector3 currentCameraPivot, currentCameraStartPos;
 	private bool isCameraRotLerping = false;

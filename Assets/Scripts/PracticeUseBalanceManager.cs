@@ -39,8 +39,6 @@ public class PracticeUseBalanceManager : BasePracticeSubmodule {
 			break;
 		case SelectableObject.SelectableObjectType.TareButton:
 			break;
-		case SelectableObject.SelectableObjectType.LevelingScrews:
-			break;
 		case SelectableObject.SelectableObjectType.OnButton:
 			break;
 		case SelectableObject.SelectableObjectType.RiceContainer:
@@ -52,5 +50,9 @@ public class PracticeUseBalanceManager : BasePracticeSubmodule {
 		case SelectableObject.SelectableObjectType.WeighPan:
 			break;
 		}
+	}
+
+	public void ToggleBalanceCalibrationMode( bool toggle ) {
+		//TODO
 	}
 }

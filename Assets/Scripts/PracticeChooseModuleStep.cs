@@ -3,10 +3,6 @@ using System.Collections;
 
 public class PracticeChooseModuleStep : BasePracticeModuleStep {
 
-	protected override void Start () {
-		base.Start();
-	}
-
 	/// <summary>
 	/// Executes the step logic. This is called from the Submodule Manager. Any logic that can't be expressed via simple bool toggles goes here. The index is the sibling index of this object.
 	/// </summary>
