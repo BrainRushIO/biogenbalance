@@ -76,6 +76,7 @@ public class PracticeCalibrateModuleStep : BasePracticeModuleStep {
 		case 6:
 			break;
 		case 7:
+			
 			break;
 		default:
 			Debug.LogWarning( "No step logic for this index." );

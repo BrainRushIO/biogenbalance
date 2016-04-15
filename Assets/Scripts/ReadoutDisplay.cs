@@ -21,12 +21,10 @@ public class ReadoutDisplay : MonoBehaviour {
 		}
 	}
 
-	public void ToggleDisplay( bool toggleOn ) {
-		readoutNumberText.enabled = toggleOn;
-		readoutUnitsText.enabled = toggleOn;
-
-		if( !toggleOn )
-			readoutPlusText.enabled = false;
+	public void ToggleDisplay( bool toggleNumbers, bool toggleUnits, bool togglePlus ) {
+		readoutNumberText.enabled = toggleNumbers;
+		readoutUnitsText.enabled = toggleUnits;
+		readoutPlusText.enabled = togglePlus;
 	}
 
 	public void TurnBalanceOn() {
@@ -60,7 +58,7 @@ public class ReadoutDisplay : MonoBehaviour {
 	}
 
 	public void PlayCalibrationModeAnimation() {
-		if( balanceCalibrated )
+		if( balanceCalibrated || !balanceOn )
 			return;
 
 		if( !calibrationCoroutineStarted && !turningOnCoroutineStarted )

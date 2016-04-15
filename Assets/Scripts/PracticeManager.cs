@@ -62,16 +62,14 @@ public class PracticeManager : MonoBehaviour {
 		// Finishing click
 		if ( Input.GetMouseButtonUp(0) ) {
 			// If we started and finished a click on an item, then interact with it
-			if( hasClickedDownOnItem && !isDragging && ApplicationManager.s_instance.currentMouseMode == ApplicationManager.MouseMode.Pointer ) {
+			if( hasClickedDownOnItem && !isDragging && ( ApplicationManager.s_instance.currentMouseMode == ApplicationManager.MouseMode.Pointer || ApplicationManager.s_instance.currentMouseMode == ApplicationManager.MouseMode.Forceps ) ) {
 				Ray ray = sceneCamera.ScreenPointToRay(Input.mousePosition);
 				RaycastHit hit;
 				if ( Physics.Raycast(ray, out hit) ) {
-//					if ( hit.transform.gameObject.tag == "Animatable" ) {
-//						hit.transform.gameObject.GetComponent<Animator> ().SetTrigger ("Clicked");
-//					}
 					SelectableObject clickedObject = hit.transform.GetComponent<SelectableObject>();
 					if( clickedObject != null ) {
-						submoduleManager.ClickedOnObject( clickedObject );
+						bool usedForceps = ( ApplicationManager.s_instance.currentMouseMode == ApplicationManager.MouseMode.Forceps ) ? true : false;
+						submoduleManager.ClickedOnObject( clickedObject, usedForceps );
 					}
 				}
 			} else if( !isDragging && !ApplicationManager.s_instance.userIsInteractingWithUI ) { // If we clicked away from any objects in the 3D Scene View, clear selection
@@ -86,7 +84,7 @@ public class PracticeManager : MonoBehaviour {
 		if( ApplicationManager.s_instance.userIsInteractingWithUI )
 			return;
 		// Starting a click
-		if ( Input.GetMouseButtonDown(0) && ApplicationManager.s_instance.currentMouseMode == ApplicationManager.MouseMode.Pointer ){
+		if ( Input.GetMouseButtonDown(0) && ( ApplicationManager.s_instance.currentMouseMode == ApplicationManager.MouseMode.Pointer || ApplicationManager.s_instance.currentMouseMode == ApplicationManager.MouseMode.Forceps ) ){
 			Ray ray = sceneCamera.ScreenPointToRay(Input.mousePosition);
 			RaycastHit hit;
 			if ( Physics.Raycast(ray, out hit) ){
@@ -367,5 +365,13 @@ public class PracticeManager : MonoBehaviour {
 	/// </summary>
 	public void ClickedNextButton() {
 		GoToNextStep();
+	}
+
+	public void StartNewCameraSlerp( Transform newPivot, Transform newCamPos ) {
+		currentCameraPivot = newPivot.position;
+		currentCameraStartPos = newCamPos.position;
+
+		StartCoroutine( LerpCameraLookAt() );
+		StartCoroutine( SlerpToNewCamPos() );
 	}
 }
