@@ -116,10 +116,10 @@ public class PracticePrepareBalanceManager : BasePracticeSubmodule {
 	void NormalizeBubblePos() {
 		Vector2 bubblePos = new Vector2(bubble.localPosition.x, bubble.localPosition.y );
 
-		bubblePos.x = Mathf.Clamp( bubble.localPosition.x, -bubbleMaxRadius, bubbleMaxRadius );
-		bubblePos.y = Mathf.Clamp( bubble.localPosition.y, -bubbleMaxRadius, bubbleMaxRadius );
+		//bubblePos.x = Mathf.Clamp( bubble.localPosition.x, -bubbleMaxRadius, bubbleMaxRadius );
+		//bubblePos.y = Mathf.Clamp( bubble.localPosition.y, -bubbleMaxRadius, bubbleMaxRadius );
 		Vector2 tempPos = new Vector2();
-		tempPos = Vector2.ClampMagnitude (bubblePos, 32);
+		tempPos = Vector2.ClampMagnitude (bubblePos, bubbleMaxRadius);
 
 		Vector3 newBubblePos = new Vector3( tempPos.x , tempPos.y , bubble.localPosition.z );
 
