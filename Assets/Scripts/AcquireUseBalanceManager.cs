@@ -18,31 +18,38 @@ public class AcquireUseBalanceManager : BaseAcquireSubmodule {
 		switch (stepIndex) {
 		case 0:
 			rightGlass.GetComponent<Animator> ().SetTrigger ("Clicked");
+			SoundtrackManager.s_instance.PlayAudioSource (SoundtrackManager.s_instance.slidingDoor);
 			break;
 		case 1:
 			insideWeighContainer.SetActive (true);
 			rightGlass.GetComponent<Animator> ().SetTrigger ("Clicked");
+			SoundtrackManager.s_instance.PlayAudioSource (SoundtrackManager.s_instance.slidingDoor);
 			outsideWeighContainer.SetActive (false);
+			readoutText.text = "9.7306";
 			break;
 		case 2:
 			readoutText.text = "0.0000";
+			SoundtrackManager.s_instance.PlayAudioSource (SoundtrackManager.s_instance.buttonBeep);
 			break;
 		case 3:
 			rightGlass.GetComponent<Animator> ().SetTrigger ("Clicked");
+			SoundtrackManager.s_instance.PlayAudioSource (SoundtrackManager.s_instance.slidingDoor);
 			break;
 		case 4:
 			insideRiceContainer.SetActive (true);
 			rice.SetActive (true);
+			SoundtrackManager.s_instance.PlayAudioSource (SoundtrackManager.s_instance.rice2);
 			rice.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0, 100f);
 			outsideRiceContainer.SetActive (false);
+			readoutText.text = "50.2452";
 			break;
 		case 5:
 			insideRiceContainer.SetActive (false);
 			rightGlass.GetComponent<Animator> ().SetTrigger ("Clicked");
+			SoundtrackManager.s_instance.PlayAudioSource (SoundtrackManager.s_instance.slidingDoor);
 			outsideRiceContainer.SetActive (true);
 			break;
 		case 6:
-			readoutText.text = "50.2452";
 			break;
 
 		}
