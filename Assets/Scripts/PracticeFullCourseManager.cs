@@ -3,21 +3,41 @@ using System.Collections;
 
 public class PracticeFullCourseManager : BasePracticeSubmodule {
 
+	// Prepare
+	public RectTransform bubble;
+
+	private float currentBubbleX, currentBubbleY;
+	private float bubbleWinThreshold = 2.5f;
+	private float bubbleMaxRadius = 32f;
+
+	// Calibrate
 	public GameObject weightOutside, weightInside;
 
+	// Use
 	public GameObject weighContainerOutside, weighContainerInside, riceContainerOutside, riceContainerInside;
 	public SkinnedMeshRenderer riceSkinnedMeshRenderer;
 	public Animator leftGlassDoor, rightGlassDoor;
 	public Transform defaultPivotPos, defaultCamPos, facePivotPos, faceCamPos;
 
+	private enum PPToggles { InLevelingPosition, BalanceIsLeveled }
 	private enum PCToggles { WeightOutside, WeightInside, BalanceOn, BalanceCalibrated, FocusedOnBalanceFace, CalibrationModeOn, LDoorOpen, RDoorOpen }
 	private enum PUToggles { WeighContainerOutside, WeightContainerInside, LDoorOpen, RDoorOpen, FocusedOnBalanceFace, BalanceTared, WeighContainerFilled, ReadingStabilized }
 
 	void Update() {
+		//FIXME remove this comment when done
 		//CheckInputs();
 
 //		if( ReadoutDisplay.s_instance.hasStableReading && !toggles[(int)PUToggles.ReadingStabilized] ) {
 //			toggles[(int)PUToggles.ReadingStabilized] = true;
+//		}
+
+		//TODO this case will be whatever step is the bubble leveling step
+//		switch( currentStep ) {
+//		case 1:
+//			if( Mathf.Abs(bubble.localPosition.x) <= bubbleWinThreshold && Mathf.Abs(bubble.localPosition.y) <= bubbleWinThreshold ) {
+//				toggles[(int)PFCToggles.BalanceIsLeveled] = true;
+//			}
+//			break;
 //		}
 	}
 
@@ -169,10 +189,68 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 		}
 	}
 
+	// Prepare
+	public void ClickedOnPositioningButton() {
+		// TODO Toggles button clicked
+		//toggles[(int)PFCToggles.InLevelingPosition] = true;
+	}
+
+	public void ClickedLeftScrewUp() {
+		Vector3 bubblePos = bubble.localPosition;
+		bubblePos.x += bubbleMaxRadius*0.1f;
+		bubblePos.y += bubbleMaxRadius*0.05f;
+		bubble.localPosition = bubblePos;
+
+		NormalizeBubblePos();
+	}
+
+	public void ClickedLeftScrewDown() {
+		Vector3 bubblePos = bubble.localPosition;
+		bubblePos.x -= bubbleMaxRadius*0.1f;
+		bubblePos.y -= bubbleMaxRadius*0.05f;
+		bubble.localPosition = bubblePos;
+
+		NormalizeBubblePos();
+	}
+
+	public void ClickedRightScrewUp() {
+		Vector3 bubblePos = bubble.localPosition;
+		bubblePos.x -= bubbleMaxRadius*0.1f;
+		bubblePos.y += bubbleMaxRadius*0.05f;
+		bubble.localPosition = bubblePos;
+
+		NormalizeBubblePos();
+	}
+
+	public void ClickedRightScrewDown() {
+		Vector3 bubblePos = bubble.localPosition;
+		bubblePos.x += bubbleMaxRadius*0.1f;
+		bubblePos.y -= bubbleMaxRadius*0.05f;
+		bubble.localPosition = bubblePos;
+
+		NormalizeBubblePos();
+	}
+
+	void NormalizeBubblePos() {
+		Vector2 bubblePos = new Vector2(bubble.localPosition.x, bubble.localPosition.y );
+
+		//bubblePos.x = Mathf.Clamp( bubble.localPosition.x, -bubbleMaxRadius, bubbleMaxRadius );
+		//bubblePos.y = Mathf.Clamp( bubble.localPosition.y, -bubbleMaxRadius, bubbleMaxRadius );
+		Vector2 tempPos = new Vector2();
+		tempPos = Vector2.ClampMagnitude (bubblePos, bubbleMaxRadius);
+
+		Vector3 newBubblePos = new Vector3( tempPos.x , tempPos.y , bubble.localPosition.z );
+
+		bubble.localPosition = newBubblePos;
+	}
+
+	// Calibration
 	public void ToggleBalanceCalibrationMode( bool toggle ) {
 		toggles[(int)PCToggles.CalibrationModeOn] = toggle;
 	}
 
+
+	// Use
 	public void ClickedOnFocusOnBalanceButton() {
 		toggles[(int)PCToggles.FocusedOnBalanceFace] = true;
 		PracticeManager.s_instance.StartNewCameraSlerp( facePivotPos, faceCamPos );
