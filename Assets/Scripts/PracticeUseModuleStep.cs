@@ -34,8 +34,7 @@ public class PracticeUseModuleStep : BasePracticeModuleStep {
 			objectToggles[0] = true;
 			for( int i = 1; i < objectToggles.Length; i++ )
 				objectToggles[i] = false;
-		}
-		
+		}		
 	}
 
 	/// <summary>

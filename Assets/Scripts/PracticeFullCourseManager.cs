@@ -5,7 +5,8 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 
 	// Prepare
 	public RectTransform bubble;
-	public Transform backPivot, backCamPos;
+	public Transform backPivot, backCamPos, backDefaultCamPos;
+	public GameObject accessBehindViewCanvas;
 
 	private float currentBubbleX, currentBubbleY;
 	private float bubbleWinThreshold = 2.5f;
@@ -20,13 +21,27 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 	public Animator leftGlassDoor, rightGlassDoor;
 	public Transform defaultPivotPos, defaultCamPos, facePivotPos, faceCamPos;
 
-	private enum PFCToggles { InLevelingPosition, BalanceIsLeveled,
+	public enum PFCToggles { InLevelingPosition, BalanceIsLeveled,
 								WeightOutside, WeightInside, BalanceOn, BalanceCalibrated, CalibrationModeOn,
 								WeighContainerOutside, WeightContainerInside, LDoorOpen, RDoorOpen, FocusedOnBalanceFace, BalanceTared, WeighContainerFilled, ReadingStabilized }
 
+	void Start() {
+		toggles = new bool[15];
+		for( int i = 0; i < toggles.Length; i++ )
+			toggles[i] = false;
+
+		toggles[(int)PFCToggles.WeighContainerOutside] = true;
+		toggles[(int)PFCToggles.WeightOutside] = true;
+
+//		ReadoutDisplay readOutDisplay = ReadoutDisplay.s_instance;
+//		readOutDisplay.balanceOn = true;
+//		readOutDisplay.balanceCalibrated = true;
+//		readOutDisplay.ToggleDisplay( true, true, false );
+//		readOutDisplay.readoutNumberText.text = "0.0000";
+	}
+
 	void Update() {
-		//FIXME remove this comment when done
-		//CheckInputs();
+		CheckInputs();
 
 		if( ReadoutDisplay.s_instance.hasStableReading && !toggles[(int)PFCToggles.ReadingStabilized] ) {
 			toggles[(int)PFCToggles.ReadingStabilized] = true;
@@ -54,7 +69,7 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 
 		// I'm sorry and this won't happen again but here's some loggic that should go in ExecuteStepLogic
 		switch( currentStep ) {
-		case 6:
+		case 8:
 			StartCoroutine( ToggleBalancedCalibrationOn() );
 			break;
 		}
@@ -85,7 +100,7 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 				return;
 			if( toggles[(int)PFCToggles.FocusedOnBalanceFace] && !toggles[(int)PFCToggles.BalanceCalibrated] ) {
 				ReadoutDisplay.s_instance.PlayCalibrationModeAnimation();
-			} else if( toggles[(int)PFCToggles.WeightContainerInside] ) {
+			} else if( toggles[(int)PFCToggles.WeightContainerInside] && !toggles[(int)PFCToggles.RDoorOpen] ) {
 				ReadoutDisplay.s_instance.ZeroOut();
 				toggles[(int)PFCToggles.BalanceTared] = true;
 				SoundtrackManager.s_instance.PlayAudioSource( SoundtrackManager.s_instance.buttonBeep );
@@ -93,7 +108,7 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 			break;
 
 		case SelectableObject.SelectableObjectType.RiceContainer:
-			if( usedForceps || toggles[(int)PFCToggles.WeighContainerFilled] )
+			if( usedForceps || toggles[(int)PFCToggles.WeighContainerFilled] || !toggles[(int)PFCToggles.WeightContainerInside] )
 				return;
 			// If we aren't holding an object when we click the weight, make it our selected object.
 			if( PracticeCalibrateBalanceManager.s_instance.selectedObject == SelectableObject.SelectableObjectType.None ) {
@@ -125,7 +140,9 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 
 				riceContainerOutside.GetComponent<Renderer>().materials[1].SetFloat( "_Thickness", 0f );
 				StartCoroutine( PourRice() );
-			} else if( toggles[(int)PFCToggles.WeighContainerOutside] && PracticeUseBalanceManager.s_instance.selectedObject == SelectableObject.SelectableObjectType.None ) {
+			} 
+			// It can only be selected if balance has been calibrated
+			else if( toggles[(int)PFCToggles.WeighContainerOutside] && PracticeUseBalanceManager.s_instance.selectedObject == SelectableObject.SelectableObjectType.None && toggles[(int)PFCToggles.BalanceCalibrated] ) {
 				PracticeUseBalanceManager.s_instance.selectedObject = SelectableObject.SelectableObjectType.WeighContainer;
 				weighContainerOutside.GetComponent<Renderer>().materials[1].SetFloat( "_Thickness", 3.5f );
 			}
@@ -152,15 +169,15 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 			if( !usedForceps )
 				return;
 			// If we aren't holding an object when we click the weight, make it our selected object.
-			if( PracticeCalibrateBalanceManager.s_instance.selectedObject == SelectableObject.SelectableObjectType.None ) {
+			if( PracticeCalibrateBalanceManager.s_instance.selectedObject == SelectableObject.SelectableObjectType.None  ) {
 				// Toggle on highlights
 				if( toggles[(int)PFCToggles.WeightInside] ) {
 					toggles[(int)PFCToggles.WeightInside] = false;
 					weightInside.SetActive( false );
-					toggles[(int)PFCToggles.WeightInside] = true;
+					toggles[(int)PFCToggles.WeightOutside] = true;
 					weightOutside.SetActive( true );
 					weightOutside.GetComponent<Renderer>().materials[1].SetFloat( "_Thickness", 0f );
-				} else if ( toggles[(int)PFCToggles.WeightOutside] ) {
+				} else if ( toggles[(int)PFCToggles.WeightOutside] || toggles[(int)PFCToggles.CalibrationModeOn] ) {
 					PracticeCalibrateBalanceManager.s_instance.selectedObject = SelectableObject.SelectableObjectType.CalibrationWeight;
 					weightOutside.GetComponent<Renderer>().materials[1].SetFloat( "_Thickness", 3.5f );
 				}
@@ -255,8 +272,12 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 	}
 
 	public void ClickedOnLeaveBackFocusButton() {
+		if( toggles[(int)PFCToggles.BalanceIsLeveled] )
+			accessBehindViewCanvas.SetActive( false );
+		else
+			accessBehindViewCanvas.SetActive( true );
 		toggles[(int)PFCToggles.InLevelingPosition] = false;
-		PracticeManager.s_instance.StartNewCameraSlerp( defaultPivotPos, defaultCamPos );
+		PracticeManager.s_instance.StartNewCameraSlerp( defaultPivotPos, backDefaultCamPos );
 	}
 
 

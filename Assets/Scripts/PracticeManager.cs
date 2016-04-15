@@ -45,7 +45,7 @@ public class PracticeManager : MonoBehaviour {
 		UIManager.s_instance.ToggleToolsActive( true, true, true, true );
 		UIManager.s_instance.ToggleSidePanel( false, false );
 		//HACK remove this line
-		UIManager.s_instance.nextButton.gameObject.SetActive( true );
+		//UIManager.s_instance.nextButton.gameObject.SetActive( true );
 		submoduleManager = BasePracticeSubmodule.s_instance;
 		orbitCam = sceneCamera.GetComponent<OrbitCamera>();
 

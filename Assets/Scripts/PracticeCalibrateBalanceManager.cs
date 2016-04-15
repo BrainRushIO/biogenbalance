@@ -69,7 +69,7 @@ public class PracticeCalibrateBalanceManager : BasePracticeSubmodule {
 				if( toggles[(int)PCToggles.WeightInside] ) {
 					toggles[(int)PCToggles.WeightInside] = false;
 					weightInside.SetActive( false );
-					toggles[(int)PCToggles.WeightInside] = true;
+					toggles[(int)PCToggles.WeightOutside] = true;
 					weightOutside.SetActive( true );
 					weightOutside.GetComponent<Renderer>().materials[1].SetFloat( "_Thickness", 0f );
 				} else if ( toggles[(int)PCToggles.WeightOutside] ) {

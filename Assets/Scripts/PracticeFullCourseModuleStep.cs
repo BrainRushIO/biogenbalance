@@ -47,10 +47,16 @@ public class PracticeFullCourseModuleStep : BasePracticeModuleStep {
 
 	void Start() {
 		int sI = transform.GetSiblingIndex();
+		if( sI > 0 )
+			objectToggles = PracticeUseBalanceManager.s_instance.moduleSteps[sI-1].GetInputs();
+		else {
+			objectToggles = new bool[15];
+			for( int i = 1; i < objectToggles.Length; i++ )
+				objectToggles[i] = false;
 
-		objectToggles = new bool[15];
-		for( int i = 0; i < objectToggles.Length; i++ )
-			objectToggles[i] = false;
+			objectToggles[(int)PracticeFullCourseManager.PFCToggles.WeightOutside] = true;
+			objectToggles[(int)PracticeFullCourseManager.PFCToggles.WeighContainerOutside] = true;
+		}
 	}
 
 	/// <summary>
@@ -60,13 +66,6 @@ public class PracticeFullCourseModuleStep : BasePracticeModuleStep {
 		int index = transform.GetSiblingIndex();
 		switch( index )
 		{
-		case 0:
-			break;
-		case 1:
-			ApplicationManager.s_instance.ChangeMouseMode( (int)ApplicationManager.MouseMode.Pointer );
-			UIManager.s_instance.ToggleToolsActive( true, false, false, false );
-			PracticeManager.s_instance.orbitCam.canZoom = true;
-			break;
 		default:
 			Debug.LogWarning( "No step logic for this index." );
 			break;
