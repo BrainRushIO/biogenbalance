@@ -80,11 +80,7 @@ public class ReadoutDisplay : MonoBehaviour {
 			if( PracticeManager.s_instance.moduleType == PracticeManager.PracticeModule.Calibrate ) 
 			{
 				PracticeManager.s_instance.submoduleManager.GetComponent<PracticeCalibrateBalanceManager>().ToggleBalanceCalibrationMode( true );
-			} 
-			else if( PracticeManager.s_instance.moduleType == PracticeManager.PracticeModule.Use ) 
-			{
-				PracticeManager.s_instance.submoduleManager.GetComponent<PracticeUseBalanceManager>().ToggleBalanceCalibrationMode( true );
-			} 
+			}
 			else if( PracticeManager.s_instance.moduleType == PracticeManager.PracticeModule.FullCourse ) 
 			{
 				PracticeManager.s_instance.submoduleManager.GetComponent<PracticeFullCourseManager>().ToggleBalanceCalibrationMode( true );
