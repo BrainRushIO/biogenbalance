@@ -57,7 +57,7 @@ This Semi-MicroBalance has a maximum weight capacity of 210g and a precision of 
 		</step>
 		<step>
 			<listText>Place Calibration Weight</listText>
-			<descriptionText>Select the weight by clicking it and place it on the weigh pan by clicking on the weigh pan.</descriptionText>
+			<descriptionText>Select the weight using the forceps tool and place it on the weigh pan by clicking on the weigh pan.</descriptionText>
 		</step>
 		<step>
 			<listText>Close Door</listText>
@@ -69,7 +69,7 @@ This Semi-MicroBalance has a maximum weight capacity of 210g and a precision of 
 		</step>
 		<step>
 			<listText>Remove Calibration Weight</listText>
-			<descriptionText>Wait 10 seconds for the balance to beep to confirm that it is calibrated.</descriptionText>
+			<description>Use the forceps tool to remove the calibration weight</descriptionText>
 		</step>
 	</calibrateBalance>
 	<useBalance>
@@ -147,7 +147,7 @@ This Semi-MicroBalance has a maximum weight capacity of 210g and a precision of 
 		</step>
 		<step>
 			<listText>Place Calibration Weight</listText>
-			<descriptionText>Select the weight by clicking it and place it on the weigh pan by clicking on the weigh pan.</descriptionText>
+			<descriptionText>Select the weight by using the forceps tool to click on it and place it on the weigh pan by clicking on the weigh pan.</descriptionText>
 		</step>
 		<step>
 			<listText>Close Door</listText>
@@ -159,7 +159,7 @@ This Semi-MicroBalance has a maximum weight capacity of 210g and a precision of 
 		</step>
 		<step>
 			<listText>Remove Calibration Weight</listText>
-			<descriptionText>Wait 10 seconds for the balance to beep to confirm that it is calibrated.</descriptionText>
+			<descriptionText>Use the forceps tool to remove the calibration weight.</descriptionText>
 		</step>
 		<section>
 			<listText>Using the Balance</listText>

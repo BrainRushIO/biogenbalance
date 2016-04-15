@@ -61,7 +61,7 @@ Note: Always refer to your balance’s User Manual to find its specifications.</
 		</section>
 		<step>
 			<listText>Weights</listText>
-			<descriptionText>This is a calibration weight. There are many shapes and sizes but we will be using these for our examples and calibration. These weights have their mass engraved on the face of their top side</descriptionText>
+			<descriptionText>This is a calibration weight. There are many shapes and sizes but we will be using these for our examples and calibration. These weights have their mass engraved on the face of their top side. Remember to use forceps to handle calibration weights. Oils from your skin are enough to throw the weight off and will cause issues with the calibration</descriptionText>
 		</step>
 		<step>
 			<listText>Determining What Balance to Choose</listText>
@@ -69,7 +69,7 @@ Note: Always refer to your balance’s User Manual to find its specifications.</
 		</step>
 		<step>
 			<listText>Scenario</listText>
-			<descriptionText>This is a 20g weight. Which would be the correct balance to weigh this material? Press “Next” to find out.</descriptionText>
+			<descriptionText>This is a 20g weight. Which would be the correct balance to weigh this material? Press “Next” to find out. Remember to use forceps to handle these precision weights</descriptionText>
 		</step>
 		<step>
 			<listText>Correct Balance</listText>
@@ -141,7 +141,7 @@ Note: Different balances enter Calibration Mode in different ways. Refer to your
 		</step>
 		<step>
 			<listText>The Calibration Weight</listText>
-			<descriptionText>This is a calibration weight. It is used when calibrating a balance to ensure that the balance is in a working condition.</descriptionText>
+			<descriptionText>This is a calibration weight. It is used when calibrating a balance to ensure that the balance is in a working condition. Use forceps to handle the calibration weight.</descriptionText>
 		</step>
 		<step>
 			<listText>Open Door</listText>
@@ -149,7 +149,7 @@ Note: Different balances enter Calibration Mode in different ways. Refer to your
 		</step>
 		<step>
 			<listText>Place the Weight</listText>
-			<descriptionText>Place the calibration weight on the weighing pan.</descriptionText>
+			<descriptionText>Use your forceps to lace the calibration weight on the weighing pan.</descriptionText>
 		</step>
 		<step>
 			<listText>Close Door</listText>
@@ -161,7 +161,7 @@ Note: Different balances enter Calibration Mode in different ways. Refer to your
 		</step>
 		<step>
 			<listText>Remove Calibration Weight</listText>
-			<descriptionText>Remove the calibration weight from the weigh pan.</descriptionText>
+			<descriptionText>Use forceps to remove the calibration weight from the weigh pan.</descriptionText>
 		</step>
 		<step>
 			<listText>Calibration Finished</listText>
