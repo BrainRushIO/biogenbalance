@@ -27,18 +27,18 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 		//FIXME remove this comment when done
 		//CheckInputs();
 
-//		if( ReadoutDisplay.s_instance.hasStableReading && !toggles[(int)PUToggles.ReadingStabilized] ) {
-//			toggles[(int)PUToggles.ReadingStabilized] = true;
-//		}
+		if( ReadoutDisplay.s_instance.hasStableReading && !toggles[(int)PFCToggles.ReadingStabilized] ) {
+			toggles[(int)PFCToggles.ReadingStabilized] = true;
+		}
 
-		//TODO this case will be whatever step is the bubble leveling step
-//		switch( currentStep ) {
-//		case 1:
-//			if( Mathf.Abs(bubble.localPosition.x) <= bubbleWinThreshold && Mathf.Abs(bubble.localPosition.y) <= bubbleWinThreshold ) {
-//				toggles[(int)PFCToggles.BalanceIsLeveled] = true;
-//			}
-//			break;
-//		}
+//		TODO this case will be whatever step is the bubble leveling step
+		switch( currentStep ) {
+		case 1:
+			if( Mathf.Abs(bubble.localPosition.x) <= bubbleWinThreshold && Mathf.Abs(bubble.localPosition.y) <= bubbleWinThreshold ) {
+				toggles[(int)PFCToggles.BalanceIsLeveled] = true;
+			}
+			break;
+		}
 	}
 
 	public override void UpdateSceneContents( int stepIndex ) {
@@ -191,8 +191,7 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 
 	// Prepare
 	public void ClickedOnPositioningButton() {
-		// TODO Toggles button clicked
-		//toggles[(int)PFCToggles.InLevelingPosition] = true;
+		toggles[(int)PFCToggles.InLevelingPosition] = true;
 	}
 
 	public void ClickedLeftScrewUp() {
