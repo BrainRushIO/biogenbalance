@@ -20,8 +20,8 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 	public Transform defaultPivotPos, defaultCamPos, facePivotPos, faceCamPos;
 
 	private enum PFCToggles { InLevelingPosition, BalanceIsLeveled,
-								WeightOutside, WeightInside, BalanceOn, BalanceCalibrated, FocusedOnBalanceFace, CalibrationModeOn, LDoorOpen, RDoorOpen,
-								WeighContainerOutside, WeightContainerInside, BalanceTared, WeighContainerFilled, ReadingStabilized }
+								WeightOutside, WeightInside, BalanceOn, BalanceCalibrated, CalibrationModeOn,
+								WeighContainerOutside, WeightContainerInside, LDoorOpen, RDoorOpen, FocusedOnBalanceFace, BalanceTared, WeighContainerFilled, ReadingStabilized }
 
 	void Update() {
 		//FIXME remove this comment when done

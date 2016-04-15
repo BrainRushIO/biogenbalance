@@ -14,7 +14,6 @@ public class PracticeUseModuleStep : BasePracticeModuleStep {
 	public bool readingStabilized;
 
 	void Awake() {
-
 		inputs = new bool[8];
 		inputs[0] = weighContainerOutside;
 		inputs[1] = weightContainerInside;
