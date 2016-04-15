@@ -46,6 +46,7 @@ public class AcquireCalibrateBalanceManager : BaseAcquireSubmodule {
 			break;
 		case 8:
 			rightGlass.GetComponent<Animator> ().SetTrigger ("Clicked");
+			SoundtrackManager.s_instance.PlayAudioSource (SoundtrackManager.s_instance.slidingDoor);
 			insideWeight.SetActive (false);
 			outsideWeight.SetActive (true);
 			break;
