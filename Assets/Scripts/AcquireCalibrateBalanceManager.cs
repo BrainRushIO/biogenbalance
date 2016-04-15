@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class AcquireCalibrateBalanceManager : BaseAcquireSubmodule {
 	public Animator rightGlass;
+	public GameObject outsideWeight, insideWeight;
+	public Text readoutText, plusText, unitText;
 	protected override void Init() {
 		base.Init();
 	}
@@ -26,6 +28,29 @@ public class AcquireCalibrateBalanceManager : BaseAcquireSubmodule {
 			break;
 
 		case 4:
+			rightGlass.GetComponent<Animator> ().SetTrigger ("Clicked");
+			SoundtrackManager.s_instance.PlayAudioSource (SoundtrackManager.s_instance.slidingDoor);
+			break;
+
+		case 5:
+			outsideWeight.SetActive(false);
+			insideWeight.SetActive(true);
+			break;
+		case 6:
+			rightGlass.GetComponent<Animator> ().SetTrigger ("Clicked");
+			SoundtrackManager.s_instance.PlayAudioSource (SoundtrackManager.s_instance.slidingDoor);
+			break;
+		case 7:
+			readoutText.text = "200.0000";
+			SoundtrackManager.s_instance.PlayAudioSource (SoundtrackManager.s_instance.buttonBeep);
+			break;
+		case 8:
+			rightGlass.GetComponent<Animator> ().SetTrigger ("Clicked");
+			SoundtrackManager.s_instance.PlayAudioSource (SoundtrackManager.s_instance.slidingDoor);
+			insideWeight.SetActive (false);
+			outsideWeight.SetActive (true);
+			break;
+		case 9:
 			rightGlass.GetComponent<Animator> ().SetTrigger ("Clicked");
 			SoundtrackManager.s_instance.PlayAudioSource (SoundtrackManager.s_instance.slidingDoor);
 			break;
