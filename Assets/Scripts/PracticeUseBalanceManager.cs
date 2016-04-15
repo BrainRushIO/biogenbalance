@@ -7,9 +7,22 @@ public class PracticeUseBalanceManager : BasePracticeSubmodule {
 	public Animator leftGlassDoor, rightGlassDoor;
 	public Transform defaultPivotPos, defaultCamPos, facePivotPos, faceCamPos;
 	
-	private enum PUToggles { WeighContainerOutside, WeightContainerInside, LDoorOpen, RDoorOpen, FocusedOnBalanceFace, BalanceTared, WeighContainerFilled }
+	private enum PUToggles { WeighContainerOutside, WeightContainerInside, LDoorOpen, RDoorOpen, FocusedOnBalanceFace, BalanceTared, WeighContainerFilled, ReadingStabilized }
 	// Used to check if door is open or closed
 	private int rightDoorOpenState, rightDoorClosedState, leftDoorOpenState, leftDoorClosedState;
+
+	void Start() {
+		toggles = new bool[8];
+		// Just saying that the weight container is outside
+		toggles[0] = true;
+		// Set the rest to false
+		for( int i = 1; i < toggles.Length; i++ )
+			toggles[i] = false;
+	}
+
+	void Update() {
+		CheckInputs();
+	}
 
 	public override void UpdateSceneContents( int stepIndex ) {
 		currentStep = stepIndex;
@@ -27,9 +40,7 @@ public class PracticeUseBalanceManager : BasePracticeSubmodule {
 			return;
 
 		weighContainerOutside.GetComponent<Renderer>().materials[1].SetFloat("Thickness", 0f );
-		weighContainerInside.GetComponent<Renderer>().materials[1].SetFloat("Thickness", 0f );
 		riceContainerOutside.GetComponent<Renderer>().materials[1].SetFloat("Thickness", 0f );
-		riceContainerInside.GetComponent<Renderer>().materials[1].SetFloat("Thickness", 0f );
 		selectedObject = SelectableObject.SelectableObjectType.None;
 	}
 
@@ -83,6 +94,12 @@ public class PracticeUseBalanceManager : BasePracticeSubmodule {
 			break;
 
 		case SelectableObject.SelectableObjectType.WeighPan:
+			if( !toggles[(int)PUToggles.WeightContainerInside] && selectedObject == SelectableObject.SelectableObjectType.WeighContainer) {
+				weighContainerOutside.SetActive( false );
+				toggles[(int)PUToggles.WeighContainerOutside] = false;
+				weighContainerInside.SetActive( true );
+				toggles[(int)PUToggles.WeightContainerInside] = true;
+			}
 			break;
 		}
 	}
