@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 505abea4751ccfa4389347154919024d
+timeCreated: 1460065850
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - acquireContentXML: {fileID: 4900000, guid: a0192c461f7cf3243b4ae06b68011de9, type: 3}
+  - defaultListViewButton: {fileID: 11420984, guid: 7f0e55335386279479201efa0cc024d5,
+      type: 2}
+  - defaultListViewSectionTitle: {fileID: 22430254, guid: ce1f684477ebc904c8d9f5d72bdf66da,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
