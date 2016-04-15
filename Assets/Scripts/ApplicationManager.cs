@@ -21,6 +21,9 @@ public class ApplicationManager : MonoBehaviour {
 		if( s_instance == null ) {
 			s_instance = this;
 			DontDestroyOnLoad( gameObject );
+
+			//Screen.fullScreen = false;
+			Screen.SetResolution( Screen.resolutions[0].width, Screen.resolutions[0].height, false );
 		} else {
 			DestroyImmediate( gameObject );
 		}
@@ -28,7 +31,6 @@ public class ApplicationManager : MonoBehaviour {
 
 	void Start () {
 		InitSceneDictionary();
-		Screen.fullScreen = false;
 		Cursor.lockState = CursorLockMode.None;
 	}
 
