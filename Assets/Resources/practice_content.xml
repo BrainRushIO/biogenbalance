@@ -107,7 +107,7 @@ This Semi-MicroBalance has a maximum weight capacity of 210g and a precision of 
 		</step>
 		<step>
 			<listText>Record Weight</listText>
-			<descriptionText>Record the weight.</descriptionText>
+			<descriptionText>Take a closer look at the readout to accurately record the weight.</descriptionText>
 		</step>
 	</useBalance>
 	<completeCourse>
