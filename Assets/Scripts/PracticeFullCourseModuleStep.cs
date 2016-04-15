@@ -4,7 +4,7 @@ using System.Collections;
 public class PracticeFullCourseModuleStep : BasePracticeModuleStep {
 
 	[Header("Prepare Inputs")]
-	public bool clickedNewPositionButton = false;
+	public bool inLevelingPosition = false;
 	public bool balanceIsLeveled = false;
 
 	[Header("Calibrate Inputs")]
@@ -26,7 +26,7 @@ public class PracticeFullCourseModuleStep : BasePracticeModuleStep {
 
 	void Awake() {
 		inputs = new bool[15];
-		inputs[0] = clickedNewPositionButton;
+		inputs[0] = inLevelingPosition;
 		inputs[1] = balanceIsLeveled;
 
 		inputs[2] = weightOutside;
