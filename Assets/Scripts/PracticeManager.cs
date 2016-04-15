@@ -14,13 +14,16 @@ public class PracticeManager : MonoBehaviour {
 	public PracticeModule moduleType = PracticeModule.Choose;
 
 	public Camera sceneCamera;
+	[System.NonSerialized]
+	public OrbitCamera orbitCam;
 	public ListViewButton defaultListViewText;
 	public TextAsset practiceContentXML;
 	public bool isDragging = false;
 
 	private BasePracticeSubmodule submoduleManager;
 	private List<StepsListEntry> practiceStepList;
-	private OrbitCamera orbitCam;
+	private Vector3 currentCameraPivot, currentCameraStartPos;
+	private bool isCameraRotLerping = false;
 	private int currentStepIndex = 0;
 	private bool showListViewIndex = true;
 	private bool isLerpingToNewPosition = false;
@@ -41,7 +44,8 @@ public class PracticeManager : MonoBehaviour {
 		ApplicationManager.s_instance.ChangeMouseMode( (int)ApplicationManager.MouseMode.Pointer );
 		UIManager.s_instance.ToggleToolsActive( true, true, true, true );
 		UIManager.s_instance.ToggleSidePanel( false, false );
-		//UIManager.s_instance.nextButton.gameObject.SetActive( true );
+		//HACK remove this line
+		UIManager.s_instance.nextButton.gameObject.SetActive( true );
 		submoduleManager = BasePracticeSubmodule.s_instance;
 		orbitCam = sceneCamera.GetComponent<OrbitCamera>();
 
@@ -132,10 +136,70 @@ public class PracticeManager : MonoBehaviour {
 			Debug.LogError( "Submodule manager is null" );
 			yield break;
 		}
-
-		// TODO Check if next step requires lerping to
-		//yield return LerpToNewCamPos( submoduleManager.GetStepCameraTransform(acquireStepList[currentStepIndex].stepIndex ) );
 		submoduleManager.UpdateSceneContents( practiceStepList[currentStepIndex].stepIndex );
+
+		// Check if next step requires lerping to using pivot system
+		if( submoduleManager.moduleSteps[practiceStepList[currentStepIndex].stepIndex].GetPivotPosition() != null ) {
+			currentCameraStartPos = submoduleManager.moduleSteps[practiceStepList[currentStepIndex].stepIndex].GetCameraPosition().position;
+			currentCameraPivot = submoduleManager.moduleSteps[practiceStepList[currentStepIndex].stepIndex].GetPivotPosition().position;
+
+			StartCoroutine( LerpCameraLookAt() );
+			StartCoroutine( SlerpToNewCamPos() );
+		}
+		// If we have a camera position for a transform then use the transform system
+		else if ( submoduleManager.moduleSteps[practiceStepList[currentStepIndex].stepIndex].GetCameraPosition() != null ) {
+			// TODO Copy new lerp coroutine from Acquire manager
+			//yield return LerpToNewCamPos( submoduleManager.GetStepCameraTransform(acquireStepList[currentStepIndex].stepIndex ) );
+		}
+	}
+
+	private IEnumerator SlerpToNewCamPos() {
+		isLerpingToNewPosition = true;
+		orbitCam.transform.parent = null;
+		orbitCam.pivotParent.position = currentCameraPivot;
+		float elapsedTime = 0f;
+		float slerpTime = 1f;
+		float startTime = Time.time;
+		Vector3 startPos = sceneCamera.transform.position;
+
+		while( elapsedTime < slerpTime ) {
+			//			if( (elapsedTime/slerpTime) >= 0.99f ) {
+			//				break;
+			//			}
+			sceneCamera.transform.position = Vector3.Lerp( startPos, currentCameraStartPos, elapsedTime/slerpTime );
+			if( !isCameraRotLerping )
+				sceneCamera.transform.LookAt( currentCameraPivot );
+			yield return null;
+			elapsedTime = Time.time-startTime;
+		}
+		orbitCam.pivotParent.LookAt( orbitCam.transform );
+		orbitCam.transform.parent = orbitCam.pivotParent;
+
+		sceneCamera.transform.position = currentCameraStartPos;
+		sceneCamera.transform.LookAt( currentCameraPivot );
+		isLerpingToNewPosition = false;
+		orbitCam.canRotate = true;
+		orbitCam.canZoom = true;
+	}
+
+	private IEnumerator LerpCameraLookAt() {
+		isCameraRotLerping = true;
+		float elapsedTime = 0f;
+		float slerpTime = 1;
+		float startTime = Time.time;
+		Quaternion startRot = sceneCamera.transform.rotation;
+
+		while( elapsedTime < slerpTime ) {
+			//			if( (elapsedTime/slerpTime) >= 0.99f ) {
+			//				break;
+			//			}
+			Quaternion targetRot = Quaternion.LookRotation( (currentCameraPivot-sceneCamera.transform.position).normalized );
+			sceneCamera.transform.rotation = Quaternion.Lerp( startRot, targetRot, elapsedTime/slerpTime );
+			yield return null;
+			elapsedTime = Time.time-startTime;
+		}
+		sceneCamera.transform.LookAt( currentCameraPivot );
+		isCameraRotLerping = false;
 	}
 
 	public void ResetInputsAndObjects() {

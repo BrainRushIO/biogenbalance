@@ -4,10 +4,14 @@ using System.Collections;
 public abstract class BasePracticeSubmodule : MonoBehaviour {
 	public static BasePracticeSubmodule s_instance;
 
+	public int currentStep = 0;
 	public SelectableObject.SelectableObjectType selectedObject;
 	public BasePracticeModuleStep[] moduleSteps;
 
-	protected  bool[] inputs;
+	[SerializeField]
+	protected bool[] toggles;
+	[SerializeField]
+	protected bool[] inputs;
 
 	void Awake() {
 		if( s_instance == null ) {
@@ -36,6 +40,17 @@ public abstract class BasePracticeSubmodule : MonoBehaviour {
 
 	protected virtual void SelectObject( SelectableObject newSelection ) {
 		ClearSelectedObject( false );
+	}
+
+	/// <summary>
+	/// Checks the inputs to see if we have met the requirements to go to the next step.
+	/// </summary>
+	public void CheckInputs() {
+		for( int i = 0; i < toggles.Length; i++ ) {
+			if( toggles[i] != inputs[i] )
+				return;
+		}
+		PracticeManager.s_instance.GoToNextStep();
 	}
 
 	public abstract void ClearSelectedObject( bool slerpToDefaultPos );/* {
