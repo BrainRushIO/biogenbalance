@@ -5,6 +5,7 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 
 	// Prepare
 	public RectTransform bubble;
+	public Transform backPivot, backCamPos;
 
 	private float currentBubbleX, currentBubbleY;
 	private float bubbleWinThreshold = 2.5f;
@@ -246,6 +247,16 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 	// Calibration
 	public void ToggleBalanceCalibrationMode( bool toggle ) {
 		toggles[(int)PFCToggles.CalibrationModeOn] = toggle;
+	}
+
+	public void ClickedOnFocusOnBackButton() {
+		toggles[(int)PFCToggles.InLevelingPosition] = true;
+		PracticeManager.s_instance.StartNewCameraSlerp( backPivot, backCamPos );
+	}
+
+	public void ClickedOnLeaveBackFocusButton() {
+		toggles[(int)PFCToggles.InLevelingPosition] = false;
+		PracticeManager.s_instance.StartNewCameraSlerp( defaultPivotPos, defaultCamPos );
 	}
 
 
