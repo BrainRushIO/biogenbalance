@@ -19,9 +19,9 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 	public Animator leftGlassDoor, rightGlassDoor;
 	public Transform defaultPivotPos, defaultCamPos, facePivotPos, faceCamPos;
 
-	private enum PPToggles { InLevelingPosition, BalanceIsLeveled }
-	private enum PCToggles { WeightOutside, WeightInside, BalanceOn, BalanceCalibrated, FocusedOnBalanceFace, CalibrationModeOn, LDoorOpen, RDoorOpen }
-	private enum PUToggles { WeighContainerOutside, WeightContainerInside, LDoorOpen, RDoorOpen, FocusedOnBalanceFace, BalanceTared, WeighContainerFilled, ReadingStabilized }
+	private enum PFCToggles { InLevelingPosition, BalanceIsLeveled,
+								WeightOutside, WeightInside, BalanceOn, BalanceCalibrated, FocusedOnBalanceFace, CalibrationModeOn, LDoorOpen, RDoorOpen,
+								WeighContainerOutside, WeightContainerInside, BalanceTared, WeighContainerFilled, ReadingStabilized }
 
 	void Update() {
 		//FIXME remove this comment when done
@@ -82,17 +82,17 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 		case SelectableObject.SelectableObjectType.TareButton:
 			if( usedForceps )
 				return;
-			if( toggles[(int)PCToggles.FocusedOnBalanceFace] && !toggles[(int)PCToggles.BalanceCalibrated] ) {
+			if( toggles[(int)PFCToggles.FocusedOnBalanceFace] && !toggles[(int)PFCToggles.BalanceCalibrated] ) {
 				ReadoutDisplay.s_instance.PlayCalibrationModeAnimation();
-			} else if( toggles[(int)PUToggles.WeightContainerInside] ) {
+			} else if( toggles[(int)PFCToggles.WeightContainerInside] ) {
 				ReadoutDisplay.s_instance.ZeroOut();
-				toggles[(int)PUToggles.BalanceTared] = true;
+				toggles[(int)PFCToggles.BalanceTared] = true;
 				SoundtrackManager.s_instance.PlayAudioSource( SoundtrackManager.s_instance.buttonBeep );
 			}
 			break;
 
 		case SelectableObject.SelectableObjectType.RiceContainer:
-			if( usedForceps || toggles[(int)PUToggles.WeighContainerFilled] )
+			if( usedForceps || toggles[(int)PFCToggles.WeighContainerFilled] )
 				return;
 			// If we aren't holding an object when we click the weight, make it our selected object.
 			if( PracticeCalibrateBalanceManager.s_instance.selectedObject == SelectableObject.SelectableObjectType.None ) {
@@ -110,21 +110,21 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 			//			} else if ( leftGlassDoor.GetCurrentAnimatorStateInfo(0).fullPathHash == Animator.StringToHash("Base Layer.SMB_RightGlass_Closed")/*rightDoorClosedState*/ ) {
 			//				toggles[(int)PCToggles.RDoorOpen] = true;
 			//			}
-			bool newDoorOpenValue = !toggles[(int)PUToggles.RDoorOpen];
-			toggles[(int)PUToggles.RDoorOpen] = newDoorOpenValue;
+			bool newDoorOpenValue = !toggles[(int)PFCToggles.RDoorOpen];
+			toggles[(int)PFCToggles.RDoorOpen] = newDoorOpenValue;
 			ReadoutDisplay.s_instance.doorsAreOpen = newDoorOpenValue;
 			rightGlassDoor.GetComponent<Animator>().SetTrigger( "Clicked" );
 			SoundtrackManager.s_instance.PlayAudioSource( SoundtrackManager.s_instance.slidingDoor );
 			break;
 
 		case SelectableObject.SelectableObjectType.WeighContainer:
-			if( toggles[(int)PUToggles.WeightContainerInside] && PracticeUseBalanceManager.s_instance.selectedObject == SelectableObject.SelectableObjectType.RiceContainer ) {
-				if( toggles[(int)PUToggles.WeighContainerFilled])
+			if( toggles[(int)PFCToggles.WeightContainerInside] && PracticeUseBalanceManager.s_instance.selectedObject == SelectableObject.SelectableObjectType.RiceContainer ) {
+				if( toggles[(int)PFCToggles.WeighContainerFilled])
 					return;
 
 				riceContainerOutside.GetComponent<Renderer>().materials[1].SetFloat( "_Thickness", 0f );
 				StartCoroutine( PourRice() );
-			} else if( toggles[(int)PUToggles.WeighContainerOutside] && PracticeUseBalanceManager.s_instance.selectedObject == SelectableObject.SelectableObjectType.None ) {
+			} else if( toggles[(int)PFCToggles.WeighContainerOutside] && PracticeUseBalanceManager.s_instance.selectedObject == SelectableObject.SelectableObjectType.None ) {
 				PracticeUseBalanceManager.s_instance.selectedObject = SelectableObject.SelectableObjectType.WeighContainer;
 				weighContainerOutside.GetComponent<Renderer>().materials[1].SetFloat( "_Thickness", 3.5f );
 			}
@@ -133,15 +133,15 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 		case SelectableObject.SelectableObjectType.WeighPan:
 			// If we're holding the calibration weight when clicking the weigh pan, place the weight.
 			if( selectedObject == SelectableObject.SelectableObjectType.CalibrationWeight ) {
-				toggles[(int)PCToggles.WeightInside] = true;
+				toggles[(int)PFCToggles.WeightInside] = true;
 				weightInside.SetActive( true );
-				toggles[(int)PCToggles.WeightOutside] = false;
+				toggles[(int)PFCToggles.WeightOutside] = false;
 				weightOutside.SetActive( false );
-			} else if( !toggles[(int)PUToggles.WeightContainerInside] && selectedObject == SelectableObject.SelectableObjectType.WeighContainer) {
+			} else if( !toggles[(int)PFCToggles.WeightContainerInside] && selectedObject == SelectableObject.SelectableObjectType.WeighContainer) {
 				weighContainerOutside.SetActive( false );
-				toggles[(int)PUToggles.WeighContainerOutside] = false;
+				toggles[(int)PFCToggles.WeighContainerOutside] = false;
 				weighContainerInside.SetActive( true );
-				toggles[(int)PUToggles.WeightContainerInside] = true;
+				toggles[(int)PFCToggles.WeightContainerInside] = true;
 				selectedObject = SelectableObject.SelectableObjectType.None;
 				ReadoutDisplay.s_instance.readoutNumberText.text = "9.7306";
 			}
@@ -153,13 +153,13 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 			// If we aren't holding an object when we click the weight, make it our selected object.
 			if( PracticeCalibrateBalanceManager.s_instance.selectedObject == SelectableObject.SelectableObjectType.None ) {
 				// Toggle on highlights
-				if( toggles[(int)PCToggles.WeightInside] ) {
-					toggles[(int)PCToggles.WeightInside] = false;
+				if( toggles[(int)PFCToggles.WeightInside] ) {
+					toggles[(int)PFCToggles.WeightInside] = false;
 					weightInside.SetActive( false );
-					toggles[(int)PCToggles.WeightInside] = true;
+					toggles[(int)PFCToggles.WeightInside] = true;
 					weightOutside.SetActive( true );
 					weightOutside.GetComponent<Renderer>().materials[1].SetFloat( "_Thickness", 0f );
-				} else if ( toggles[(int)PCToggles.WeightOutside] ) {
+				} else if ( toggles[(int)PFCToggles.WeightOutside] ) {
 					PracticeCalibrateBalanceManager.s_instance.selectedObject = SelectableObject.SelectableObjectType.CalibrationWeight;
 					weightOutside.GetComponent<Renderer>().materials[1].SetFloat( "_Thickness", 3.5f );
 				}
@@ -181,8 +181,8 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 		case SelectableObject.SelectableObjectType.OnButton:
 			if( usedForceps )
 				return;
-			if( toggles[(int)PCToggles.FocusedOnBalanceFace] ) {
-				toggles[(int)PCToggles.BalanceOn] = true;
+			if( toggles[(int)PFCToggles.FocusedOnBalanceFace] ) {
+				toggles[(int)PFCToggles.BalanceOn] = true;
 				ReadoutDisplay.s_instance.TurnBalanceOn();
 			}
 			break;
@@ -246,25 +246,25 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 
 	// Calibration
 	public void ToggleBalanceCalibrationMode( bool toggle ) {
-		toggles[(int)PCToggles.CalibrationModeOn] = toggle;
+		toggles[(int)PFCToggles.CalibrationModeOn] = toggle;
 	}
 
 
 	// Use
 	public void ClickedOnFocusOnBalanceButton() {
-		toggles[(int)PCToggles.FocusedOnBalanceFace] = true;
+		toggles[(int)PFCToggles.FocusedOnBalanceFace] = true;
 		PracticeManager.s_instance.StartNewCameraSlerp( facePivotPos, faceCamPos );
 	}
 
 	public void ClickedOnLeaveFaceFocusButton() {
-		toggles[(int)PCToggles.FocusedOnBalanceFace] = false;
+		toggles[(int)PFCToggles.FocusedOnBalanceFace] = false;
 		PracticeManager.s_instance.StartNewCameraSlerp( defaultPivotPos, defaultCamPos );
 	}
 
 	private IEnumerator ToggleBalancedCalibrationOn() {
 		yield return new WaitForSeconds( 5f );
-		toggles[(int)PCToggles.BalanceCalibrated] = true;
-		toggles[(int)PCToggles.CalibrationModeOn] = false;
+		toggles[(int)PFCToggles.BalanceCalibrated] = true;
+		toggles[(int)PFCToggles.CalibrationModeOn] = false;
 		SoundtrackManager.s_instance.PlayAudioSource( SoundtrackManager.s_instance.buttonBeep );
 		ReadoutDisplay.s_instance.ToggleDisplay( true, true, false );
 		ReadoutDisplay.s_instance.ZeroOut();
@@ -285,7 +285,7 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 			yield return null;
 		}
 		riceSkinnedMeshRenderer.SetBlendShapeWeight( 0, 100f );
-		toggles[(int)PUToggles.WeighContainerFilled] = true;
+		toggles[(int)PFCToggles.WeighContainerFilled] = true;
 		riceContainerInside.SetActive( false );
 		selectedObject = SelectableObject.SelectableObjectType.None;
 		riceContainerOutside.SetActive( true );
