@@ -3,6 +3,7 @@ using System.Collections;
 
 public class PracticeUseBalanceManager : BasePracticeSubmodule {
 	public GameObject weighContainerOutside, weighContainerInside, riceContainerOutside, riceContainerInside;
+	public SkinnedMeshRenderer riceSkinnedMeshRenderer;
 	public Animator leftGlassDoor, rightGlassDoor;
 	public Transform defaultPivotPos, defaultCamPos, facePivotPos, faceCamPos;
 	
@@ -45,7 +46,7 @@ public class PracticeUseBalanceManager : BasePracticeSubmodule {
 			break;
 
 		case SelectableObject.SelectableObjectType.RiceContainer:
-			if( usedForceps )
+			if( usedForceps || toggles[(int)PUToggles.WeighContainerFilled] )
 				return;
 			// If we aren't holding an object when we click the weight, make it our selected object.
 			if( PracticeCalibrateBalanceManager.s_instance.selectedObject == SelectableObject.SelectableObjectType.None ) {
@@ -69,6 +70,16 @@ public class PracticeUseBalanceManager : BasePracticeSubmodule {
 			break;
 
 		case SelectableObject.SelectableObjectType.WeighContainer:
+			if( toggles[(int)PUToggles.WeightContainerInside] && PracticeUseBalanceManager.s_instance.selectedObject == SelectableObject.SelectableObjectType.RiceContainer ) {
+				if( toggles[(int)PUToggles.WeighContainerFilled])
+					return;
+				
+				riceContainerOutside.GetComponent<Renderer>().materials[1].SetFloat( "_Thickness", 0f );
+				StartCoroutine( PourRice() );
+			} else if( toggles[(int)PUToggles.WeighContainerOutside] && PracticeUseBalanceManager.s_instance.selectedObject == SelectableObject.SelectableObjectType.None ) {
+				PracticeUseBalanceManager.s_instance.selectedObject = SelectableObject.SelectableObjectType.WeighContainer;
+				weighContainerOutside.GetComponent<Renderer>().materials[1].SetFloat( "_Thickness", 3.5f );
+			}
 			break;
 
 		case SelectableObject.SelectableObjectType.WeighPan:
@@ -84,5 +95,27 @@ public class PracticeUseBalanceManager : BasePracticeSubmodule {
 	public void ClickedOnLeaveFaceFocusButton() {
 		toggles[(int)PUToggles.FocusedOnBalanceFace] = false;
 		PracticeManager.s_instance.StartNewCameraSlerp( defaultPivotPos, defaultCamPos );
+	}
+
+	public IEnumerator PourRice() {
+		Debug.Log( "Pouring Rice" );
+		riceContainerOutside.SetActive( false );
+		riceContainerInside.SetActive( true );
+		riceContainerInside.GetComponent<Animator>().SetTrigger( "Activate" );
+		SoundtrackManager.s_instance.PlayAudioSource( SoundtrackManager.s_instance.rice2 );
+
+		float startTime = Time.time;
+		float lerpDuration = 2f;
+		while( lerpDuration > Time.time-startTime ) {
+			riceSkinnedMeshRenderer.SetBlendShapeWeight( 0, 100f * ((Time.time-startTime)/lerpDuration) );
+			yield return null;
+		}
+		riceSkinnedMeshRenderer.SetBlendShapeWeight( 0, 100f );
+		toggles[(int)PUToggles.WeighContainerFilled] = true;
+		riceContainerInside.SetActive( false );
+		selectedObject = SelectableObject.SelectableObjectType.None;
+		riceContainerOutside.SetActive( true );
+
+		Debug.Log( "Ended Pouring Rice." );
 	}
 }
