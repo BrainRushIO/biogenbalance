@@ -7,7 +7,7 @@ public class PracticePrepareBalanceManager : BasePracticeSubmodule {
 
 	private float currentBubbleX, currentBubbleY;
 	private float bubbleWinThreshold = 2.5f;
-	private float bubbleMaxDiameter = 66.6f;
+	private float bubbleMaxRadius = 32f;
 
 	void Start() {
 		toggles = new bool[2];
@@ -26,7 +26,7 @@ public class PracticePrepareBalanceManager : BasePracticeSubmodule {
 		case 0:
 			break;
 		case 1:
-			if( Mathf.Abs(bubble.position.x) <= bubbleWinThreshold && Mathf.Abs(bubble.position.y) <= bubbleWinThreshold ) {
+			if( Mathf.Abs(bubble.localPosition.x) <= bubbleWinThreshold && Mathf.Abs(bubble.localPosition.y) <= bubbleWinThreshold ) {
 				Debug.Log( "Yay you win!" );
 			}
 			break;
@@ -79,36 +79,36 @@ public class PracticePrepareBalanceManager : BasePracticeSubmodule {
 
 	public void ClickedLeftScrewUp() {
 		Vector3 bubblePos = bubble.localPosition;
-		bubblePos.x += bubbleMaxDiameter*0.1f;
-		bubblePos.y += bubbleMaxDiameter*0.1f;
+		bubblePos.x += bubbleMaxRadius*0.1f;
+		bubblePos.y += bubbleMaxRadius*0.05f;
 		bubble.localPosition = bubblePos;
 
 		NormalizeBubblePos();
 	}
 
 	public void ClickedLeftScrewDown() {
-		Vector3 bubblePos = bubble.position;
-		bubblePos.x -= bubbleMaxDiameter*0.1f;
-		bubblePos.y -= bubbleMaxDiameter*0.1f;
-		bubble.position = bubblePos;
+		Vector3 bubblePos = bubble.localPosition;
+		bubblePos.x -= bubbleMaxRadius*0.1f;
+		bubblePos.y -= bubbleMaxRadius*0.05f;
+		bubble.localPosition = bubblePos;
 
 		NormalizeBubblePos();
 	}
 
 	public void ClickedRightScrewUp() {
-		Vector3 bubblePos = bubble.position;
-		bubblePos.x -= bubbleMaxDiameter*0.1f;
-		bubblePos.y += bubbleMaxDiameter*0.1f;
-		bubble.position = bubblePos;
+		Vector3 bubblePos = bubble.localPosition;
+		bubblePos.x -= bubbleMaxRadius*0.1f;
+		bubblePos.y += bubbleMaxRadius*0.05f;
+		bubble.localPosition = bubblePos;
 
 		NormalizeBubblePos();
 	}
 
 	public void ClickedRightScrewDown() {
-		Vector3 bubblePos = bubble.position;
-		bubblePos.x += bubbleMaxDiameter*0.1f;
-		bubblePos.y -= bubbleMaxDiameter*0.1f;
-		bubble.position = bubblePos;
+		Vector3 bubblePos = bubble.localPosition;
+		bubblePos.x += bubbleMaxRadius*0.1f;
+		bubblePos.y -= bubbleMaxRadius*0.05f;
+		bubble.localPosition = bubblePos;
 
 		NormalizeBubblePos();
 	}
@@ -116,13 +116,12 @@ public class PracticePrepareBalanceManager : BasePracticeSubmodule {
 	void NormalizeBubblePos() {
 		Vector2 bubblePos = new Vector2(bubble.localPosition.x, bubble.localPosition.y );
 
-		bubblePos.x = Mathf.Clamp( bubble.localPosition.x, -bubbleMaxDiameter, bubbleMaxDiameter );
-		bubblePos.y = Mathf.Clamp( bubble.localPosition.y, -bubbleMaxDiameter, bubbleMaxDiameter );
-		Vector2 temp = new Vector2();
-		temp.x = Mathf.Cos( bubblePos.x );
-		temp.y = Mathf.Sin( bubblePos.y );
+		bubblePos.x = Mathf.Clamp( bubble.localPosition.x, -bubbleMaxRadius, bubbleMaxRadius );
+		bubblePos.y = Mathf.Clamp( bubble.localPosition.y, -bubbleMaxRadius, bubbleMaxRadius );
+		Vector2 tempPos = new Vector2();
+		tempPos = Vector2.ClampMagnitude (bubblePos, 32);
 
-		Vector3 newBubblePos = new Vector3( temp.x, temp.y, bubble.localPosition.z );
+		Vector3 newBubblePos = new Vector3( tempPos.x , tempPos.y , bubble.localPosition.z );
 
 		bubble.localPosition = newBubblePos;
 	}
