@@ -29,7 +29,7 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 		selectedObject = SelectableObject.SelectableObjectType.None;
 	}
 
-	public override void ClickedOnObject( SelectableObject clickedOnObject ) {
+	public override void ClickedOnObject( SelectableObject clickedOnObject, bool usedForceps ) {
 		SelectableObject.SelectableObjectType clickedObjectType = clickedOnObject.objectType;
 
 		switch( clickedObjectType ) {

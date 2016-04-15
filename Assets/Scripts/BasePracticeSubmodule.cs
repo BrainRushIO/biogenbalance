@@ -45,12 +45,13 @@ public abstract class BasePracticeSubmodule : MonoBehaviour {
 	/// <summary>
 	/// Checks the inputs to see if we have met the requirements to go to the next step.
 	/// </summary>
-	public void CheckInputs() {
+	public bool CheckInputs() {
 		for( int i = 0; i < toggles.Length; i++ ) {
 			if( toggles[i] != inputs[i] )
-				return;
+				return false;
 		}
 		PracticeManager.s_instance.GoToNextStep();
+		return true;
 	}
 
 	public abstract void ClearSelectedObject( bool slerpToDefaultPos );/* {
@@ -61,7 +62,7 @@ public abstract class BasePracticeSubmodule : MonoBehaviour {
 		selectedObject = SelectableObject.SelectableObjectType.None;
 	}*/
 
-	public abstract void ClickedOnObject( SelectableObject clickedOnObject );/* {
+	public abstract void ClickedOnObject( SelectableObject clickedOnObject, bool usedForceps );/* {
 		SelectableObject.SelectableObjectType clickedObjectType = clickedOnObject.objectType;
 
 		switch( clickedObjectType ) {

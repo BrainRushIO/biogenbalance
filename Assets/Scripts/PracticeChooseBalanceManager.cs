@@ -68,7 +68,7 @@ public class PracticeChooseBalanceManager : BasePracticeSubmodule {
 		selectedObject = SelectableObject.SelectableObjectType.None;
 	}
 
-	public override void ClickedOnObject( SelectableObject clickedOnObject ) {
+	public override void ClickedOnObject( SelectableObject clickedOnObject, bool usedForceps ) {
 	}
 
 	/// <summary>
