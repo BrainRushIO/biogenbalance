@@ -33,7 +33,7 @@ public class PracticeManager : MonoBehaviour {
 		if( s_instance == null ) {
 			s_instance = this;
 			InitializePracticeStepList();
-			InitializeAcquireListView();
+			InitializePracticeListView();
 		} else {
 			Debug.LogWarning( "Destroying duplicate Practice Manager." );
 			DestroyImmediate( this.gameObject );
@@ -216,10 +216,6 @@ public class PracticeManager : MonoBehaviour {
 			ToggleListViewItemHighLight( i, false );
 		UIManager.s_instance.UpdateDescriptionViewText( "" );
 		UIManager.s_instance.ToggleSidePanel( false, false );
-
-//		//TODO Remove this if 
-//		if( submoduleManager != null )
-//			submoduleManager.ResetScene();
 	}
 	
 	private void InitializePracticeStepList() {
@@ -304,7 +300,7 @@ public class PracticeManager : MonoBehaviour {
 		}
 	}
 
-	private void InitializeAcquireListView() {
+	private void InitializePracticeListView() {
 		int practiceListCount = practiceStepList.Count;
 
 		// Setting the height of the list view to match the amount of buttons I will add to it.
