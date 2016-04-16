@@ -44,8 +44,9 @@ public class UIManager : MonoBehaviour {
 					panButtonNormalSprite, panButtonHighlightedSprite,
 					forcepsButtonNormalSprite, forcepsButtonHighlightedSprite;
 
-	public Texture2D pointerCursor,
-				rotateCursor,
+	[Header("Cursors")]
+	public Texture2D pointerCursor;
+	public Texture2D rotateCursor,
 				panCursor,
 				forcepsCursor,
 				selectableItemCursor,
@@ -128,20 +129,35 @@ public class UIManager : MonoBehaviour {
 	}
 
 	public void UpdateMouseCursor() {
-		switch (ApplicationManager.s_instance.currentMouseMode) 
-		{
-		case ApplicationManager.MouseMode.Pointer:
-			Cursor.SetCursor( pointerCursor, Vector2.zero, CursorMode.ForceSoftware );
-			break;
-		case ApplicationManager.MouseMode.Rotate:
-			Cursor.SetCursor( rotateCursor, Vector2.zero, CursorMode.ForceSoftware );
-			break;
-		case ApplicationManager.MouseMode.Pan:
-			Cursor.SetCursor( panCursor, Vector2.zero, CursorMode.ForceSoftware );
-			break;
-		case ApplicationManager.MouseMode.Forceps:
-			Cursor.SetCursor( forcepsCursor, Vector2.zero, CursorMode.ForceSoftware );
-			break;
+		if( ApplicationManager.s_instance.currentSpecialCursorMode == ApplicationManager.SpecialCursorMode.None ) {
+			switch (ApplicationManager.s_instance.currentMouseMode) 
+			{
+			case ApplicationManager.MouseMode.Pointer:
+				Cursor.SetCursor( pointerCursor, Vector2.zero, CursorMode.ForceSoftware );
+				break;
+			case ApplicationManager.MouseMode.Rotate:
+				Cursor.SetCursor( rotateCursor, Vector2.zero, CursorMode.ForceSoftware );
+				break;
+			case ApplicationManager.MouseMode.Pan:
+				Cursor.SetCursor( panCursor, Vector2.zero, CursorMode.ForceSoftware );
+				break;
+			case ApplicationManager.MouseMode.Forceps:
+				Cursor.SetCursor( forcepsCursor, Vector2.zero, CursorMode.ForceSoftware );
+				break;
+			}
+		} else {
+			switch( ApplicationManager.s_instance.currentSpecialCursorMode )
+			{
+			case ApplicationManager.SpecialCursorMode.OpenHand:
+				Cursor.SetCursor( selectableItemCursor, Vector2.zero, CursorMode.ForceSoftware );
+				break;
+			case ApplicationManager.SpecialCursorMode.ClosedHand:
+				Cursor.SetCursor( holdingItemCursor, Vector2.zero, CursorMode.ForceSoftware );
+				break;
+			case ApplicationManager.SpecialCursorMode.PointingHand:
+				Cursor.SetCursor( placeItemCursor, Vector2.zero, CursorMode.ForceSoftware );
+				break;
+			}
 		}
 	}
 

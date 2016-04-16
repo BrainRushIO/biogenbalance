@@ -54,6 +54,19 @@ public class PracticeManager : MonoBehaviour {
 	}
 
 	void Update() {
+		Ray mouseHoverRay = sceneCamera.ScreenPointToRay(Input.mousePosition);
+		RaycastHit mouseHoverHit;
+		if ( Physics.Raycast(mouseHoverRay, out mouseHoverHit) ) {
+			SelectableObject hoveredObject = mouseHoverHit.transform.GetComponent<SelectableObject>();
+			if( hoveredObject != null ) {
+				submoduleManager.HoveredOverObject( hoveredObject );
+			} 
+		} else {
+			if( ApplicationManager.s_instance.currentSpecialCursorMode == ApplicationManager.SpecialCursorMode.None && submoduleManager.selectedObject == SelectableObject.SelectableObjectType.None ) {
+				ApplicationManager.s_instance.SetSpecialMouseMode( (int)ApplicationManager.SpecialCursorMode.None );
+			}
+		}
+
 		#region PointerInput
 		// Inupt is disbaled if camera is lerping
 		if( isLerpingToNewPosition )
@@ -73,7 +86,7 @@ public class PracticeManager : MonoBehaviour {
 					}
 				}
 			} else if( !isDragging && !ApplicationManager.s_instance.userIsInteractingWithUI ) { // If we clicked away from any objects in the 3D Scene View, clear selection
-				submoduleManager.ClearSelectedObject( true );
+				submoduleManager.ClearSelectedObject();
 			}
 
 			hasClickedDownOnItem = false;

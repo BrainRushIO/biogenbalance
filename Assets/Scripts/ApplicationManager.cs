@@ -12,6 +12,9 @@ public class ApplicationManager : MonoBehaviour {
 	public enum MouseMode { Pointer, Rotate, Pan, Forceps }
 	public MouseMode currentMouseMode = MouseMode.Pointer;
 
+	public enum SpecialCursorMode { None, OpenHand, ClosedHand, PointingHand }
+	public SpecialCursorMode currentSpecialCursorMode = SpecialCursorMode.None;
+
 	private Dictionary<string, string> scenesDictionary;
 
 	public bool userIsInteractingWithUI = false;
@@ -64,7 +67,7 @@ public class ApplicationManager : MonoBehaviour {
 	public void LoadScene( string sceneInitials ) {
 		string newScene = scenesDictionary[sceneInitials];
 
-		if (newScene == SceneManager.GetActiveScene ().name)
+		if (newScene == SceneManager.GetActiveScene().name)
 			return;
 
 		switch( currentApplicationMode )
@@ -85,10 +88,10 @@ public class ApplicationManager : MonoBehaviour {
 			currentApplicationMode = ApplicationMode.Validate;
 		}
 
+		SetSpecialMouseMode( (int)SpecialCursorMode.None );
 		UIManager.s_instance.ClearListView();
 		UIManager.s_instance.UpdateDescriptionViewText( "" );
 		SceneManager.LoadScene( newScene );
-//		Debug.Log( "Loaded new scene: " + newScene );
 	}
 
 	public void ChangeMouseMode( int newMouseMode ) {
@@ -101,5 +104,11 @@ public class ApplicationManager : MonoBehaviour {
 		messageWindowActive = false;
 		if( UIManager.s_instance.messageWindow != null )
 			UIManager.s_instance.messageWindow.gameObject.SetActive( false );
+	}
+
+	public void SetSpecialMouseMode( int selection ) {
+		currentSpecialCursorMode = (SpecialCursorMode)selection;
+		UIManager.s_instance.UpdateMouseCursor();
+
 	}
 }

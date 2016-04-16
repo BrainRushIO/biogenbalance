@@ -79,7 +79,8 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 	public void CheckInputs( PFCToggles[] ignoreToggles ) {
 		for( int i = 0; i < toggles.Length; i++ ) {
 			bool ignoreInput = false;
-			foreach( PFCToggles toggle in ignoreToggles ) {
+
+			foreach( PFCToggles toggle in ignoreToggles ){
 				if( i == (int)toggle ) {
 					ignoreInput = true;
 					break;
@@ -111,19 +112,35 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 		}
 	}
 
-	/// <summary>
-	/// Resets the scene objects to their default position.
-	/// </summary>
-	public override void ResetScene() {
+	public override void HoveredOverObject( SelectableObject obj ) {
+		SelectableObject.SelectableObjectType hoveredObjectType = obj.objectType;
 
-	}
-
-	public override void ClearSelectedObject( bool slerpToDefaultPos ) {
-		if( selectedObject == SelectableObject.SelectableObjectType.None )
-			return;
-
-		//TODO Turn off highlights and shit
-		selectedObject = SelectableObject.SelectableObjectType.None;
+		switch( hoveredObjectType )
+		{
+		case SelectableObject.SelectableObjectType.CalibrationWeight:
+			if( selectedObject == SelectableObject.SelectableObjectType.None && ApplicationManager.s_instance.currentMouseMode == ApplicationManager.MouseMode.Forceps ) {
+				ApplicationManager.s_instance.SetSpecialMouseMode( (int)ApplicationManager.SpecialCursorMode.OpenHand );
+			}
+			break;
+		case SelectableObject.SelectableObjectType.RiceContainer:
+			if( selectedObject == SelectableObject.SelectableObjectType.None && ApplicationManager.s_instance.currentMouseMode == ApplicationManager.MouseMode.Pointer ) {
+				ApplicationManager.s_instance.SetSpecialMouseMode( (int)ApplicationManager.SpecialCursorMode.OpenHand );
+			}
+			break;
+		case SelectableObject.SelectableObjectType.WeighContainer:
+			if( selectedObject == SelectableObject.SelectableObjectType.None && ApplicationManager.s_instance.currentMouseMode == ApplicationManager.MouseMode.Pointer ) {
+				ApplicationManager.s_instance.SetSpecialMouseMode( (int)ApplicationManager.SpecialCursorMode.OpenHand );
+			} else if( selectedObject == SelectableObject.SelectableObjectType.RiceContainer ) {
+				ApplicationManager.s_instance.SetSpecialMouseMode( (int)ApplicationManager.SpecialCursorMode.PointingHand );
+			}
+			break;
+		case SelectableObject.SelectableObjectType.WeighPan:
+			if( (selectedObject == SelectableObject.SelectableObjectType.CalibrationWeight && ApplicationManager.s_instance.currentMouseMode == ApplicationManager.MouseMode.Forceps ) 
+				|| selectedObject == SelectableObject.SelectableObjectType.WeighContainer && ApplicationManager.s_instance.currentMouseMode == ApplicationManager.MouseMode.Pointer ) {
+				ApplicationManager.s_instance.SetSpecialMouseMode( (int)ApplicationManager.SpecialCursorMode.PointingHand );
+			}
+			break;
+		}
 	}
 
 	public override void ClickedOnObject( SelectableObject clickedOnObject, bool usedForceps ) {
@@ -149,8 +166,9 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 			if( usedForceps || toggles[(int)PFCToggles.WeighContainerFilled] || !toggles[(int)PFCToggles.WeightContainerInside] )
 				return;
 			// If we aren't holding an object when we click the weight, make it our selected object.
-			if( PracticeCalibrateBalanceManager.s_instance.selectedObject == SelectableObject.SelectableObjectType.None ) {
-				PracticeCalibrateBalanceManager.s_instance.selectedObject = SelectableObject.SelectableObjectType.RiceContainer;
+			if( selectedObject == SelectableObject.SelectableObjectType.None ) {
+				SelectObject( SelectableObject.SelectableObjectType.RiceContainer );
+				//selectedObject = SelectableObject.SelectableObjectType.RiceContainer;
 //				riceContainerOutside.GetComponent<Renderer>().materials[1].SetFloat( "_Thickness", 3.5f );
 			} else {
 				PracticeManager.s_instance.PressedHintButton();
@@ -179,8 +197,9 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 				StartCoroutine( PourRice() );
 			} 
 			// It can only be selected if balance has been calibrated
-			else if( toggles[(int)PFCToggles.WeighContainerOutside] && PracticeUseBalanceManager.s_instance.selectedObject == SelectableObject.SelectableObjectType.None && toggles[(int)PFCToggles.BalanceCalibrated] ) {
-				PracticeUseBalanceManager.s_instance.selectedObject = SelectableObject.SelectableObjectType.WeighContainer;
+			else if( toggles[(int)PFCToggles.WeighContainerOutside] && selectedObject == SelectableObject.SelectableObjectType.None && toggles[(int)PFCToggles.BalanceCalibrated] ) {
+				SelectObject( SelectableObject.SelectableObjectType.WeighContainer );
+				//selectedObject = SelectableObject.SelectableObjectType.WeighContainer;
 //				weighContainerOutside.GetComponent<Renderer>().materials[1].SetFloat( "_Thickness", 3.5f );
 			} else {
 				PracticeManager.s_instance.PressedHintButton();
@@ -199,7 +218,8 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 				toggles[(int)PFCToggles.WeighContainerOutside] = false;
 				weighContainerInside.SetActive( true );
 				toggles[(int)PFCToggles.WeightContainerInside] = true;
-				selectedObject = SelectableObject.SelectableObjectType.None;
+				ClearSelectedObject();
+				//selectedObject = SelectableObject.SelectableObjectType.None;
 				ReadoutDisplay.s_instance.readoutNumberText.text = "9.7306";
 			} else {
 				PracticeManager.s_instance.PressedHintButton();
@@ -219,7 +239,8 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 					weightOutside.SetActive( true );
 //					weightOutside.GetComponent<Renderer>().materials[1].SetFloat( "_Thickness", 0f );
 				} else if ( toggles[(int)PFCToggles.WeightOutside] || toggles[(int)PFCToggles.CalibrationModeOn] ) {
-					PracticeCalibrateBalanceManager.s_instance.selectedObject = SelectableObject.SelectableObjectType.CalibrationWeight;
+					SelectObject( SelectableObject.SelectableObjectType.CalibrationWeight );
+					//selectedObject = SelectableObject.SelectableObjectType.CalibrationWeight;
 //					weightOutside.GetComponent<Renderer>().materials[1].SetFloat( "_Thickness", 3.5f );
 				}
 			} else {
@@ -378,7 +399,8 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 		riceSkinnedMeshRenderer.SetBlendShapeWeight( 0, 100f );
 		toggles[(int)PFCToggles.WeighContainerFilled] = true;
 		riceContainerInside.SetActive( false );
-		selectedObject = SelectableObject.SelectableObjectType.None;
+		ClearSelectedObject();
+		//selectedObject = SelectableObject.SelectableObjectType.None;
 		riceContainerOutside.SetActive( true );
 		Debug.Log( "Ended Pouring Rice." );
 	}

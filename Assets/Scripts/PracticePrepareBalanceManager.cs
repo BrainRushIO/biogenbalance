@@ -44,24 +44,6 @@ public class PracticePrepareBalanceManager : BasePracticeSubmodule {
 		moduleSteps[stepIndex].ExecuteStepLogic();
 	}
 
-	/// <summary>
-	/// Resets the scene objects to their default position.
-	/// </summary>
-	public override void ResetScene() {
-	}
-
-	protected override void SelectObject( SelectableObject newSelection ) {
-		ClearSelectedObject( false );
-	}
-
-	public override void ClearSelectedObject( bool lerpToDefaultPos ) {
-		if( selectedObject == SelectableObject.SelectableObjectType.None )
-			return;
-
-		//TODO Turn off highlights and shit
-		selectedObject = SelectableObject.SelectableObjectType.None;
-	}
-
 	public override void ClickedOnObject( SelectableObject clickedOnObject, bool usedForceps ) {
 	}
 

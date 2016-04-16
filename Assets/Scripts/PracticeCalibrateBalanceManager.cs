@@ -41,21 +41,6 @@ public class PracticeCalibrateBalanceManager : BasePracticeSubmodule {
 		}
 	}
 
-	public override void ResetScene() {
-	}
-
-	protected override void SelectObject( SelectableObject newSelection ) {
-		ClearSelectedObject( false );
-	}
-
-	public override void ClearSelectedObject( bool slerpToDefaultPos ) {
-		if( selectedObject == SelectableObject.SelectableObjectType.None )
-			return;
-
-		//TODO Turn off highlights and shit
-		selectedObject = SelectableObject.SelectableObjectType.None;
-	}
-
 	public override void ClickedOnObject( SelectableObject clickedOnObject, bool usedForceps ) {
 		SelectableObject.SelectableObjectType clickedObjectType = clickedOnObject.objectType;
 

@@ -36,13 +36,26 @@ public abstract class BasePracticeSubmodule : MonoBehaviour {
 
 	public abstract void UpdateSceneContents( int stepIndex );
 
-	/// <summary>
-	/// Resets the scene objects to their default position.
-	/// </summary>
-	public virtual void ResetScene() {}
-
 	protected virtual void SelectObject( SelectableObject newSelection ) {
-		ClearSelectedObject( false );
+		ClearSelectedObject();
+
+		selectedObject = newSelection.objectType;
+		ApplicationManager.s_instance.SetSpecialMouseMode( (int)ApplicationManager.SpecialCursorMode.ClosedHand );
+	}
+
+	protected virtual void SelectObject( SelectableObject.SelectableObjectType newSelection ) {
+		ClearSelectedObject();
+
+		selectedObject = newSelection;
+		ApplicationManager.s_instance.SetSpecialMouseMode( (int)ApplicationManager.SpecialCursorMode.ClosedHand );
+	}
+
+	public virtual void ClearSelectedObject( ) {
+		if( selectedObject == SelectableObject.SelectableObjectType.None )
+			return;
+
+		selectedObject = SelectableObject.SelectableObjectType.None;
+		ApplicationManager.s_instance.SetSpecialMouseMode( (int)ApplicationManager.SpecialCursorMode.None );
 	}
 
 	/// <summary>
@@ -57,13 +70,7 @@ public abstract class BasePracticeSubmodule : MonoBehaviour {
 		return true;
 	}
 
-	public abstract void ClearSelectedObject( bool slerpToDefaultPos );/* {
-		if( selectedObject == SelectableObject.SelectableObjectType.None )
-			return;
-
-		//TODO Turn off highlights and shit
-		selectedObject = SelectableObject.SelectableObjectType.None;
-	}*/
+	public virtual void HoveredOverObject( SelectableObject obj ) {}
 
 	public abstract void ClickedOnObject( SelectableObject clickedOnObject, bool usedForceps );/* {
 		SelectableObject.SelectableObjectType clickedObjectType = clickedOnObject.objectType;

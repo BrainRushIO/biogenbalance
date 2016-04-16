@@ -45,18 +45,6 @@ public class PracticeUseBalanceManager : BasePracticeSubmodule {
 		moduleSteps[currentStep].ExecuteStepLogic();
 	}
 
-	public override void ClearSelectedObject( bool slerpToDefaultPos ) {
-		// HACK remove this
-		return;
-
-		if( selectedObject == SelectableObject.SelectableObjectType.None )
-			return;
-
-		weighContainerOutside.GetComponent<Renderer>().materials[1].SetFloat("Thickness", 0f );
-		riceContainerOutside.GetComponent<Renderer>().materials[1].SetFloat("Thickness", 0f );
-		selectedObject = SelectableObject.SelectableObjectType.None;
-	}
-
 	public override void ClickedOnObject( SelectableObject clickedOnObject, bool usedForceps ) {
 		SelectableObject.SelectableObjectType clickedObjectType = clickedOnObject.objectType;
 
