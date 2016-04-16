@@ -7,8 +7,6 @@ public class ValidateManager : MonoBehaviour {
 	public Camera sceneCamera;
 	[System.NonSerialized]
 	public OrbitCamera orbitCam;
-	public ListViewButton defaultListViewText;
-	public TextAsset practiceContentXML;
 	public bool isDragging = false;
 
 	/// <summary>
@@ -16,7 +14,7 @@ public class ValidateManager : MonoBehaviour {
 	/// </summary>
 	public int currentStep = 0;
 	public SelectableObject.SelectableObjectType selectedObject;
-	public BasePracticeModuleStep[] moduleSteps;
+	public ValidateStep[] moduleSteps;
 
 	[SerializeField]
 	private bool[] toggles;
@@ -248,7 +246,7 @@ public class ValidateManager : MonoBehaviour {
 	}
 
 	protected virtual void Init () {
-		moduleSteps = GetComponentsInChildren<BasePracticeModuleStep>();
+		moduleSteps = GetComponentsInChildren<ValidateStep>();
 		selectedObject = SelectableObject.SelectableObjectType.None;
 
 		if( moduleSteps == null || moduleSteps.Length == 0) {

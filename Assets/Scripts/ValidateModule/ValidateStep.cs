@@ -51,14 +51,14 @@ public class ValidateStep : MonoBehaviour {
 	void Start() {
 		int sI = transform.GetSiblingIndex();
 		if( sI > 0 )
-			objectToggles = PracticeUseBalanceManager.s_instance.moduleSteps[sI-1].GetInputs();
+			objectToggles = ValidateManager.s_instance.moduleSteps[sI-1].GetInputs();
 		else {
 			objectToggles = new bool[15];
 			for( int i = 1; i < objectToggles.Length; i++ )
 				objectToggles[i] = false;
 
-			objectToggles[(int)PracticeFullCourseManager.PFCToggles.WeightOutside] = true;
-			objectToggles[(int)PracticeFullCourseManager.PFCToggles.WeighContainerOutside] = true;
+			objectToggles[(int)ValidateManager.VToggles.WeightOutside] = true;
+			objectToggles[(int)ValidateManager.VToggles.WeighContainerOutside] = true;
 		}
 	}
 		
