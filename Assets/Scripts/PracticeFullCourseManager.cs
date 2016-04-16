@@ -6,7 +6,7 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 	// Prepare
 	public RectTransform bubble;
 	public Transform backPivot, backCamPos, backDefaultCamPos;
-	public GameObject accessBehindViewCanvas;
+	public GameObject accessBehindViewCanvas, screwsCanvas, bubbleCanvas, returnFromBackCanvas;
 
 	private float currentBubbleX, currentBubbleY;
 	private float bubbleWinThreshold = 2.5f;
@@ -25,6 +25,8 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 								WeightOutside, WeightInside, BalanceOn, BalanceCalibrated, CalibrationModeOn,
 								WeighContainerOutside, WeightContainerInside, LDoorOpen, RDoorOpen, FocusedOnBalanceFace, BalanceTared, WeighContainerFilled, ReadingStabilized }
 
+	private int rightDoorOpenState, rightDoorClosedState, leftDoorOpenState, leftDoorClosedState;
+
 	void Start() {
 		toggles = new bool[15];
 		for( int i = 0; i < toggles.Length; i++ )
@@ -33,28 +35,62 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 		toggles[(int)PFCToggles.WeighContainerOutside] = true;
 		toggles[(int)PFCToggles.WeightOutside] = true;
 
-//		ReadoutDisplay readOutDisplay = ReadoutDisplay.s_instance;
-//		readOutDisplay.balanceOn = true;
-//		readOutDisplay.balanceCalibrated = true;
-//		readOutDisplay.ToggleDisplay( true, true, false );
-//		readOutDisplay.readoutNumberText.text = "0.0000";
+		rightDoorOpenState = Animator.StringToHash( "Base Layer.SMB_RightGlass_Open" );
+		rightDoorClosedState = Animator.StringToHash( "Base Layer.SMB_RightGlass_Closed" );
+		leftDoorOpenState = Animator.StringToHash( "Base Layer.SMB_LeftGlass_Open" );
+		leftDoorClosedState = Animator.StringToHash( "Base Layer.SMB_LeftGlass_Closed" );
 	}
 
 	void Update() {
-		CheckInputs();
+		// Making exceptions for what layers to ignore depending on step. Shitty, I know but we need to design this better next time.
+		switch( currentStep )
+		{
+		case 0:
+		case 1:
+		case 2:
+		case 3:
+		case 4:
+		case 14:
+			CheckInputs( new PFCToggles[2] { PFCToggles.LDoorOpen, PFCToggles.RDoorOpen } );
+			break;
+		default:
+			CheckInputs();
+			break;
+		}
 
 		if( ReadoutDisplay.s_instance.hasStableReading && !toggles[(int)PFCToggles.ReadingStabilized] ) {
 			toggles[(int)PFCToggles.ReadingStabilized] = true;
 		}
+		
+		UpdateDoorTogglesBasedOnAnimationState( false );
 
-//		TODO this case will be whatever step is the bubble leveling step
+//		This case will be whatever step is the bubble leveling step
 		switch( currentStep ) {
 		case 1:
 			if( Mathf.Abs(bubble.localPosition.x) <= bubbleWinThreshold && Mathf.Abs(bubble.localPosition.y) <= bubbleWinThreshold ) {
 				toggles[(int)PFCToggles.BalanceIsLeveled] = true;
+				SoundtrackManager.s_instance.PlayAudioSource( SoundtrackManager.s_instance.buttonBeep );
+				ClickedOnLeaveBackFocusButton();
 			}
 			break;
 		}
+	}
+
+	public void CheckInputs( PFCToggles[] ignoreToggles ) {
+		for( int i = 0; i < toggles.Length; i++ ) {
+			bool ignoreInput = false;
+			foreach( PFCToggles toggle in ignoreToggles ) {
+				if( i == (int)toggle ) {
+					ignoreInput = true;
+					break;
+				}
+			}
+			if( ignoreInput )
+				continue;
+			if( toggles[i] != inputs[i] )
+				return;
+		}
+		PracticeManager.s_instance.GoToNextStep();
 	}
 
 	public override void UpdateSceneContents( int stepIndex ) {
@@ -104,6 +140,8 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 				ReadoutDisplay.s_instance.ZeroOut();
 				toggles[(int)PFCToggles.BalanceTared] = true;
 				SoundtrackManager.s_instance.PlayAudioSource( SoundtrackManager.s_instance.buttonBeep );
+			} else {
+				PracticeManager.s_instance.PressedHintButton();
 			}
 			break;
 
@@ -113,7 +151,9 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 			// If we aren't holding an object when we click the weight, make it our selected object.
 			if( PracticeCalibrateBalanceManager.s_instance.selectedObject == SelectableObject.SelectableObjectType.None ) {
 				PracticeCalibrateBalanceManager.s_instance.selectedObject = SelectableObject.SelectableObjectType.RiceContainer;
-				riceContainerOutside.GetComponent<Renderer>().materials[1].SetFloat( "_Thickness", 3.5f );
+//				riceContainerOutside.GetComponent<Renderer>().materials[1].SetFloat( "_Thickness", 3.5f );
+			} else {
+				PracticeManager.s_instance.PressedHintButton();
 			}
 			break;
 
@@ -121,14 +161,11 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 			if( usedForceps )
 				return;
 			// Check what state the animation is in and toggle on the opposite since we're going to transition animations after.
-			//			if( leftGlassDoor.GetCurrentAnimatorStateInfo(0).fullPathHash == rightDoorOpenState ) {
-			//				toggles[(int)PCToggles.RDoorOpen] = false;
-			//			} else if ( leftGlassDoor.GetCurrentAnimatorStateInfo(0).fullPathHash == Animator.StringToHash("Base Layer.SMB_RightGlass_Closed")/*rightDoorClosedState*/ ) {
-			//				toggles[(int)PCToggles.RDoorOpen] = true;
-			//			}
-			bool newDoorOpenValue = !toggles[(int)PFCToggles.RDoorOpen];
-			toggles[(int)PFCToggles.RDoorOpen] = newDoorOpenValue;
-			ReadoutDisplay.s_instance.doorsAreOpen = newDoorOpenValue;
+			UpdateDoorTogglesBasedOnAnimationState( true );
+
+//			bool newDoorOpenValue = !toggles[(int)PFCToggles.RDoorOpen];
+//			toggles[(int)PFCToggles.RDoorOpen] = newDoorOpenValue;
+			ReadoutDisplay.s_instance.doorsAreOpen = toggles[(int)PFCToggles.RDoorOpen];// newDoorOpenValue;
 			rightGlassDoor.GetComponent<Animator>().SetTrigger( "Clicked" );
 			SoundtrackManager.s_instance.PlayAudioSource( SoundtrackManager.s_instance.slidingDoor );
 			break;
@@ -138,13 +175,15 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 				if( toggles[(int)PFCToggles.WeighContainerFilled])
 					return;
 
-				riceContainerOutside.GetComponent<Renderer>().materials[1].SetFloat( "_Thickness", 0f );
+//				riceContainerOutside.GetComponent<Renderer>().materials[1].SetFloat( "_Thickness", 0f );
 				StartCoroutine( PourRice() );
 			} 
 			// It can only be selected if balance has been calibrated
 			else if( toggles[(int)PFCToggles.WeighContainerOutside] && PracticeUseBalanceManager.s_instance.selectedObject == SelectableObject.SelectableObjectType.None && toggles[(int)PFCToggles.BalanceCalibrated] ) {
 				PracticeUseBalanceManager.s_instance.selectedObject = SelectableObject.SelectableObjectType.WeighContainer;
-				weighContainerOutside.GetComponent<Renderer>().materials[1].SetFloat( "_Thickness", 3.5f );
+//				weighContainerOutside.GetComponent<Renderer>().materials[1].SetFloat( "_Thickness", 3.5f );
+			} else {
+				PracticeManager.s_instance.PressedHintButton();
 			}
 			break;
 
@@ -162,6 +201,8 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 				toggles[(int)PFCToggles.WeightContainerInside] = true;
 				selectedObject = SelectableObject.SelectableObjectType.None;
 				ReadoutDisplay.s_instance.readoutNumberText.text = "9.7306";
+			} else {
+				PracticeManager.s_instance.PressedHintButton();
 			}
 			break;
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -176,11 +217,13 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 					weightInside.SetActive( false );
 					toggles[(int)PFCToggles.WeightOutside] = true;
 					weightOutside.SetActive( true );
-					weightOutside.GetComponent<Renderer>().materials[1].SetFloat( "_Thickness", 0f );
+//					weightOutside.GetComponent<Renderer>().materials[1].SetFloat( "_Thickness", 0f );
 				} else if ( toggles[(int)PFCToggles.WeightOutside] || toggles[(int)PFCToggles.CalibrationModeOn] ) {
 					PracticeCalibrateBalanceManager.s_instance.selectedObject = SelectableObject.SelectableObjectType.CalibrationWeight;
-					weightOutside.GetComponent<Renderer>().materials[1].SetFloat( "_Thickness", 3.5f );
+//					weightOutside.GetComponent<Renderer>().materials[1].SetFloat( "_Thickness", 3.5f );
 				}
+			} else {
+				PracticeManager.s_instance.PressedHintButton();
 			}
 			break;
 
@@ -199,11 +242,24 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 		case SelectableObject.SelectableObjectType.OnButton:
 			if( usedForceps )
 				return;
+			if( !toggles[(int)PFCToggles.BalanceIsLeveled] ){
+				PracticeManager.s_instance.PressedHintButton();
+				return;
+			}	
+
 			if( toggles[(int)PFCToggles.FocusedOnBalanceFace] ) {
 				toggles[(int)PFCToggles.BalanceOn] = true;
 				ReadoutDisplay.s_instance.TurnBalanceOn();
 			}
 			break;
+		}
+	}
+
+	private void UpdateDoorTogglesBasedOnAnimationState( bool inverse ) {
+		if( rightGlassDoor.GetCurrentAnimatorStateInfo(0).fullPathHash == rightDoorOpenState ) {
+			toggles[(int)PFCToggles.RDoorOpen] = ( inverse ) ? false : true;
+		} else if ( rightGlassDoor.GetCurrentAnimatorStateInfo(0).fullPathHash == rightDoorClosedState ) {
+			toggles[(int)PFCToggles.RDoorOpen] = ( inverse ) ? true : false;
 		}
 	}
 
@@ -272,10 +328,14 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 	}
 
 	public void ClickedOnLeaveBackFocusButton() {
-		if( toggles[(int)PFCToggles.BalanceIsLeveled] )
+		if( toggles[(int)PFCToggles.BalanceIsLeveled] ) {
 			accessBehindViewCanvas.SetActive( false );
+		}
 		else
 			accessBehindViewCanvas.SetActive( true );
+		screwsCanvas.SetActive( false );
+		bubbleCanvas.SetActive( false );
+		returnFromBackCanvas.SetActive( false );
 		toggles[(int)PFCToggles.InLevelingPosition] = false;
 		PracticeManager.s_instance.StartNewCameraSlerp( defaultPivotPos, backDefaultCamPos );
 	}

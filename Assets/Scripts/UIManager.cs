@@ -182,6 +182,11 @@ public class UIManager : MonoBehaviour {
 	/// <param name="toggleOn">If set to <c>true</c> toggle on.</param>
 	public void ToggleSidePanel( bool toggleOn, bool lerpTransition ) {
 		CanvasGroup cG = sidePanel.GetComponent<CanvasGroup>();
+		if( cG.alpha == 1f && toggleOn == true )
+			return;
+		else if( cG.alpha == 0f && toggleOn == false )
+			return;
+
 		if( lerpTransition ) 
 			StartCoroutine( LerpSidePanelAlpha( toggleOn, 0.15f, cG ) );
 		else

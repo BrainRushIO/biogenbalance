@@ -4,6 +4,9 @@ using System.Collections;
 public abstract class BasePracticeSubmodule : MonoBehaviour {
 	public static BasePracticeSubmodule s_instance;
 
+	/// <summary>
+	/// The current step. Zero-indexed. The List View steps are One-indexed e.g. List Step 1 is currentStep 0.
+	/// </summary>
 	public int currentStep = 0;
 	public SelectableObject.SelectableObjectType selectedObject;
 	public BasePracticeModuleStep[] moduleSteps;
