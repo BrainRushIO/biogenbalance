@@ -153,6 +153,13 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 				ApplicationManager.s_instance.SetSpecialMouseMode( (int)ApplicationManager.SpecialCursorMode.PointingHand );
 			}
 			break;
+		case SelectableObject.SelectableObjectType.RightDoor:
+		case SelectableObject.SelectableObjectType.OnButton:
+		case SelectableObject.SelectableObjectType.TareButton:
+			if( ApplicationManager.s_instance.currentMouseMode == ApplicationManager.MouseMode.Pointer && selectedObject == SelectableObject.SelectableObjectType.None ) {
+				ApplicationManager.s_instance.SetSpecialMouseMode( (int)ApplicationManager.SpecialCursorMode.PointingHand );
+			}
+			break;
 		}
 	}
 
@@ -164,7 +171,7 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 		case SelectableObject.SelectableObjectType.TareButton:
 			if( usedForceps )
 				return;
-			if( toggles[(int)PFCToggles.FocusedOnBalanceFace] && !toggles[(int)PFCToggles.BalanceCalibrated] ) {
+			if( toggles[(int)PFCToggles.FocusedOnBalanceFace] && !toggles[(int)PFCToggles.BalanceCalibrated] && toggles[(int)PFCToggles.BalanceOn] ) {
 				ReadoutDisplay.s_instance.PlayCalibrationModeAnimation();
 			} else if( toggles[(int)PFCToggles.WeightContainerInside] && !toggles[(int)PFCToggles.RDoorOpen] ) {
 				ReadoutDisplay.s_instance.ZeroOut();
@@ -181,8 +188,6 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 			// If we aren't holding an object when we click the weight, make it our selected object.
 			if( selectedObject == SelectableObject.SelectableObjectType.None ) {
 				SelectObject( SelectableObject.SelectableObjectType.RiceContainer );
-				//selectedObject = SelectableObject.SelectableObjectType.RiceContainer;
-//				riceContainerOutside.GetComponent<Renderer>().materials[1].SetFloat( "_Thickness", 3.5f );
 			} else {
 				PracticeManager.s_instance.PressedHintButton();
 			}
@@ -194,8 +199,6 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 			// Check what state the animation is in and toggle on the opposite since we're going to transition animations after.
 			UpdateDoorTogglesBasedOnAnimationState( true );
 
-//			bool newDoorOpenValue = !toggles[(int)PFCToggles.RDoorOpen];
-//			toggles[(int)PFCToggles.RDoorOpen] = newDoorOpenValue;
 			ReadoutDisplay.s_instance.doorsAreOpen = toggles[(int)PFCToggles.RDoorOpen];// newDoorOpenValue;
 			rightGlassDoor.GetComponent<Animator>().SetTrigger( "Clicked" );
 			SoundtrackManager.s_instance.PlayAudioSource( SoundtrackManager.s_instance.slidingDoor );
@@ -206,14 +209,11 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 				if( toggles[(int)PFCToggles.WeighContainerFilled])
 					return;
 
-//				riceContainerOutside.GetComponent<Renderer>().materials[1].SetFloat( "_Thickness", 0f );
 				StartCoroutine( PourRice() );
 			} 
 			// It can only be selected if balance has been calibrated
 			else if( toggles[(int)PFCToggles.WeighContainerOutside] && selectedObject == SelectableObject.SelectableObjectType.None && toggles[(int)PFCToggles.BalanceCalibrated] ) {
 				SelectObject( SelectableObject.SelectableObjectType.WeighContainer );
-				//selectedObject = SelectableObject.SelectableObjectType.WeighContainer;
-//				weighContainerOutside.GetComponent<Renderer>().materials[1].SetFloat( "_Thickness", 3.5f );
 			} else {
 				PracticeManager.s_instance.PressedHintButton();
 			}
@@ -226,18 +226,19 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 				weightInside.SetActive( true );
 				toggles[(int)PFCToggles.WeightOutside] = false;
 				weightOutside.SetActive( false );
+				ClearSelectedObject();
 			} else if( !toggles[(int)PFCToggles.WeightContainerInside] && selectedObject == SelectableObject.SelectableObjectType.WeighContainer) {
 				weighContainerOutside.SetActive( false );
 				toggles[(int)PFCToggles.WeighContainerOutside] = false;
 				weighContainerInside.SetActive( true );
 				toggles[(int)PFCToggles.WeightContainerInside] = true;
 				ClearSelectedObject();
-				//selectedObject = SelectableObject.SelectableObjectType.None;
 				ReadoutDisplay.s_instance.readoutNumberText.text = "9.7306";
 			} else {
 				PracticeManager.s_instance.PressedHintButton();
 			}
 			break;
+
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		case SelectableObject.SelectableObjectType.CalibrationWeight:
 			if( !usedForceps )
@@ -250,40 +251,23 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 					weightInside.SetActive( false );
 					toggles[(int)PFCToggles.WeightOutside] = true;
 					weightOutside.SetActive( true );
-//					weightOutside.GetComponent<Renderer>().materials[1].SetFloat( "_Thickness", 0f );
 				} else if ( toggles[(int)PFCToggles.WeightOutside] || toggles[(int)PFCToggles.CalibrationModeOn] ) {
 					SelectObject( SelectableObject.SelectableObjectType.CalibrationWeight );
-					//selectedObject = SelectableObject.SelectableObjectType.CalibrationWeight;
-//					weightOutside.GetComponent<Renderer>().materials[1].SetFloat( "_Thickness", 3.5f );
 				}
 			} else {
 				PracticeManager.s_instance.PressedHintButton();
 			}
 			break;
 
-		case SelectableObject.SelectableObjectType.LeftDoor:
-			if( usedForceps )
-				return;
-//			// Check what state the animation is in and toggle on the opposite since we're going to transition animations after.
-//			if( leftGlassDoor.GetCurrentAnimatorStateInfo(0).fullPathHash == leftDoorOpenState ) {
-//				toggles[(int)PCToggles.LDoorOpen] = false;
-//			} else if ( leftGlassDoor.GetCurrentAnimatorStateInfo(0).fullPathHash == leftDoorClosedState ) {
-//				toggles[(int)PCToggles.LDoorOpen] = true;
-//			}
-//			leftGlassDoor.GetComponent<Animator>().SetTrigger( "Clicked" );
-			break;
-
 		case SelectableObject.SelectableObjectType.OnButton:
 			if( usedForceps )
 				return;
-			if( !toggles[(int)PFCToggles.BalanceIsLeveled] ){
-				PracticeManager.s_instance.PressedHintButton();
-				return;
-			}	
 
-			if( toggles[(int)PFCToggles.FocusedOnBalanceFace] ) {
+			if( toggles[(int)PFCToggles.FocusedOnBalanceFace] && toggles[(int)PFCToggles.BalanceIsLeveled] ) {
 				toggles[(int)PFCToggles.BalanceOn] = true;
 				ReadoutDisplay.s_instance.TurnBalanceOn();
+			} else {
+				PracticeManager.s_instance.PressedHintButton();
 			}
 			break;
 		}
