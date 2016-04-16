@@ -39,6 +39,10 @@ public class UIManager : MonoBehaviour {
 	public Button rotateToolButton;
 	public Button panToolButton;
 	public Button forcepsToolButton;
+	private Sprite pointerButtonNormalSprite, pointerButtonHighlightedSprite,
+					rotateButtonNormalSprite, rotateButtonHighlightedSprite,
+					panButtonNormalSprite, panButtonHighlightedSprite,
+					forcepsButtonNormalSprite, forcepsButtonHighlightedSprite;
 
 	public Texture2D pointerCursor,
 				rotateCursor,
@@ -52,9 +56,25 @@ public class UIManager : MonoBehaviour {
 		if( s_instance == null ) {
 			s_instance = this;
 			DontDestroyOnLoad( gameObject );
+
+			Init();
 		} else {
 			DestroyImmediate( gameObject );
 		}
+	}
+
+	void Init() {
+		pointerButtonNormalSprite = pointerToolButton.image.sprite;
+		pointerButtonHighlightedSprite = pointerToolButton.spriteState.highlightedSprite;
+
+		rotateButtonNormalSprite = rotateToolButton.image.sprite;
+		rotateButtonHighlightedSprite = rotateToolButton.spriteState.highlightedSprite;
+
+		panButtonNormalSprite = panToolButton.image.sprite;
+		panButtonHighlightedSprite = panToolButton.spriteState.highlightedSprite;
+
+		forcepsButtonNormalSprite = forcepsToolButton.image.sprite;
+		forcepsButtonHighlightedSprite = forcepsToolButton.spriteState.highlightedSprite;
 	}
 
 	public void CloseDropDowns() {
@@ -210,5 +230,29 @@ public class UIManager : MonoBehaviour {
 			lerpTime += Time.deltaTime;
 		}
 		cG.alpha = endVal;
+	}
+
+	public void ToggleToolHighlight( int newHighlightedTool ) {
+		pointerToolButton.image.sprite = pointerButtonNormalSprite;
+		rotateToolButton.image.sprite = rotateButtonNormalSprite;
+		panToolButton.image.sprite = panButtonNormalSprite;
+		forcepsToolButton.image.sprite = forcepsButtonNormalSprite;
+
+		ApplicationManager.MouseMode toolToHighlight = (ApplicationManager.MouseMode)newHighlightedTool;
+		switch( toolToHighlight )
+		{
+		case ApplicationManager.MouseMode.Pointer:
+			pointerToolButton.image.sprite = pointerButtonHighlightedSprite;
+			break;
+		case ApplicationManager.MouseMode.Rotate:
+			rotateToolButton.image.sprite = rotateButtonHighlightedSprite;
+			break;
+		case ApplicationManager.MouseMode.Pan:
+			panToolButton.image.sprite = panButtonHighlightedSprite;
+			break;
+		case ApplicationManager.MouseMode.Forceps:
+			forcepsToolButton.image.sprite = forcepsButtonHighlightedSprite;
+			break;
+		}
 	}
 }

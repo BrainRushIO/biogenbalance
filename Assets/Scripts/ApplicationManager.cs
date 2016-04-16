@@ -93,6 +93,7 @@ public class ApplicationManager : MonoBehaviour {
 
 	public void ChangeMouseMode( int newMouseMode ) {
 		currentMouseMode = (MouseMode)newMouseMode;
+		UIManager.s_instance.ToggleToolHighlight( newMouseMode );
 		UIManager.s_instance.UpdateMouseCursor();
 	}
 
