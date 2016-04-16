@@ -113,6 +113,19 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 	}
 
 	public override void HoveredOverObject( SelectableObject obj ) {
+		// We didn't hover over anything
+		if( obj == null ) {
+			// If we're still holding something then change to closed hand
+			if( selectedObject != SelectableObject.SelectableObjectType.None ) {
+				ApplicationManager.s_instance.SetSpecialMouseMode( (int)ApplicationManager.SpecialCursorMode.ClosedHand );
+			} else {
+				// Set the special cursor mode in the Application Manager to None if it isn't already that.
+				if( ApplicationManager.s_instance.currentSpecialCursorMode != ApplicationManager.SpecialCursorMode.None )
+					ApplicationManager.s_instance.SetSpecialMouseMode( (int)ApplicationManager.SpecialCursorMode.None );
+			}
+			return;
+		}
+
 		SelectableObject.SelectableObjectType hoveredObjectType = obj.objectType;
 
 		switch( hoveredObjectType )

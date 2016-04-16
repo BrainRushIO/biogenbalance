@@ -58,13 +58,9 @@ public class PracticeManager : MonoBehaviour {
 		RaycastHit mouseHoverHit;
 		if ( Physics.Raycast(mouseHoverRay, out mouseHoverHit) ) {
 			SelectableObject hoveredObject = mouseHoverHit.transform.GetComponent<SelectableObject>();
-			if( hoveredObject != null ) {
-				submoduleManager.HoveredOverObject( hoveredObject );
-			} 
+			submoduleManager.HoveredOverObject( hoveredObject );
 		} else {
-			if( ApplicationManager.s_instance.currentSpecialCursorMode == ApplicationManager.SpecialCursorMode.None && submoduleManager.selectedObject == SelectableObject.SelectableObjectType.None ) {
-				ApplicationManager.s_instance.SetSpecialMouseMode( (int)ApplicationManager.SpecialCursorMode.None );
-			}
+			submoduleManager.HoveredOverObject( null );
 		}
 
 		#region PointerInput
