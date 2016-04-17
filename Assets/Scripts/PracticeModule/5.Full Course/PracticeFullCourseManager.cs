@@ -256,8 +256,11 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		case SelectableObject.SelectableObjectType.CalibrationWeight:
-			if( !usedForceps )
+			if( !usedForceps )  {
+				PracticeManager.s_instance.PressedHintButton();
+				PracticeManager.s_instance.numMistakes++;
 				return;
+			}
 			// If we aren't holding an object when we click the weight, make it our selected object.
 			if( PracticeCalibrateBalanceManager.s_instance.selectedObject == SelectableObject.SelectableObjectType.None  ) {
 				// Toggle on highlights
