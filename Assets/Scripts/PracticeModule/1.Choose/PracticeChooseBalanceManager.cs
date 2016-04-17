@@ -4,7 +4,7 @@ using System.Collections;
 public class PracticeChooseBalanceManager : BasePracticeSubmodule {
 
 	public GameObject step1, step2;
-
+	public Camera introCamera;
 	public bool selectedMicrobalance = false, selectedSemiMicroBalance = false;
 
 	public override void UpdateSceneContents( int stepIndex ) {
@@ -13,6 +13,7 @@ public class PracticeChooseBalanceManager : BasePracticeSubmodule {
 		case 0:
 			step1.SetActive( true );
 			step2.SetActive( false );
+			introCamera.gameObject.SetActive( false );
 			ApplicationManager.s_instance.ChangeMouseMode( (int)ApplicationManager.MouseMode.Rotate );
 			UIManager.s_instance.ToggleSidePanel( true, false );
 			UIManager.s_instance.ToggleToolsActive( false, true, false, false );

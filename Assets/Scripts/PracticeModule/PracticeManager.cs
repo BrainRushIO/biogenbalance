@@ -140,7 +140,7 @@ public class PracticeManager : MonoBehaviour {
 		newListViewButtonSelection.childText.color = Color.white;
 		newListViewButtonSelection.checkBox.isOn = true;
 
-		UIManager.s_instance.UpdateDescriptionViewText( "Hint: " + practiceStepList[stepIndex].uiText.descriptionViewText );
+		UIManager.s_instance.UpdateDescriptionViewText( /*"Hint: " +*/ practiceStepList[stepIndex].uiText.descriptionViewText );
 		ToggleListViewItemHighLight( stepIndex, true );
 	}
 
@@ -400,7 +400,7 @@ public class PracticeManager : MonoBehaviour {
 		}
 
 		introPopup.transform.parent.gameObject.SetActive( false );
-
+		UIManager.s_instance.hintButton.gameObject.SetActive( true );
 		isInIntro = false;
 		GoToNextStep();
 	}
