@@ -378,6 +378,9 @@ public class ValidateManager : MonoBehaviour {
 		case SelectableObject.SelectableObjectType.RightDoor:
 		case SelectableObject.SelectableObjectType.OnButton:
 		case SelectableObject.SelectableObjectType.TareButton:
+			if( !toggles[(int)VToggles.FocusedOnBalanceFace] )
+				break;
+
 			if( ApplicationManager.s_instance.currentMouseMode == ApplicationManager.MouseMode.Pointer && selectedObject == SelectableObject.SelectableObjectType.None ) {
 				ApplicationManager.s_instance.SetSpecialMouseMode( (int)ApplicationManager.SpecialCursorMode.PointingHand );
 			}
@@ -391,7 +394,7 @@ public class ValidateManager : MonoBehaviour {
 		switch( clickedObjectType )
 		{
 		case SelectableObject.SelectableObjectType.TareButton:
-			if( usedForceps )
+			if( usedForceps || !toggles[(int)VToggles.FocusedOnBalanceFace] )
 				return;
 			if( toggles[(int)VToggles.FocusedOnBalanceFace] && !toggles[(int)VToggles.BalanceCalibrated] && toggles[(int)VToggles.BalanceOn] ) {
 				ReadoutDisplay.s_instance.PlayCalibrationModeAnimation();
@@ -482,7 +485,7 @@ public class ValidateManager : MonoBehaviour {
 			break;
 
 		case SelectableObject.SelectableObjectType.OnButton:
-			if( usedForceps )
+			if( usedForceps || !toggles[(int)VToggles.FocusedOnBalanceFace] )
 				return;
 
 			if( toggles[(int)VToggles.FocusedOnBalanceFace] && toggles[(int)VToggles.BalanceIsLeveled] ) {

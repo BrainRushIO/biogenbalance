@@ -159,6 +159,9 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 		case SelectableObject.SelectableObjectType.RightDoor:
 		case SelectableObject.SelectableObjectType.OnButton:
 		case SelectableObject.SelectableObjectType.TareButton:
+			if( !toggles[(int)PFCToggles.FocusedOnBalanceFace] )
+				break;
+
 			if( ApplicationManager.s_instance.currentMouseMode == ApplicationManager.MouseMode.Pointer && selectedObject == SelectableObject.SelectableObjectType.None ) {
 				ApplicationManager.s_instance.SetSpecialMouseMode( (int)ApplicationManager.SpecialCursorMode.PointingHand );
 			}
@@ -172,7 +175,7 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 		switch( clickedObjectType )
 		{
 		case SelectableObject.SelectableObjectType.TareButton:
-			if( usedForceps )
+			if( usedForceps || !toggles[(int)PFCToggles.FocusedOnBalanceFace] )
 				return;
 			if( toggles[(int)PFCToggles.FocusedOnBalanceFace] && !toggles[(int)PFCToggles.BalanceCalibrated] && toggles[(int)PFCToggles.BalanceOn] ) {
 				ReadoutDisplay.s_instance.PlayCalibrationModeAnimation();
@@ -263,7 +266,7 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 			break;
 
 		case SelectableObject.SelectableObjectType.OnButton:
-			if( usedForceps )
+			if( usedForceps || !toggles[(int)PFCToggles.FocusedOnBalanceFace] )
 				return;
 
 			if( toggles[(int)PFCToggles.FocusedOnBalanceFace] && toggles[(int)PFCToggles.BalanceIsLeveled] ) {
