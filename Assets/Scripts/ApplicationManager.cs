@@ -23,14 +23,16 @@ public class ApplicationManager : MonoBehaviour {
 	public bool userIsInteractingWithUI = false;
 	public bool messageWindowActive = true;
 	public PlayerData playerData;
+	public Resolution[] resolutions;
+	public int currentResolution;
 
 	void Awake() {
 		if( s_instance == null ) {
 			s_instance = this;
 			DontDestroyOnLoad( gameObject );
 
-			//Screen.fullScreen = false;
-			Screen.SetResolution( Screen.resolutions[0].width, Screen.resolutions[0].height, false );
+			resolutions = Screen.resolutions;
+			Screen.SetResolution( resolutions[currentResolution].width, resolutions[currentResolution].height, false );
 		} else {
 			DestroyImmediate( gameObject );
 		}
@@ -157,7 +159,12 @@ public class ApplicationManager : MonoBehaviour {
 		} else {
 			Debug.Log( "Could not find load file." );
 		}
-		
+	}
+
+	public void ClearData() {
+		if( File.Exists( Application.persistentDataPath + "/user_data.stem" ) ) {
+			File.Delete( Application.persistentDataPath + "/user_data.stem" );
+		}
 	}
 }
 
