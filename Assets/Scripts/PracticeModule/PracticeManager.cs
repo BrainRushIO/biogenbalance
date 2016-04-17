@@ -44,6 +44,7 @@ public class PracticeManager : MonoBehaviour {
 		ApplicationManager.s_instance.ChangeMouseMode( (int)ApplicationManager.MouseMode.Pointer );
 		UIManager.s_instance.ToggleToolsActive( true, true, true, true );
 		UIManager.s_instance.ToggleSidePanel( false, false );
+		UIManager.s_instance.hintButton.gameObject.SetActive( false );
 		//HACK remove this line
 		//UIManager.s_instance.nextButton.gameObject.SetActive( true );
 		submoduleManager = BasePracticeSubmodule.s_instance;

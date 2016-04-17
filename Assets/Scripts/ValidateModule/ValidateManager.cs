@@ -12,7 +12,7 @@ public class ValidateManager : MonoBehaviour {
 	/// <summary>
 	/// The current step. Zero-indexed. The List View steps are One-indexed e.g. List Step 1 is currentStep 0.
 	/// </summary>
-	public int currentStep = 0;
+	public int currentStep = -1;
 	public SelectableObject.SelectableObjectType selectedObject;
 	public ValidateStep[] moduleSteps;
 
@@ -57,7 +57,7 @@ public class ValidateManager : MonoBehaviour {
 			s_instance = this;
 			Init();
 		} else {
-			Debug.LogWarning( "Destroying duplicate Practice Manager." );
+			Debug.LogWarning( "Destroying duplicate Validate Manager." );
 			DestroyImmediate( this.gameObject );
 		}
 	}
@@ -67,6 +67,7 @@ public class ValidateManager : MonoBehaviour {
 		ApplicationManager.s_instance.ChangeMouseMode( (int)ApplicationManager.MouseMode.Pointer );
 		UIManager.s_instance.ToggleToolsActive( true, true, true, true );
 		UIManager.s_instance.ToggleSidePanel( false, false );
+		UIManager.s_instance.hintButton.gameObject.SetActive( false );
 		orbitCam = sceneCamera.GetComponent<OrbitCamera>();
 
 		// Init Toggles
@@ -81,6 +82,8 @@ public class ValidateManager : MonoBehaviour {
 		rightDoorClosedState = Animator.StringToHash( "Base Layer.SMB_RightGlass_Closed" );
 //		leftDoorOpenState = Animator.StringToHash( "Base Layer.SMB_LeftGlass_Open" );
 //		leftDoorClosedState = Animator.StringToHash( "Base Layer.SMB_LeftGlass_Closed" );
+		foreach( ValidateStep step in moduleSteps )
+			step.InitToggles();
 
 		// Start Module
 		currentStep = -1;
@@ -178,14 +181,15 @@ public class ValidateManager : MonoBehaviour {
 	public void GoToNextStep() {
 		currentStep++;
 
-		// TODO Make this the new win condition
-//		if( currentStep >= practiceStepList.Count ) {
-//			Debug.LogWarning( "Current step index outside of list bounds." );
-//			return;
-//		}
+		// Win condition
+		if( currentStep >= moduleSteps.Length ) {
+			Debug.LogWarning( "Current step index outside of list bounds." );
+			return;
+		}
 
 		// Update scene
 		UpdateSceneContents( currentStep );
+		Debug.Log( "Now on step: " + currentStep );
 	}
 
 	private IEnumerator LerpCameraLookAt() {
@@ -284,7 +288,7 @@ public class ValidateManager : MonoBehaviour {
 			if( toggles[i] != inputs[i] )
 				return false;
 		}
-		PracticeManager.s_instance.GoToNextStep();
+		GoToNextStep();
 		return true;
 	}
 
@@ -304,7 +308,7 @@ public class ValidateManager : MonoBehaviour {
 			if( toggles[i] != inputs[i] )
 				return;
 		}
-		PracticeManager.s_instance.GoToNextStep();
+		GoToNextStep();
 	}
 
 	public void UpdateSceneContents( int stepIndex ) {
@@ -391,7 +395,7 @@ public class ValidateManager : MonoBehaviour {
 				toggles[(int)VToggles.BalanceTared] = true;
 				SoundtrackManager.s_instance.PlayAudioSource( SoundtrackManager.s_instance.buttonBeep );
 			} else {
-				PracticeManager.s_instance.PressedHintButton();
+				Fail();
 			}
 			break;
 
@@ -402,7 +406,7 @@ public class ValidateManager : MonoBehaviour {
 			if( selectedObject == SelectableObject.SelectableObjectType.None ) {
 				SelectObject( SelectableObject.SelectableObjectType.RiceContainer );
 			} else {
-				PracticeManager.s_instance.PressedHintButton();
+				Fail();
 			}
 			break;
 
@@ -418,7 +422,7 @@ public class ValidateManager : MonoBehaviour {
 			break;
 
 		case SelectableObject.SelectableObjectType.WeighContainer:
-			if( toggles[(int)VToggles.WeightContainerInside] && PracticeUseBalanceManager.s_instance.selectedObject == SelectableObject.SelectableObjectType.RiceContainer ) {
+			if( toggles[(int)VToggles.WeightContainerInside] && selectedObject == SelectableObject.SelectableObjectType.RiceContainer ) {
 				if( toggles[(int)VToggles.WeighContainerFilled])
 					return;
 
@@ -428,7 +432,7 @@ public class ValidateManager : MonoBehaviour {
 			else if( toggles[(int)VToggles.WeighContainerOutside] && selectedObject == SelectableObject.SelectableObjectType.None && toggles[(int)VToggles.BalanceCalibrated] ) {
 				SelectObject( SelectableObject.SelectableObjectType.WeighContainer );
 			} else {
-				PracticeManager.s_instance.PressedHintButton();
+				Fail();
 			}
 			break;
 
@@ -448,7 +452,7 @@ public class ValidateManager : MonoBehaviour {
 				ClearSelectedObject();
 				ReadoutDisplay.s_instance.readoutNumberText.text = "9.7306";
 			} else {
-				PracticeManager.s_instance.PressedHintButton();
+				Fail();
 			}
 			break;
 
@@ -457,7 +461,7 @@ public class ValidateManager : MonoBehaviour {
 			if( !usedForceps )
 				return;
 			// If we aren't holding an object when we click the weight, make it our selected object.
-			if( PracticeCalibrateBalanceManager.s_instance.selectedObject == SelectableObject.SelectableObjectType.None  ) {
+			if( selectedObject == SelectableObject.SelectableObjectType.None  ) {
 				// Toggle on highlights
 				if( toggles[(int)VToggles.WeightInside] ) {
 					toggles[(int)VToggles.WeightInside] = false;
@@ -468,7 +472,7 @@ public class ValidateManager : MonoBehaviour {
 					SelectObject( SelectableObject.SelectableObjectType.CalibrationWeight );
 				}
 			} else {
-				PracticeManager.s_instance.PressedHintButton();
+				Fail();
 			}
 			break;
 
@@ -480,10 +484,14 @@ public class ValidateManager : MonoBehaviour {
 				toggles[(int)VToggles.BalanceOn] = true;
 				ReadoutDisplay.s_instance.TurnBalanceOn();
 			} else {
-				PracticeManager.s_instance.PressedHintButton();
+				Fail();
 			}
 			break;
 		}
+	}
+
+	private void Fail() {
+		Debug.LogWarning( "Fail" );
 	}
 
 	private void UpdateDoorTogglesBasedOnAnimationState( bool inverse ) {
@@ -555,7 +563,7 @@ public class ValidateManager : MonoBehaviour {
 
 	public void ClickedOnFocusOnBackButton() {
 		toggles[(int)VToggles.InLevelingPosition] = true;
-		PracticeManager.s_instance.StartNewCameraSlerp( backPivot, backCamPos );
+		StartNewCameraSlerp( backPivot, backCamPos );
 	}
 
 	public void ClickedOnLeaveBackFocusButton() {
@@ -568,19 +576,19 @@ public class ValidateManager : MonoBehaviour {
 		bubbleCanvas.SetActive( false );
 		returnFromBackCanvas.SetActive( false );
 		toggles[(int)VToggles.InLevelingPosition] = false;
-		PracticeManager.s_instance.StartNewCameraSlerp( defaultPivotPos, backDefaultCamPos );
+		StartNewCameraSlerp( defaultPivotPos, backDefaultCamPos );
 	}
 
 
 	// Use
 	public void ClickedOnFocusOnBalanceButton() {
 		toggles[(int)VToggles.FocusedOnBalanceFace] = true;
-		PracticeManager.s_instance.StartNewCameraSlerp( facePivotPos, faceCamPos );
+		StartNewCameraSlerp( facePivotPos, faceCamPos );
 	}
 
 	public void ClickedOnLeaveFaceFocusButton() {
 		toggles[(int)VToggles.FocusedOnBalanceFace] = false;
-		PracticeManager.s_instance.StartNewCameraSlerp( defaultPivotPos, defaultCamPos );
+		StartNewCameraSlerp( defaultPivotPos, defaultCamPos );
 	}
 
 	private IEnumerator ToggleBalancedCalibrationOn() {

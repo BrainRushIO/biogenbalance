@@ -36,6 +36,7 @@ public class OrbitCamera : MonoBehaviour {
 				transform.LookAt (pivotParent);
 			}
 			break;
+
 		case ApplicationManager.ApplicationMode.Practice:
 			if( PracticeManager.s_instance == null )
 				break;
@@ -58,6 +59,36 @@ public class OrbitCamera : MonoBehaviour {
 				if( !canPan )
 					break;
 				if( PracticeManager.s_instance.isDragging ) {
+					pivotParent.transform.Translate( Vector3.down * Input.GetAxis( "Mouse Y" ) * panSpeed );
+					pivotParent.transform.Translate( Vector3.right * Input.GetAxis( "Mouse X" ) * panSpeed );
+					transform.LookAt (pivotParent);
+				}
+				break;
+			}
+			break;
+
+		case ApplicationManager.ApplicationMode.Validate:
+			if( ValidateManager.s_instance == null )
+				break;
+
+			if ( ValidateManager.s_instance.isDragging == false && Input.GetMouseButton (0) && Mathf.Abs((Input.mousePosition-lastMousePos).magnitude) > 2f )
+				ValidateManager.s_instance.isDragging = true;
+
+			switch( ApplicationManager.s_instance.currentMouseMode )
+			{
+			case ApplicationManager.MouseMode.Rotate:
+				if( !canRotate )
+					break;
+				if( ValidateManager.s_instance.isDragging ) {
+					pivotParent.transform.RotateAround (pivotParent.position, pivotParent.up, Input.GetAxis ("Mouse X") * dragSpeed);
+					pivotParent.transform.RotateAround (pivotParent.position, pivotParent.right, Input.GetAxis ("Mouse Y") * dragSpeed);
+					transform.LookAt (pivotParent);
+				}
+				break;
+			case ApplicationManager.MouseMode.Pan:
+				if( !canPan )
+					break;
+				if( ValidateManager.s_instance.isDragging ) {
 					pivotParent.transform.Translate( Vector3.down * Input.GetAxis( "Mouse Y" ) * panSpeed );
 					pivotParent.transform.Translate( Vector3.right * Input.GetAxis( "Mouse X" ) * panSpeed );
 					transform.LookAt (pivotParent);

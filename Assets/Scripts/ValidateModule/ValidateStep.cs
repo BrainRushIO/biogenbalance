@@ -48,7 +48,7 @@ public class ValidateStep : MonoBehaviour {
 		inputs[14] = readingStabilized;
 	}
 
-	void Start() {
+	public void InitToggles() {
 		int sI = transform.GetSiblingIndex();
 		if( sI > 0 )
 			objectToggles = ValidateManager.s_instance.moduleSteps[sI-1].GetInputs();

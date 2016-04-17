@@ -88,6 +88,10 @@ public class ReadoutDisplay : MonoBehaviour {
 				PracticeManager.s_instance.submoduleManager.GetComponent<PracticeFullCourseManager>().ToggleBalanceCalibrationMode( true );
 			}
 		}
+		else if( ApplicationManager.s_instance.currentApplicationMode == ApplicationManager.ApplicationMode.Validate ) 
+		{
+			ValidateManager.s_instance.ToggleBalanceCalibrationMode( true );
+		}
 
 		SoundtrackManager.s_instance.PlayAudioSource( SoundtrackManager.s_instance.buttonBeep );
 		calibrationCoroutineStarted = false;
