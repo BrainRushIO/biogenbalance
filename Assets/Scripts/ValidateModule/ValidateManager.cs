@@ -126,7 +126,8 @@ public class ValidateManager : MonoBehaviour {
 			if( Mathf.Abs(bubble.localPosition.x) <= bubbleWinThreshold && Mathf.Abs(bubble.localPosition.y) <= bubbleWinThreshold ) {
 				toggles[(int)VToggles.BalanceIsLeveled] = true;
 				SoundtrackManager.s_instance.PlayAudioSource( SoundtrackManager.s_instance.buttonBeep );
-				ClickedOnLeaveBackFocusButton();
+				//ClickedOnLeaveBackFocusButton();
+				screwsCanvas.SetActive( false );
 			}
 			break;
 		}
