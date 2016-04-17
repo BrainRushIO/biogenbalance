@@ -45,6 +45,7 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 		if( PracticeManager.s_instance.isInIntro )
 			return;
 
+		Debug.Log( currentStep+1);
 		// Making exceptions for what layers to ignore depending on step. Shitty, I know but we need to design this better next time.
 		switch( currentStep )
 		{
@@ -53,8 +54,18 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 		case 2:
 		case 3:
 		case 4:
-		case 14:
+		case 5:
 			CheckInputs( new PFCToggles[2] { PFCToggles.LDoorOpen, PFCToggles.RDoorOpen } );
+			break;
+		case 9:
+			CheckInputs(new PFCToggles[1] { PFCToggles.FocusedOnBalanceFace } );
+			break;
+		case 14:
+			CheckInputs( new PFCToggles[2] {PFCToggles.FocusedOnBalanceFace, PFCToggles.RDoorOpen} );
+			break;
+		case 15:
+		case 16:
+			CheckInputs( new PFCToggles[1] {PFCToggles.FocusedOnBalanceFace} );
 			break;
 		default:
 			CheckInputs();
