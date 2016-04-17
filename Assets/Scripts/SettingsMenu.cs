@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class SettingsMenu : MonoBehaviour {
 
-	Dropdown resolutionDropdown;
+	public Dropdown resolutionDropdown;
 
 	void Start () {
 		resolutionDropdown.ClearOptions();
@@ -14,8 +14,9 @@ public class SettingsMenu : MonoBehaviour {
 			newOption.text = ApplicationManager.s_instance.resolutions[i].width +"x"+ ApplicationManager.s_instance.resolutions[i].height;
 			resolutionDropdown.options.Add( newOption );
 		}
-
+			
 		resolutionDropdown.value = ApplicationManager.s_instance.currentResolution;
+		resolutionDropdown.captionText.text = resolutionDropdown.options[resolutionDropdown.value].text;
 	}
 
 	public void ClearUserData() {
