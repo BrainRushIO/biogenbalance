@@ -22,6 +22,7 @@ public class AcquireManager : MonoBehaviour {
 	public Camera sceneCamera;
 	public bool isInIntro = true;
 	public CanvasGroup introPopup, completionPopup;
+	public Camera introCamera;
 	public List<StepsListEntry> acquireStepList;
 	public TextAsset acquireContentXML;
 
@@ -314,6 +315,7 @@ public class AcquireManager : MonoBehaviour {
 	private IEnumerator CloseIntroPopup() {
 		float startTime = Time.time;
 		float lerpDuration = 0.15f;
+		introCamera.gameObject.SetActive( false );
 
 		while( lerpDuration > Time.time - startTime ) {
 			introPopup.alpha = Mathf.Lerp( 1f, 0f, (Time.time-startTime)/lerpDuration );

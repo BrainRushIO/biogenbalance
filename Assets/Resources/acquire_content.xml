@@ -84,7 +84,7 @@ Note: Always refer to your balance’s User Manual to find its specifications.</
 		</popupWindow>
 		<step>
 			<listText>Calibration Label</listText>
-			<descriptionText></descriptionText>
+			<descriptionText>Calibration labels let you know when was the last time a technician serviced and calibrated the specific balance. It holds the contact information for the next time the balance needs servicing.</descriptionText>
 		</step>
 		<section>
 			<listText>Level Balance</listText>
