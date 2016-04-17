@@ -62,6 +62,9 @@ public class Progress : MonoBehaviour {
 	}
 
 	private IEnumerator LerpScrollBar( Slider scrollBar, float duration, float lerpToValue ) {
+		if( lerpToValue == 0f )
+			yield break;
+
 		float startTime = Time.time;
 
 		while( duration > Time.time - startTime ) {
