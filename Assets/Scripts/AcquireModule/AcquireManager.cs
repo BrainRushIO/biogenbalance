@@ -21,7 +21,7 @@ public class AcquireManager : MonoBehaviour {
 
 	public Camera sceneCamera;
 	public bool isInIntro = true;
-	public CanvasGroup introPopup;
+	public CanvasGroup introPopup, completionPopup;
 	public List<StepsListEntry> acquireStepList;
 	public TextAsset acquireContentXML;
 
@@ -35,6 +35,8 @@ public class AcquireManager : MonoBehaviour {
 	private int currentStepIndex = 0;
 	private bool showListViewIndex = true;
 	private bool isLerpingToNewPosition = false;
+	[SerializeField]
+	private bool hasFinishedModule = false;
 
 	[Header("UI")]
 	public RectTransform defaultListViewSectionTitle;
@@ -62,19 +64,22 @@ public class AcquireManager : MonoBehaviour {
 
 	private void UpdateNextButton() {
 		// Sets the next button off only if we are on the last step.
-		if( currentStepIndex >= acquireStepList.Count-1 )
-			UIManager.s_instance.nextButton.gameObject.SetActive( false );
-		else 
+//		if( currentStepIndex >= acquireStepList.Count-1 )
+//			UIManager.s_instance.nextButton.gameObject.SetActive( false );
+//		else 
 			UIManager.s_instance.nextButton.gameObject.SetActive( true );
 	}
 
 	public void GoToNextStep() {
+		if( hasFinishedModule )
+			return;
+		
 		currentStepIndex++;
 		while ( currentStepIndex < acquireStepList.Count && acquireStepList[currentStepIndex].isSectionParent )
 			currentStepIndex++;
 
 		if( currentStepIndex >= acquireStepList.Count ) {
-			Debug.LogWarning( "Current step index outside of list bounds." );
+			CompleteModule();
 			return;
 		}
 
@@ -82,6 +87,9 @@ public class AcquireManager : MonoBehaviour {
 	}
 
 	public void GoToStep( int newStepIndex ) {
+		if( hasFinishedModule )
+			return;
+
 		ResetSceneObjects();
 		currentStepIndex = newStepIndex;
 		
@@ -316,5 +324,58 @@ public class AcquireManager : MonoBehaviour {
 		UIManager.s_instance.nextButton.gameObject.SetActive( true );
 		isInIntro = false;
 		GoToNextStep();
+	}
+
+	private void CompleteModule() {
+		hasFinishedModule = true;
+		UIManager.s_instance.nextButton.gameObject.SetActive( false );
+		StartCoroutine( ToggleOnCompletionPopup() );
+	}
+
+	private IEnumerator ToggleOnCompletionPopup() {
+		float startTime = Time.time;
+		float lerpDuration = 0.15f;
+		completionPopup.interactable = true;
+		completionPopup.blocksRaycasts = true;
+
+		while( lerpDuration >= Time.time - startTime ) {
+			completionPopup.alpha = Mathf.Lerp( 0f, 1f, (Time.time-startTime)/lerpDuration );
+			yield return null;
+		}
+
+		completionPopup.alpha = 1f;
+	}
+
+	public void ClickedGoToPracticeModule() {
+		switch( moduleType )
+		{
+		case AcquireModule.Choose:
+			ApplicationManager.s_instance.LoadScene( "P1" );
+			break;
+		case AcquireModule.Prepare:
+			ApplicationManager.s_instance.LoadScene( "P2" );
+			break;
+		case AcquireModule.Calibrate:
+			ApplicationManager.s_instance.LoadScene( "P3" );
+			break;
+		case AcquireModule.Use:
+			ApplicationManager.s_instance.LoadScene( "P4" );
+			break;
+		}
+	}
+
+	public void ClickedGoToNextAcquireModule() {
+		switch( moduleType )
+		{
+		case AcquireModule.Choose:
+			ApplicationManager.s_instance.LoadScene( "A2" );
+			break;
+		case AcquireModule.Prepare:
+			ApplicationManager.s_instance.LoadScene( "A3" );
+			break;
+		case AcquireModule.Calibrate:
+			ApplicationManager.s_instance.LoadScene( "A4" );
+			break;
+		}
 	}
 }

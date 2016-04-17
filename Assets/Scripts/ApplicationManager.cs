@@ -92,6 +92,7 @@ public class ApplicationManager : MonoBehaviour {
 		UIManager.s_instance.ClearListView();
 		UIManager.s_instance.UpdateDescriptionViewText( "" );
 		SceneManager.LoadScene( newScene );
+		UIManager.s_instance.HighlightMenuButton( ((int)currentApplicationMode)-1 );
 	}
 
 	public void ChangeMouseMode( int newMouseMode ) {
