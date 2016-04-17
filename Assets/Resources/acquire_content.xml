@@ -11,7 +11,7 @@
 		</section>
 		<step>
 			<listText>Intro</listText>
-			<descriptionText>This a Microbalance, it is the more sensitive of the two balances we will be using. Because it is extremely sensitive, it is used to weight materials with its precision in the fractions of a milligram. It is made up of two hardware components: one for user input and the other to weigh materials.</descriptionText>
+			<descriptionText>This is a Microbalance, it is the more sensitive of the two balances we will be using. Because it is extremely sensitive, it is used to weigh materials with its precision in the fractions of a milligram. It is made up of two hardware components: one for user input and the other to weigh materials.</descriptionText>
 		</step>
 		<step>
 			<listText>Specifications</listText>
@@ -36,7 +36,7 @@ Note: Always refer to your balance’s User Manual to find its specifications.</
 		</section>
 		<step>
 			<listText>Intro</listText>
-			<descriptionText>This a Semi-Microbalance, it is used to weigh objects of more mass than the ones weighed on a Microbalance.</descriptionText>
+			<descriptionText>This is a Semi-Microbalance, it is used to weigh objects of more mass than the ones weighed on a Microbalance.</descriptionText>
 		</step>
 		<step>
 			<listText>Specifications</listText>
@@ -106,7 +106,7 @@ Note: Always refer to your balance’s User Manual to find its specifications.</
 		</section>
 		<step>
 			<listText>Problem Areas</listText>
-			<descriptionText>Dirty and grime accumulates on the weigh pan and the few mechanisms under it.</descriptionText>
+			<descriptionText>Dirt and grime accumulates on the weigh pan and the mechanisms housed below it.</descriptionText>
 		</step>
 		<step>
 			<listText>Importance of Cleaning</listText>
@@ -149,11 +149,11 @@ Note: Different balances enter Calibration Mode in different ways. Refer to your
 		</step>
 		<step>
 			<listText>Place the Weight</listText>
-			<descriptionText>Use your forceps to lace the calibration weight on the weighing pan.</descriptionText>
+			<descriptionText>Use your forceps to place the calibration weight on the weighing pan.</descriptionText>
 		</step>
 		<step>
 			<listText>Close Door</listText>
-			<descriptionText>Close the door. This keeps wind drafts from affecting the balance reading. The door are also referred to as "Draft Shields".</descriptionText>
+			<descriptionText>Close the door. This keeps wind drafts from affecting the balance reading. The doors are also referred to as "Draft Shields".</descriptionText>
 		</step>
 		<step>
 			<listText>Wait for Reading to Stabilize</listText>

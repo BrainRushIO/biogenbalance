@@ -37,7 +37,7 @@ This Semi-MicroBalance has a maximum weight capacity of 210g and a precision of 
 			<text></text>
 		</popupWindow>
 		<step>
-			<listText>Balance Face</listText>
+			<listText>Access Balancec Face</listText>
 			<descriptionText>Click the button in front of the balance to access the balance’s face buttons.</descriptionText>
 		</step>
 		<step>
