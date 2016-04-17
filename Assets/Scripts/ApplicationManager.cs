@@ -108,6 +108,38 @@ public class ApplicationManager : MonoBehaviour {
 		UIManager.s_instance.HighlightMenuButton( ((int)currentApplicationMode)-1 );
 	}
 
+	public void ForceLoadScene( string sceneInitials ) {
+		string newScene = scenesDictionary[sceneInitials];
+
+		switch( currentApplicationMode )
+		{
+		case ApplicationMode.Intro:
+			CloseMessageWindow();
+			break;
+		}
+
+		// Change state
+		if( sceneInitials.Contains("F") ) {
+			currentApplicationMode = ApplicationMode.Familiarize;
+		} else if ( sceneInitials.Contains("A") ) {
+			currentApplicationMode = ApplicationMode.Acquire;
+		} else if ( sceneInitials.Contains("P") ) {
+			currentApplicationMode = ApplicationMode.Practice;
+		} else if ( sceneInitials.Contains("V") ) {
+			currentApplicationMode = ApplicationMode.Validate;
+		} else if ( sceneInitials.Contains("R") ) {
+			currentApplicationMode = ApplicationMode.Progress;
+		} else if ( sceneInitials.Contains("S") ) {
+			currentApplicationMode = ApplicationMode.Settings;
+		}
+
+		SetSpecialMouseMode( (int)SpecialCursorMode.None );
+		UIManager.s_instance.ClearListView();
+		UIManager.s_instance.UpdateDescriptionViewText( "" );
+		SceneManager.LoadScene( newScene );
+		UIManager.s_instance.HighlightMenuButton( ((int)currentApplicationMode)-1 );
+	}
+
 	public void ChangeMouseMode( int newMouseMode ) {
 		currentMouseMode = (MouseMode)newMouseMode;
 		UIManager.s_instance.ToggleToolHighlight( newMouseMode );

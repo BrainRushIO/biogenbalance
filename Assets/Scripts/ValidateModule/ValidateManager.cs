@@ -9,8 +9,9 @@ public class ValidateManager : MonoBehaviour {
 	public OrbitCamera orbitCam;
 	public bool isDragging = false;
 	public bool isInIntro = true;
-	public CanvasGroup introPopup, completionPopup;
+	public CanvasGroup introPopup, completionPopup, failPopup;
 	public bool hasFinishedModule = false;
+	public bool hasFailedModule = false;
 
 	/// <summary>
 	/// The current step. Zero-indexed. The List View steps are One-indexed e.g. List Step 1 is currentStep 0.
@@ -85,8 +86,6 @@ public class ValidateManager : MonoBehaviour {
 
 		rightDoorOpenState = Animator.StringToHash( "Base Layer.SMB_RightGlass_Open" );
 		rightDoorClosedState = Animator.StringToHash( "Base Layer.SMB_RightGlass_Closed" );
-//		leftDoorOpenState = Animator.StringToHash( "Base Layer.SMB_LeftGlass_Open" );
-//		leftDoorClosedState = Animator.StringToHash( "Base Layer.SMB_LeftGlass_Closed" );
 		foreach( ValidateStep step in moduleSteps )
 			step.InitToggles();
 
@@ -96,7 +95,7 @@ public class ValidateManager : MonoBehaviour {
 	}
 
 	void Update() {
-		if( isInIntro || hasFinishedModule )
+		if( isInIntro || hasFinishedModule || hasFailedModule )
 			return;
 
 		CheckHoverAndClicks();
@@ -198,7 +197,7 @@ public class ValidateManager : MonoBehaviour {
 	}
 
 	public void GoToNextStep() {
-		if( hasFinishedModule )
+		if( hasFinishedModule || hasFailedModule )
 			return;
 
 		currentStep++;
@@ -521,6 +520,8 @@ public class ValidateManager : MonoBehaviour {
 
 	private void Fail() {
 		Debug.LogWarning( "Fail" );
+		hasFailedModule = true;
+		StartCoroutine(ToggleOnFailPopup() );
 	}
 
 	private void UpdateDoorTogglesBasedOnAnimationState( bool inverse ) {
@@ -677,16 +678,6 @@ public class ValidateManager : MonoBehaviour {
 		ApplicationManager.s_instance.playerData.validate = true;
 		ApplicationManager.s_instance.playerData.completionTime = Time.time-moduleStartTime;
 		ApplicationManager.s_instance.Save();
-		UIManager.s_instance.hintButton.gameObject.SetActive( false );
-
-		MessageWindow completionMessageWindow = completionPopup.GetComponent<MessageWindow>();
-		string completionMessage = completionMessageWindow.bodyText.text;
-		if( numMistakes == 0 ) {
-			completionMessage += "\n\nYou didn't have any mistakes in this practice.";
-		} else {
-			completionMessage += "\n\nYou made "+ numMistakes +" in this practice. Keep practicing until you can complete this module without any mistakes.";
-		}
-		completionMessageWindow.bodyText.text = completionMessage;
 
 		StartCoroutine( ToggleOnCompletionPopup() );
 	}
@@ -703,5 +694,23 @@ public class ValidateManager : MonoBehaviour {
 		}
 
 		completionPopup.alpha = 1f;
+	}
+
+	private IEnumerator ToggleOnFailPopup() {
+		float startTime = Time.time;
+		float lerpDuration = 0.15f;
+		failPopup.interactable = true;
+		failPopup.blocksRaycasts = true;
+
+		while( lerpDuration >= Time.time - startTime ) {
+			failPopup.alpha = Mathf.Lerp( 0f, 1f, (Time.time-startTime)/lerpDuration );
+			yield return null;
+		}
+
+		failPopup.alpha = 1f;
+	}
+
+	public void PressedTryAgainButton() {
+		ApplicationManager.s_instance.ForceLoadScene( "V1" );
 	}
 }
