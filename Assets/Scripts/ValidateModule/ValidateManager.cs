@@ -377,6 +377,10 @@ public class ValidateManager : MonoBehaviour {
 			}
 			break;
 		case SelectableObject.SelectableObjectType.RightDoor:
+			if( ApplicationManager.s_instance.currentMouseMode == ApplicationManager.MouseMode.Pointer && selectedObject == SelectableObject.SelectableObjectType.None ) {
+				ApplicationManager.s_instance.SetSpecialMouseMode( (int)ApplicationManager.SpecialCursorMode.PointingHand );
+			}
+			break;
 		case SelectableObject.SelectableObjectType.OnButton:
 		case SelectableObject.SelectableObjectType.TareButton:
 			if( !toggles[(int)VToggles.FocusedOnBalanceFace] )
