@@ -43,6 +43,7 @@ public class FamiliarizeManager : MonoBehaviour {
 	private OrbitCamera orbitCam;
 	private Transform currentCameraPivot, currentCameraStartPos;
 	private string defaultDescViewText = "Click an item in the Outliner to learn more about it.";
+	private bool hasViewedAllItems = false;
 
 	void Awake() {
 		if( s_instance == null ) {
@@ -62,6 +63,12 @@ public class FamiliarizeManager : MonoBehaviour {
 		UIManager.s_instance.UpdateDescriptionViewText( defaultDescViewText );
 		UIManager.s_instance.nextButton.gameObject.SetActive( false );
 		UIManager.s_instance.ToggleSidePanel( true, false );
+
+		if( moduleType == FamiliarizeModule.MicroBalance ) {
+			hasViewedAllItems = ApplicationManager.s_instance.playerData.f_micro;
+		} else {
+			hasViewedAllItems = ApplicationManager.s_instance.playerData.f_semi;
+		}
 	}
 
 	void Update () {
@@ -105,6 +112,27 @@ public class FamiliarizeManager : MonoBehaviour {
 			}
 		}
 		#endregion
+
+		CheckCompletion();
+	}
+
+	void CheckCompletion() {
+		if( hasViewedAllItems )
+			return;
+
+		foreach( FamiliarizeDictionaryEntry entry in familiarizeDictionary.Values ) {
+			if( entry.button.checkBox.isOn == false )
+				return;
+		}
+
+		hasViewedAllItems = true;
+		if( moduleType == FamiliarizeModule.MicroBalance ) {
+			ApplicationManager.s_instance.playerData.f_micro = true;
+		} else {
+			ApplicationManager.s_instance.playerData.f_semi = true;
+		}
+
+		ApplicationManager.s_instance.Save();
 	}
 
 	void InitializeFamiliarizeDictionary() {

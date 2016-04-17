@@ -328,7 +328,24 @@ public class AcquireManager : MonoBehaviour {
 
 	private void CompleteModule() {
 		hasFinishedModule = true;
+		switch( moduleType )
+		{
+		case AcquireModule.Choose:
+			ApplicationManager.s_instance.playerData.a_choose = true;
+			break;
+		case AcquireModule.Prepare:
+			ApplicationManager.s_instance.playerData.a_prepare = true;
+			break;
+		case AcquireModule.Calibrate:
+			ApplicationManager.s_instance.playerData.a_calibrate = true;
+			break;
+		case AcquireModule.Use:
+			ApplicationManager.s_instance.playerData.a_use = true;
+			break;
+		}
+		ApplicationManager.s_instance.Save();
 		UIManager.s_instance.nextButton.gameObject.SetActive( false );
+
 		StartCoroutine( ToggleOnCompletionPopup() );
 	}
 

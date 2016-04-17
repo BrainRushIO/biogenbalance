@@ -29,6 +29,7 @@ public class ValidateManager : MonoBehaviour {
 	private bool isLerpingToNewPosition = false;
 	private bool hasClickedDownOnItem = false;
 	private int numMistakes = 0;
+	private float moduleStartTime = 0f;
 
 	#region PFC_VARS
 	// Prepare
@@ -663,6 +664,9 @@ public class ValidateManager : MonoBehaviour {
 
 	public void CompleteModule() {
 		hasFinishedModule = true;
+		ApplicationManager.s_instance.playerData.validate = true;
+		ApplicationManager.s_instance.playerData.completionTime = Time.time-moduleStartTime;
+		ApplicationManager.s_instance.Save();
 		UIManager.s_instance.hintButton.gameObject.SetActive( false );
 
 		MessageWindow completionMessageWindow = completionPopup.GetComponent<MessageWindow>();

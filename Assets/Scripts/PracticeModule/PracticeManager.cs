@@ -413,6 +413,25 @@ public class PracticeManager : MonoBehaviour {
 	public void CompleteModule() {
 		hasFinishedModule = true;
 		UIManager.s_instance.hintButton.gameObject.SetActive( false );
+		switch( moduleType )
+		{
+		case PracticeModule.Choose:
+			ApplicationManager.s_instance.playerData.p_choose = true;
+			break;
+		case PracticeModule.Prepare:
+			ApplicationManager.s_instance.playerData.p_prepare = true;
+			break;
+		case PracticeModule.Calibrate:
+			ApplicationManager.s_instance.playerData.p_calibrate = true;
+			break;
+		case PracticeModule.Use:
+			ApplicationManager.s_instance.playerData.p_use = true;
+			break;
+		case PracticeModule.FullCourse:
+			ApplicationManager.s_instance.playerData.p_full = true;
+			break;
+		}
+		ApplicationManager.s_instance.Save();
 
 		MessageWindow completionMessageWindow = completionPopup.GetComponent<MessageWindow>();
 		string completionMessage = completionMessageWindow.bodyText.text;

@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
+using System;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine.SceneManagement;
 
 public class ApplicationManager : MonoBehaviour {
@@ -19,6 +22,7 @@ public class ApplicationManager : MonoBehaviour {
 
 	public bool userIsInteractingWithUI = false;
 	public bool messageWindowActive = true;
+	public PlayerData playerData;
 
 	void Awake() {
 		if( s_instance == null ) {
@@ -35,6 +39,7 @@ public class ApplicationManager : MonoBehaviour {
 	void Start () {
 		InitSceneDictionary();
 		Cursor.lockState = CursorLockMode.None;
+		Load();
 	}
 
 	/// <summary>
@@ -118,4 +123,63 @@ public class ApplicationManager : MonoBehaviour {
 		UIManager.s_instance.UpdateMouseCursor();
 
 	}
+
+	public void Save() {
+		BinaryFormatter bf = new BinaryFormatter();
+		FileStream file = File.Create( Application.persistentDataPath +"/uProgress.stem" );
+		bf.Serialize(file, playerData);
+		file.Close();
+		Debug.Log( "Saved file." );
+	}
+
+	private void Load() {
+		if( File.Exists( Application.persistentDataPath + "/uProgress.stem" ) )
+		{
+			BinaryFormatter bf = new BinaryFormatter();
+			FileStream file = File.Open( Application.persistentDataPath +"/uProgress.stem", FileMode.Open );
+			PlayerData data = (PlayerData)bf.Deserialize(file);
+			file.Close();
+			Debug.Log( "Loaded file." );
+
+			playerData.f_semi = data.f_semi;
+			playerData.f_micro = data.f_micro;
+			playerData.a_choose = data.a_choose;
+			playerData.a_prepare = data.a_prepare;
+			playerData.a_calibrate = data.a_calibrate;
+			playerData.a_use = data.a_use;
+			playerData.p_choose = data.p_choose;
+			playerData.p_prepare = data.p_prepare;
+			playerData.p_calibrate = data.p_calibrate;
+			playerData.p_use = data.p_use;
+			playerData.p_full = data.p_full;
+			playerData.validate = data.validate;
+			playerData.completionTime = data.completionTime;
+		} else {
+			Debug.Log( "Could not find load file." );
+		}
+		
+	}
+}
+
+[Serializable]
+public class PlayerData
+{
+	// Familiarize
+	public bool f_semi = false;
+	public bool f_micro = false;
+	// Acquire
+	public bool a_choose = false;
+	public bool a_prepare = false;
+	public bool a_calibrate = false;
+	public bool a_use = false;
+	// Practice
+	public bool p_choose = false;
+	public bool p_prepare = false;
+	public bool p_calibrate = false;
+	public bool p_use = false;
+	public bool p_full = false;
+	// Validate
+	public bool validate = false;
+	public float completionTime = float.NaN;
+
 }
