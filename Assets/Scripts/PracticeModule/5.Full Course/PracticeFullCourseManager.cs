@@ -190,6 +190,7 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 				SoundtrackManager.s_instance.PlayAudioSource( SoundtrackManager.s_instance.buttonBeep );
 			} else {
 				PracticeManager.s_instance.PressedHintButton();
+				PracticeManager.s_instance.numMistakes++;
 			}
 			break;
 
@@ -201,6 +202,7 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 				SelectObject( SelectableObject.SelectableObjectType.RiceContainer );
 			} else {
 				PracticeManager.s_instance.PressedHintButton();
+				PracticeManager.s_instance.numMistakes++;
 			}
 			break;
 
@@ -227,6 +229,7 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 				SelectObject( SelectableObject.SelectableObjectType.WeighContainer );
 			} else {
 				PracticeManager.s_instance.PressedHintButton();
+				PracticeManager.s_instance.numMistakes++;
 			}
 			break;
 
@@ -247,6 +250,7 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 				ReadoutDisplay.s_instance.readoutNumberText.text = "9.7306";
 			} else {
 				PracticeManager.s_instance.PressedHintButton();
+				PracticeManager.s_instance.numMistakes++;
 			}
 			break;
 
@@ -267,6 +271,7 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 				}
 			} else {
 				PracticeManager.s_instance.PressedHintButton();
+				PracticeManager.s_instance.numMistakes++;
 			}
 			break;
 
@@ -279,6 +284,7 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 				ReadoutDisplay.s_instance.TurnBalanceOn();
 			} else {
 				PracticeManager.s_instance.PressedHintButton();
+				PracticeManager.s_instance.numMistakes++;
 			}
 			break;
 		}

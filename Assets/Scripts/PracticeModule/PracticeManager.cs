@@ -21,7 +21,9 @@ public class PracticeManager : MonoBehaviour {
 	public bool isDragging = false;
 	public bool hasWon = false;
 	public bool isInIntro = true;
-	public CanvasGroup introPopup;
+	public CanvasGroup introPopup, completionPopup;
+	public bool hasFinishedModule = false;
+	public int numMistakes = 0;
 
 	public BasePracticeSubmodule submoduleManager;
 	private List<StepsListEntry> practiceStepList;
@@ -57,7 +59,7 @@ public class PracticeManager : MonoBehaviour {
 	}
 
 	void Update() {
-		if( isInIntro )
+		if( isInIntro || hasFinishedModule )
 			return;
 
 		Ray mouseHoverRay = sceneCamera.ScreenPointToRay(Input.mousePosition);
@@ -116,12 +118,15 @@ public class PracticeManager : MonoBehaviour {
 	}
 
 	public void GoToNextStep() {
+		if( hasFinishedModule )
+			return;
+
 		currentStepIndex++;
 		while ( currentStepIndex < practiceStepList.Count && practiceStepList[currentStepIndex].isSectionParent )
 			currentStepIndex++;
 
 		if( currentStepIndex >= practiceStepList.Count ) {
-			Debug.LogWarning( "Current step index outside of list bounds." );
+			CompleteModule();
 			return;
 		}
 
@@ -403,5 +408,35 @@ public class PracticeManager : MonoBehaviour {
 		UIManager.s_instance.hintButton.gameObject.SetActive( true );
 		isInIntro = false;
 		GoToNextStep();
+	}
+
+	public void CompleteModule() {
+		hasFinishedModule = true;
+		UIManager.s_instance.hintButton.gameObject.SetActive( false );
+
+		MessageWindow completionMessageWindow = completionPopup.GetComponent<MessageWindow>();
+		string completionMessage = completionMessageWindow.bodyText.text;
+		if( numMistakes == 0 ) {
+			completionMessage += "\n\nYou didn't have any mistakes in this practice.";
+		} else {
+			completionMessage += "\n\nYou made "+ numMistakes +" in this practice. Keep practicing until you can complete this module without any mistakes.";
+		}
+		completionMessageWindow.bodyText.text = completionMessage;
+
+		StartCoroutine( ToggleOnCompletionPopup() );
+	}
+
+	private IEnumerator ToggleOnCompletionPopup() {
+		float startTime = Time.time;
+		float lerpDuration = 0.15f;
+		completionPopup.interactable = true;
+		completionPopup.blocksRaycasts = true;
+
+		while( lerpDuration >= Time.time - startTime ) {
+			completionPopup.alpha = Mathf.Lerp( 0f, 1f, (Time.time-startTime)/lerpDuration );
+			yield return null;
+		}
+
+		completionPopup.alpha = 1f;
 	}
 }

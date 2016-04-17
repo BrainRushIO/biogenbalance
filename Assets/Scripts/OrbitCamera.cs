@@ -43,7 +43,7 @@ public class OrbitCamera : MonoBehaviour {
 		case ApplicationManager.ApplicationMode.Practice:
 			if( PracticeManager.s_instance == null )
 				break;
-			if( PracticeManager.s_instance.isInIntro )
+			if( PracticeManager.s_instance.isInIntro || PracticeManager.s_instance.hasFinishedModule )
 				return;
 
 			if ( PracticeManager.s_instance.isDragging == false && Input.GetMouseButton (0) && Mathf.Abs((Input.mousePosition-lastMousePos).magnitude) > 2f )

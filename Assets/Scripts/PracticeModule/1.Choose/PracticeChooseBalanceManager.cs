@@ -5,6 +5,7 @@ public class PracticeChooseBalanceManager : BasePracticeSubmodule {
 
 	public GameObject step1, step2;
 	public Camera introCamera;
+	public Canvas questionCanvas;
 	public bool selectedMicrobalance = false, selectedSemiMicroBalance = false;
 
 	public override void UpdateSceneContents( int stepIndex ) {
@@ -30,10 +31,15 @@ public class PracticeChooseBalanceManager : BasePracticeSubmodule {
 	}
 
 	public void CheckAnswer() {
+		if( PracticeManager.s_instance.hasFinishedModule )
+			return;
+
 		if( selectedSemiMicroBalance && !selectedMicrobalance ) {
-			Debug.LogWarning( "YAY YOU WIN." );
+			questionCanvas.gameObject.SetActive( false );
+			PracticeManager.s_instance.CompleteModule();
 		} else {
 			PracticeManager.s_instance.PressedHintButton();
+			PracticeManager.s_instance.numMistakes++;
 		}
 	}
 
