@@ -126,17 +126,17 @@ public class ApplicationManager : MonoBehaviour {
 
 	public void Save() {
 		BinaryFormatter bf = new BinaryFormatter();
-		FileStream file = File.Create( Application.persistentDataPath +"/uProgress.stem" );
+		FileStream file = File.Create( Application.persistentDataPath +"/user_data.stem" );
 		bf.Serialize(file, playerData);
 		file.Close();
 		Debug.Log( "Saved file." );
 	}
 
 	private void Load() {
-		if( File.Exists( Application.persistentDataPath + "/uProgress.stem" ) )
+		if( File.Exists( Application.persistentDataPath + "/user_data.stem" ) )
 		{
 			BinaryFormatter bf = new BinaryFormatter();
-			FileStream file = File.Open( Application.persistentDataPath +"/uProgress.stem", FileMode.Open );
+			FileStream file = File.Open( Application.persistentDataPath +"/user_data.stem", FileMode.Open );
 			PlayerData data = (PlayerData)bf.Deserialize(file);
 			file.Close();
 			Debug.Log( "Loaded file." );
