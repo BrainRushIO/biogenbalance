@@ -19,11 +19,11 @@ public class PracticeCalibrateBalanceManager : BasePracticeSubmodule {
 	}
 
 	void Update() {
-		if( PracticeManager.s_instance.isInIntro )
+		if( PracticeManager.s_instance.isInIntro || PracticeManager.s_instance.hasFinishedModule )
 			return;
 
 		if( CheckInputs() == true && currentStep >= moduleSteps.Length-1 )
-			Debug.Log( "Yay you win!" );
+			PracticeManager.s_instance.CompleteModule();
 	}
 
 	public override void UpdateSceneContents( int stepIndex ) {
