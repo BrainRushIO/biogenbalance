@@ -4,6 +4,7 @@ using System.Collections;
 public class PracticePrepareBalanceManager : BasePracticeSubmodule {
 
 	public RectTransform bubble;
+	public Canvas screwsCanvas, bubbleCanvas;
 
 	private float currentBubbleX, currentBubbleY;
 	private float bubbleWinThreshold = 2.5f;
@@ -20,7 +21,7 @@ public class PracticePrepareBalanceManager : BasePracticeSubmodule {
 	}
 
 	void Update() {
-		if( PracticeManager.s_instance.isInIntro )
+		if( PracticeManager.s_instance.isInIntro || PracticeManager.s_instance.hasFinishedModule )
 			return;
 
 		CheckInputs();
@@ -30,7 +31,9 @@ public class PracticePrepareBalanceManager : BasePracticeSubmodule {
 			break;
 		case 1:
 			if( Mathf.Abs(bubble.localPosition.x) <= bubbleWinThreshold && Mathf.Abs(bubble.localPosition.y) <= bubbleWinThreshold ) {
-				Debug.Log( "Yay you win!" );
+				screwsCanvas.gameObject.SetActive( false );
+				bubbleCanvas.gameObject.SetActive( false );
+				PracticeManager.s_instance.CompleteModule();
 			}
 			break;
 		}
