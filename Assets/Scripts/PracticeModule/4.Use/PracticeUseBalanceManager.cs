@@ -67,7 +67,6 @@ public class PracticeUseBalanceManager : BasePracticeSubmodule {
 			// If we aren't holding an object when we click the weight, make it our selected object.
 			if( PracticeCalibrateBalanceManager.s_instance.selectedObject == SelectableObject.SelectableObjectType.None ) {
 				PracticeCalibrateBalanceManager.s_instance.selectedObject = SelectableObject.SelectableObjectType.RiceContainer;
-				riceContainerOutside.GetComponent<Renderer>().materials[1].SetFloat( "_Thickness", 3.5f );
 			}
 			break;
 
@@ -92,11 +91,9 @@ public class PracticeUseBalanceManager : BasePracticeSubmodule {
 				if( toggles[(int)PUToggles.WeighContainerFilled])
 					return;
 				
-				riceContainerOutside.GetComponent<Renderer>().materials[1].SetFloat( "_Thickness", 0f );
 				StartCoroutine( PourRice() );
 			} else if( toggles[(int)PUToggles.WeighContainerOutside] && PracticeUseBalanceManager.s_instance.selectedObject == SelectableObject.SelectableObjectType.None ) {
 				PracticeUseBalanceManager.s_instance.selectedObject = SelectableObject.SelectableObjectType.WeighContainer;
-				weighContainerOutside.GetComponent<Renderer>().materials[1].SetFloat( "_Thickness", 3.5f );
 			}
 			break;
 
