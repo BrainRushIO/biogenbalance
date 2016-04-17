@@ -22,6 +22,7 @@ public class PracticeManager : MonoBehaviour {
 	public bool hasWon = false;
 	public bool isInIntro = true;
 	public CanvasGroup introPopup, completionPopup;
+	public Camera introCamera;
 	public bool hasFinishedModule = false;
 	public int numMistakes = 0;
 
@@ -399,6 +400,8 @@ public class PracticeManager : MonoBehaviour {
 	private IEnumerator CloseIntroPopup() {
 		float startTime = Time.time;
 		float lerpDuration = 0.15f;
+		if( introCamera != null )
+			introCamera.gameObject.SetActive( false );
 
 		while( lerpDuration > Time.time - startTime ) {
 			introPopup.alpha = Mathf.Lerp( 1f, 0f, (Time.time-startTime)/lerpDuration );
