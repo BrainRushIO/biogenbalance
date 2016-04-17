@@ -33,6 +33,7 @@ public class UIManager : MonoBehaviour {
 	public RectTransform defaultListViewModuleTitle, defaultListViewButton, defaultListViewSectionTitle;
 	public Color listViewButtonNormalColor, listViewButtonHighlightColor;
 	public Button hintButton;
+	private float scrollBarIncrementAmount = 0.1f;
 
 	[Header("Tools")]
 	public Button pointerToolButton;
@@ -271,4 +272,29 @@ public class UIManager : MonoBehaviour {
 			break;
 		}
 	}
+
+	public void ListViewUpButton() {
+		listViewVerticalScrollbar.value = Mathf.Clamp(listViewVerticalScrollbar.value+scrollBarIncrementAmount, 0f, 1f);
+	}
+
+	public void ListViewDownButton() {
+		listViewVerticalScrollbar.value = Mathf.Clamp(listViewVerticalScrollbar.value-scrollBarIncrementAmount, 0f, 1f);
+	}
+
+	public void ListViewRightButton() {
+		listViewHorizontalScrollbar.value = Mathf.Clamp(listViewHorizontalScrollbar.value+scrollBarIncrementAmount, 0f, 1f);
+	}
+
+	public void ListViewLeftButton() {
+		listViewHorizontalScrollbar.value = Mathf.Clamp(listViewHorizontalScrollbar.value-scrollBarIncrementAmount, 0f, 1f);
+	}
+
+	public void DescriptionViewUpButton() {
+		descriptionViewScrollbar.value = Mathf.Clamp(descriptionViewScrollbar.value+scrollBarIncrementAmount, 0f, 1f);
+	}
+
+	public void DescriptionViewDownButton() {
+		descriptionViewScrollbar.value = Mathf.Clamp(descriptionViewScrollbar.value-scrollBarIncrementAmount, 0f, 1f);
+	}
+
 }

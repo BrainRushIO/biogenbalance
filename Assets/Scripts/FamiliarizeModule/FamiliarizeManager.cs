@@ -191,7 +191,7 @@ public class FamiliarizeManager : MonoBehaviour {
 	}
 
 	public void SelectObjectOfKey( string searchKey ) {
-		if( isLerpingToNewPosition )
+		if( isLerpingToNewPosition || isInIntro )
 			return;
 
 		FamiliarizeDictionaryEntry temp;
