@@ -89,10 +89,13 @@ public class ValidateManager : MonoBehaviour {
 
 		// Start Module
 		currentStep = -1;
-		GoToNextStep();
+		//GoToNextStep(); This is now being called by closing the intro popup window.
 	}
 
 	void Update() {
+		if( isInIntro )
+			return;
+
 		CheckHoverAndClicks();
 
 		// Making exceptions for what layers to ignore depending on step. Shitty, I know but we need to design this better next time.
