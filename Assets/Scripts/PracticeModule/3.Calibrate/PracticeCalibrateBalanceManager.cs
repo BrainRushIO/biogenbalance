@@ -19,6 +19,9 @@ public class PracticeCalibrateBalanceManager : BasePracticeSubmodule {
 	}
 
 	void Update() {
+		if( PracticeManager.s_instance.isInIntro )
+			return;
+
 		if( CheckInputs() == true && currentStep >= moduleSteps.Length-1 )
 			Debug.Log( "Yay you win!" );
 	}

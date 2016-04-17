@@ -19,6 +19,9 @@ public class PracticeManager : MonoBehaviour {
 	public ListViewButton defaultListViewText;
 	public TextAsset practiceContentXML;
 	public bool isDragging = false;
+	public bool hasWon = false;
+	public bool isInIntro = true;
+	public CanvasGroup introPopup;
 
 	public BasePracticeSubmodule submoduleManager;
 	private List<StepsListEntry> practiceStepList;
@@ -51,10 +54,12 @@ public class PracticeManager : MonoBehaviour {
 		orbitCam = sceneCamera.GetComponent<OrbitCamera>();
 
 		currentStepIndex = -1;
-		GoToNextStep();
 	}
 
 	void Update() {
+		if( isInIntro )
+			return;
+
 		Ray mouseHoverRay = sceneCamera.ScreenPointToRay(Input.mousePosition);
 		RaycastHit mouseHoverHit;
 		if ( Physics.Raycast(mouseHoverRay, out mouseHoverHit) ) {
@@ -379,5 +384,24 @@ public class PracticeManager : MonoBehaviour {
 
 		StartCoroutine( LerpCameraLookAt() );
 		StartCoroutine( SlerpToNewCamPos() );
+	}
+
+	public void ClickedCloseIntroPopupButton() {
+		StartCoroutine( CloseIntroPopup() );
+	}
+
+	private IEnumerator CloseIntroPopup() {
+		float startTime = Time.time;
+		float lerpDuration = 0.15f;
+
+		while( lerpDuration > Time.time - startTime ) {
+			introPopup.alpha = Mathf.Lerp( 1f, 0f, (Time.time-startTime)/lerpDuration );
+			yield return null;
+		}
+
+		introPopup.transform.parent.gameObject.SetActive( false );
+
+		isInIntro = false;
+		GoToNextStep();
 	}
 }

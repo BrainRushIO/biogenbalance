@@ -26,6 +26,8 @@ public class FamiliarizeManager : MonoBehaviour {
 	[System.NonSerialized]
 	public bool isDragging = false;
 	public TextAsset familiarizeContentXML;
+	public bool isInIntro = true;
+	public CanvasGroup introPopup;
 
 	[Header("UI")]
 	public Button defaultListViewButton;
@@ -280,5 +282,23 @@ public class FamiliarizeManager : MonoBehaviour {
 			tempBlock.normalColor = UIManager.s_instance.listViewButtonNormalColor;
 		}
 		listViewButton.colors = tempBlock;
+	}
+
+	public void ClickedCloseIntroPopupButton() {
+		StartCoroutine( CloseIntroPopup() );
+	}
+
+	private IEnumerator CloseIntroPopup() {
+		float startTime = Time.time;
+		float lerpDuration = 0.15f;
+
+		while( lerpDuration > Time.time - startTime ) {
+			introPopup.alpha = Mathf.Lerp( 1f, 0f, (Time.time-startTime)/lerpDuration );
+			yield return null;
+		}
+
+		introPopup.transform.parent.gameObject.SetActive( false );
+
+		isInIntro = false;
 	}
 }

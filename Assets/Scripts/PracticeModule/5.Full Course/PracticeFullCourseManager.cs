@@ -42,6 +42,9 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 	}
 
 	void Update() {
+		if( PracticeManager.s_instance.isInIntro )
+			return;
+
 		// Making exceptions for what layers to ignore depending on step. Shitty, I know but we need to design this better next time.
 		switch( currentStep )
 		{
@@ -341,6 +344,9 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 	}
 
 	public void ClickedOnFocusOnBackButton() {
+		if( PracticeManager.s_instance.isInIntro )
+			return;
+
 		toggles[(int)PFCToggles.InLevelingPosition] = true;
 		PracticeManager.s_instance.StartNewCameraSlerp( backPivot, backCamPos );
 	}
@@ -361,6 +367,9 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 
 	// Use
 	public void ClickedOnFocusOnBalanceButton() {
+		if( PracticeManager.s_instance.isInIntro )
+			return;
+
 		toggles[(int)PFCToggles.FocusedOnBalanceFace] = true;
 		PracticeManager.s_instance.StartNewCameraSlerp( facePivotPos, faceCamPos );
 	}

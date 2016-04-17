@@ -26,6 +26,9 @@ public class OrbitCamera : MonoBehaviour {
 		case ApplicationManager.ApplicationMode.Familiarize:
 			if( !canRotate || FamiliarizeManager.s_instance == null )
 				break;
+			if( FamiliarizeManager.s_instance.isInIntro )
+				return;
+
 			// Handle draggin camera
 			if ( FamiliarizeManager.s_instance.isDragging == false && Input.GetMouseButton (0) && Mathf.Abs((Input.mousePosition-lastMousePos).magnitude) > 2f ) {
 				FamiliarizeManager.s_instance.isDragging = true;
@@ -40,6 +43,8 @@ public class OrbitCamera : MonoBehaviour {
 		case ApplicationManager.ApplicationMode.Practice:
 			if( PracticeManager.s_instance == null )
 				break;
+			if( PracticeManager.s_instance.isInIntro )
+				return;
 
 			if ( PracticeManager.s_instance.isDragging == false && Input.GetMouseButton (0) && Mathf.Abs((Input.mousePosition-lastMousePos).magnitude) > 2f )
 				PracticeManager.s_instance.isDragging = true;
@@ -70,6 +75,8 @@ public class OrbitCamera : MonoBehaviour {
 		case ApplicationManager.ApplicationMode.Validate:
 			if( ValidateManager.s_instance == null )
 				break;
+			if( ValidateManager.s_instance.isInIntro )
+				return;
 
 			if ( ValidateManager.s_instance.isDragging == false && Input.GetMouseButton (0) && Mathf.Abs((Input.mousePosition-lastMousePos).magnitude) > 2f )
 				ValidateManager.s_instance.isDragging = true;

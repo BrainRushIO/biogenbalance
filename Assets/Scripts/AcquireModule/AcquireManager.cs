@@ -20,6 +20,8 @@ public class AcquireManager : MonoBehaviour {
 	public AcquireModule moduleType = AcquireModule.Choose;
 
 	public Camera sceneCamera;
+	public bool isInIntro = true;
+	public CanvasGroup introPopup;
 	public List<StepsListEntry> acquireStepList;
 	public TextAsset acquireContentXML;
 
@@ -52,12 +54,10 @@ public class AcquireManager : MonoBehaviour {
 		ApplicationManager.s_instance.ChangeMouseMode( 0 );
 		UIManager.s_instance.ToggleToolsActive( false, false, false, false );
 		UIManager.s_instance.ToggleSidePanel( true, false );
-		UIManager.s_instance.nextButton.gameObject.SetActive( true );
+		UIManager.s_instance.nextButton.gameObject.SetActive( false );
 		submoduleManager = BaseAcquireSubmodule.s_instance;
 
-		//FIXME Replace this with the popup window logic
 		currentStepIndex = -1;
-		GoToNextStep();
 	}
 
 	private void UpdateNextButton() {
@@ -297,5 +297,24 @@ public class AcquireManager : MonoBehaviour {
 		sceneCamera.transform.position = targetTransform.position;
 		sceneCamera.transform.rotation = targetTransform.rotation;
 		isLerpingToNewPosition = false;
+	}
+
+	public void ClickedCloseIntroPopupButton() {
+		StartCoroutine( CloseIntroPopup() );
+	}
+
+	private IEnumerator CloseIntroPopup() {
+		float startTime = Time.time;
+		float lerpDuration = 0.15f;
+
+		while( lerpDuration > Time.time - startTime ) {
+			introPopup.alpha = Mathf.Lerp( 1f, 0f, (Time.time-startTime)/lerpDuration );
+			yield return null;
+		}
+
+		introPopup.transform.parent.gameObject.SetActive( false );
+		UIManager.s_instance.nextButton.gameObject.SetActive( true );
+		isInIntro = false;
+		GoToNextStep();
 	}
 }

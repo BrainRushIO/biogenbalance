@@ -8,6 +8,8 @@ public class ValidateManager : MonoBehaviour {
 	[System.NonSerialized]
 	public OrbitCamera orbitCam;
 	public bool isDragging = false;
+	public bool isInIntro = true;
+	public CanvasGroup introPopup;
 
 	/// <summary>
 	/// The current step. Zero-indexed. The List View steps are One-indexed e.g. List Step 1 is currentStep 0.
@@ -623,4 +625,23 @@ public class ValidateManager : MonoBehaviour {
 		Debug.Log( "Ended Pouring Rice." );
 	}
 	#endregion
+
+	public void ClickedCloseIntroPopupButton() {
+		StartCoroutine( CloseIntroPopup() );
+	}
+
+	private IEnumerator CloseIntroPopup() {
+		float startTime = Time.time;
+		float lerpDuration = 0.15f;
+
+		while( lerpDuration > Time.time - startTime ) {
+			introPopup.alpha = Mathf.Lerp( 1f, 0f, (Time.time-startTime)/lerpDuration );
+			yield return null;
+		}
+
+		introPopup.transform.parent.gameObject.SetActive( false );
+
+		isInIntro = false;
+		GoToNextStep();
+	}
 }

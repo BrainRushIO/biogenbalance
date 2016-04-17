@@ -20,6 +20,9 @@ public class PracticePrepareBalanceManager : BasePracticeSubmodule {
 	}
 
 	void Update() {
+		if( PracticeManager.s_instance.isInIntro )
+			return;
+
 		CheckInputs();
 
 		switch( currentStep ) {
