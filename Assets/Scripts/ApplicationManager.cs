@@ -54,6 +54,8 @@ public class ApplicationManager : MonoBehaviour {
 		scenesDictionary.Add( "P4", "P4_UseBalance" );
 		scenesDictionary.Add( "P5", "P5_Full" );
 		scenesDictionary.Add( "V1", "V1_Validate" );
+		scenesDictionary.Add( "R", "Progress" );
+		scenesDictionary.Add( "S", "Settings" );
 	}
 
 	void Update () {
@@ -86,6 +88,10 @@ public class ApplicationManager : MonoBehaviour {
 			currentApplicationMode = ApplicationMode.Practice;
 		} else if ( sceneInitials.Contains("V") ) {
 			currentApplicationMode = ApplicationMode.Validate;
+		} else if ( sceneInitials.Contains("R") ) {
+			currentApplicationMode = ApplicationMode.Progress;
+		} else if ( sceneInitials.Contains("S") ) {
+			currentApplicationMode = ApplicationMode.Settings;
 		}
 
 		SetSpecialMouseMode( (int)SpecialCursorMode.None );
