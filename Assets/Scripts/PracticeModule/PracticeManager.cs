@@ -440,9 +440,9 @@ public class PracticeManager : MonoBehaviour {
 		MessageWindow completionMessageWindow = completionPopup.GetComponent<MessageWindow>();
 		string completionMessage = completionMessageWindow.bodyText.text;
 		if( numMistakes == 0 ) {
-			completionMessage += "\n\nYou didn't have any mistakes in this practice.";
+			completionMessage += "\nYou didn't have any mistakes in this practice.";
 		} else {
-			completionMessage += "\n\nYou made "+ numMistakes +" in this practice. Keep practicing until you can complete this module without any mistakes.";
+			completionMessage += "\nYou made "+ numMistakes +" in this practice. Keep practicing until you can complete this module without any mistakes.";
 		}
 		completionMessageWindow.bodyText.text = completionMessage;
 
