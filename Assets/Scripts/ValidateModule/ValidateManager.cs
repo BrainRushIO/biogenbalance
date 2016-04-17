@@ -9,7 +9,8 @@ public class ValidateManager : MonoBehaviour {
 	public OrbitCamera orbitCam;
 	public bool isDragging = false;
 	public bool isInIntro = true;
-	public CanvasGroup introPopup;
+	public CanvasGroup introPopup, completionPopup;
+	public bool hasFinishedModule = false;
 
 	/// <summary>
 	/// The current step. Zero-indexed. The List View steps are One-indexed e.g. List Step 1 is currentStep 0.
@@ -27,6 +28,7 @@ public class ValidateManager : MonoBehaviour {
 	private bool isCameraRotLerping = false;
 	private bool isLerpingToNewPosition = false;
 	private bool hasClickedDownOnItem = false;
+	private int numMistakes = 0;
 
 	#region PFC_VARS
 	// Prepare
@@ -93,7 +95,7 @@ public class ValidateManager : MonoBehaviour {
 	}
 
 	void Update() {
-		if( isInIntro )
+		if( isInIntro || hasFinishedModule )
 			return;
 
 		CheckHoverAndClicks();
@@ -185,11 +187,14 @@ public class ValidateManager : MonoBehaviour {
 	}
 
 	public void GoToNextStep() {
+		if( hasFinishedModule )
+			return;
+
 		currentStep++;
 
 		// Win condition
 		if( currentStep >= moduleSteps.Length ) {
-			Debug.LogWarning( "Current step index outside of list bounds." );
+			CompleteModule();
 			return;
 		}
 
@@ -654,5 +659,35 @@ public class ValidateManager : MonoBehaviour {
 
 		isInIntro = false;
 		GoToNextStep();
+	}
+
+	public void CompleteModule() {
+		hasFinishedModule = true;
+		UIManager.s_instance.hintButton.gameObject.SetActive( false );
+
+		MessageWindow completionMessageWindow = completionPopup.GetComponent<MessageWindow>();
+		string completionMessage = completionMessageWindow.bodyText.text;
+		if( numMistakes == 0 ) {
+			completionMessage += "\n\nYou didn't have any mistakes in this practice.";
+		} else {
+			completionMessage += "\n\nYou made "+ numMistakes +" in this practice. Keep practicing until you can complete this module without any mistakes.";
+		}
+		completionMessageWindow.bodyText.text = completionMessage;
+
+		StartCoroutine( ToggleOnCompletionPopup() );
+	}
+
+	private IEnumerator ToggleOnCompletionPopup() {
+		float startTime = Time.time;
+		float lerpDuration = 0.15f;
+		completionPopup.interactable = true;
+		completionPopup.blocksRaycasts = true;
+
+		while( lerpDuration >= Time.time - startTime ) {
+			completionPopup.alpha = Mathf.Lerp( 0f, 1f, (Time.time-startTime)/lerpDuration );
+			yield return null;
+		}
+
+		completionPopup.alpha = 1f;
 	}
 }
