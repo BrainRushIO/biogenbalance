@@ -109,8 +109,18 @@ public class ValidateManager : MonoBehaviour {
 		case 2:
 		case 3:
 		case 4:
-		case 14:
+		case 5:
 			CheckInputs( new VToggles[2] { VToggles.LDoorOpen, VToggles.RDoorOpen } );
+			break;
+		case 9:
+			CheckInputs(new VToggles[1] { VToggles.FocusedOnBalanceFace } );
+			break;
+		case 14:
+			CheckInputs( new VToggles[2] {VToggles.FocusedOnBalanceFace, VToggles.RDoorOpen} );
+			break;
+		case 15:
+		case 16:
+			CheckInputs( new VToggles[1] {VToggles.FocusedOnBalanceFace} );
 			break;
 		default:
 			CheckInputs();
