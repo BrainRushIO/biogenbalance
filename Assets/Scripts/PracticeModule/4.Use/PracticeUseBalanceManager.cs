@@ -27,6 +27,9 @@ public class PracticeUseBalanceManager : BasePracticeSubmodule {
 	}
 
 	void Update() {
+		if( PracticeManager.s_instance.isInIntro )
+			return;
+		
 		CheckInputs();
 
 		if( ReadoutDisplay.s_instance.hasStableReading && !toggles[(int)PUToggles.ReadingStabilized] ) {
