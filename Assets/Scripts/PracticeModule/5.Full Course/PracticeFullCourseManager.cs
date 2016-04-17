@@ -79,7 +79,7 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 			break;
 		}
 	}
-
+		
 	public void CheckInputs( PFCToggles[] ignoreToggles ) {
 		for( int i = 0; i < toggles.Length; i++ ) {
 			bool ignoreInput = false;
@@ -378,6 +378,14 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 		PracticeManager.s_instance.StartNewCameraSlerp( defaultPivotPos, backDefaultCamPos );
 	}
 
+	private IEnumerator ToggleBalancedCalibrationOn() {
+		yield return new WaitForSeconds( 5f );
+		toggles[(int)PFCToggles.BalanceCalibrated] = true;
+		toggles[(int)PFCToggles.CalibrationModeOn] = false;
+		SoundtrackManager.s_instance.PlayAudioSource( SoundtrackManager.s_instance.buttonBeep );
+		ReadoutDisplay.s_instance.ToggleDisplay( true, true, false );
+		ReadoutDisplay.s_instance.ZeroOut();
+	}
 
 	// Use
 	public void ClickedOnFocusOnBalanceButton() {
@@ -393,14 +401,6 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 		PracticeManager.s_instance.StartNewCameraSlerp( defaultPivotPos, defaultCamPos );
 	}
 
-	private IEnumerator ToggleBalancedCalibrationOn() {
-		yield return new WaitForSeconds( 5f );
-		toggles[(int)PFCToggles.BalanceCalibrated] = true;
-		toggles[(int)PFCToggles.CalibrationModeOn] = false;
-		SoundtrackManager.s_instance.PlayAudioSource( SoundtrackManager.s_instance.buttonBeep );
-		ReadoutDisplay.s_instance.ToggleDisplay( true, true, false );
-		ReadoutDisplay.s_instance.ZeroOut();
-	}
 
 	public IEnumerator PourRice() {
 		Debug.Log( "Pouring Rice" );
@@ -408,15 +408,15 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 		riceContainerInside.SetActive( true );
 		riceContainerInside.GetComponent<Animator>().SetTrigger( "Activate" );
 		SoundtrackManager.s_instance.PlayAudioSource( SoundtrackManager.s_instance.rice2 );
-		ReadoutDisplay.s_instance.WeighObject( 50.0244f );
+		ReadoutDisplay.s_instance.WeighObject( 50.0244f*0.75f );
 
 		float startTime = Time.time;
 		float lerpDuration = 2f;
 		while( lerpDuration > Time.time-startTime ) {
-			riceSkinnedMeshRenderer.SetBlendShapeWeight( 0, 100f * ((Time.time-startTime)/lerpDuration) );
+			riceSkinnedMeshRenderer.SetBlendShapeWeight( 0, 75f * ((Time.time-startTime)/lerpDuration) );
 			yield return null;
 		}
-		riceSkinnedMeshRenderer.SetBlendShapeWeight( 0, 100f );
+		riceSkinnedMeshRenderer.SetBlendShapeWeight( 0, 75f );
 		toggles[(int)PFCToggles.WeighContainerFilled] = true;
 		riceContainerInside.SetActive( false );
 		ClearSelectedObject();

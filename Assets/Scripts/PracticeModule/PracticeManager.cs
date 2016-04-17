@@ -131,6 +131,7 @@ public class PracticeManager : MonoBehaviour {
 		}
 
 		GoToStep(currentStepIndex);
+		Debug.Log( currentStepIndex );
 	}
 
 	public void GoToStep( int stepIndex ) {

@@ -165,6 +165,20 @@ public class ApplicationManager : MonoBehaviour {
 		if( File.Exists( Application.persistentDataPath + "/user_data.stem" ) ) {
 			File.Delete( Application.persistentDataPath + "/user_data.stem" );
 		}
+			
+		playerData.f_semi = false;
+		playerData.f_micro = false;
+		playerData.a_choose = false;
+		playerData.a_prepare = false;
+		playerData.a_calibrate = false;
+		playerData.a_use = false;
+		playerData.p_choose = false;
+		playerData.p_prepare = false;
+		playerData.p_calibrate = false;
+		playerData.p_use = false;
+		playerData.p_full = false;
+		playerData.validate = false;
+		playerData. completionTime = float.NaN;
 	}
 }
 
