@@ -83,7 +83,7 @@ public class PracticeFullCourseManager : BasePracticeSubmodule {
 		case 1:
 			if( Mathf.Abs(bubble.localPosition.x) <= bubbleWinThreshold && Mathf.Abs(bubble.localPosition.y) <= bubbleWinThreshold ) {
 				toggles[(int)PFCToggles.BalanceIsLeveled] = true;
-				SoundtrackManager.s_instance.PlayAudioSource( SoundtrackManager.s_instance.buttonBeep );
+				//SoundtrackManager.s_instance.PlayAudioSource( SoundtrackManager.s_instance.buttonBeep );
 				//ClickedOnLeaveBackFocusButton();
 				screwsCanvas.SetActive( false );
 			}
