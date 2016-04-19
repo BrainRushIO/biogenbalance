@@ -19,6 +19,12 @@ public class PracticeManager : MonoBehaviour {
 	public ListViewButton defaultListViewText;
 	public TextAsset practiceContentXML;
 	public bool isDragging = false;
+	public bool hasWon = false;
+	public bool isInIntro = true;
+	public CanvasGroup introPopup, completionPopup;
+	public Camera introCamera;
+	public bool hasFinishedModule = false;
+	public int numMistakes = 0;
 
 	public BasePracticeSubmodule submoduleManager;
 	private List<StepsListEntry> practiceStepList;
@@ -33,7 +39,7 @@ public class PracticeManager : MonoBehaviour {
 		if( s_instance == null ) {
 			s_instance = this;
 			InitializePracticeStepList();
-			InitializeAcquireListView();
+			InitializePracticeListView();
 		} else {
 			Debug.LogWarning( "Destroying duplicate Practice Manager." );
 			DestroyImmediate( this.gameObject );
@@ -44,16 +50,28 @@ public class PracticeManager : MonoBehaviour {
 		ApplicationManager.s_instance.ChangeMouseMode( (int)ApplicationManager.MouseMode.Pointer );
 		UIManager.s_instance.ToggleToolsActive( true, true, true, true );
 		UIManager.s_instance.ToggleSidePanel( false, false );
+		UIManager.s_instance.hintButton.gameObject.SetActive( false );
 		//HACK remove this line
 		//UIManager.s_instance.nextButton.gameObject.SetActive( true );
 		submoduleManager = BasePracticeSubmodule.s_instance;
 		orbitCam = sceneCamera.GetComponent<OrbitCamera>();
 
 		currentStepIndex = -1;
-		GoToNextStep();
 	}
 
 	void Update() {
+		if( isInIntro || hasFinishedModule )
+			return;
+
+		Ray mouseHoverRay = sceneCamera.ScreenPointToRay(Input.mousePosition);
+		RaycastHit mouseHoverHit;
+		if ( Physics.Raycast(mouseHoverRay, out mouseHoverHit) ) {
+			SelectableObject hoveredObject = mouseHoverHit.transform.GetComponent<SelectableObject>();
+			submoduleManager.HoveredOverObject( hoveredObject );
+		} else {
+			submoduleManager.HoveredOverObject( null );
+		}
+
 		#region PointerInput
 		// Inupt is disbaled if camera is lerping
 		if( isLerpingToNewPosition )
@@ -73,7 +91,7 @@ public class PracticeManager : MonoBehaviour {
 					}
 				}
 			} else if( !isDragging && !ApplicationManager.s_instance.userIsInteractingWithUI ) { // If we clicked away from any objects in the 3D Scene View, clear selection
-				submoduleManager.ClearSelectedObject( true );
+				submoduleManager.ClearSelectedObject();
 			}
 
 			hasClickedDownOnItem = false;
@@ -101,16 +119,20 @@ public class PracticeManager : MonoBehaviour {
 	}
 
 	public void GoToNextStep() {
+		if( hasFinishedModule )
+			return;
+
 		currentStepIndex++;
 		while ( currentStepIndex < practiceStepList.Count && practiceStepList[currentStepIndex].isSectionParent )
 			currentStepIndex++;
 
 		if( currentStepIndex >= practiceStepList.Count ) {
-			Debug.LogWarning( "Current step index outside of list bounds." );
+			CompleteModule();
 			return;
 		}
 
 		GoToStep(currentStepIndex);
+		Debug.Log( currentStepIndex );
 	}
 
 	public void GoToStep( int stepIndex ) {
@@ -125,7 +147,7 @@ public class PracticeManager : MonoBehaviour {
 		newListViewButtonSelection.childText.color = Color.white;
 		newListViewButtonSelection.checkBox.isOn = true;
 
-		UIManager.s_instance.UpdateDescriptionViewText( "Hint: " + practiceStepList[stepIndex].uiText.descriptionViewText );
+		UIManager.s_instance.UpdateDescriptionViewText( /*"Hint: " +*/ practiceStepList[stepIndex].uiText.descriptionViewText );
 		ToggleListViewItemHighLight( stepIndex, true );
 	}
 
@@ -207,10 +229,6 @@ public class PracticeManager : MonoBehaviour {
 			ToggleListViewItemHighLight( i, false );
 		UIManager.s_instance.UpdateDescriptionViewText( "" );
 		UIManager.s_instance.ToggleSidePanel( false, false );
-
-//		//TODO Remove this if 
-//		if( submoduleManager != null )
-//			submoduleManager.ResetScene();
 	}
 	
 	private void InitializePracticeStepList() {
@@ -295,7 +313,7 @@ public class PracticeManager : MonoBehaviour {
 		}
 	}
 
-	private void InitializeAcquireListView() {
+	private void InitializePracticeListView() {
 		int practiceListCount = practiceStepList.Count;
 
 		// Setting the height of the list view to match the amount of buttons I will add to it.
@@ -373,5 +391,75 @@ public class PracticeManager : MonoBehaviour {
 
 		StartCoroutine( LerpCameraLookAt() );
 		StartCoroutine( SlerpToNewCamPos() );
+	}
+
+	public void ClickedCloseIntroPopupButton() {
+		StartCoroutine( CloseIntroPopup() );
+	}
+
+	private IEnumerator CloseIntroPopup() {
+		float startTime = Time.time;
+		float lerpDuration = 0.15f;
+		if( introCamera != null )
+			introCamera.gameObject.SetActive( false );
+
+		while( lerpDuration > Time.time - startTime ) {
+			introPopup.alpha = Mathf.Lerp( 1f, 0f, (Time.time-startTime)/lerpDuration );
+			yield return null;
+		}
+
+		introPopup.transform.parent.gameObject.SetActive( false );
+		UIManager.s_instance.hintButton.gameObject.SetActive( true );
+		isInIntro = false;
+		GoToNextStep();
+	}
+
+	public void CompleteModule() {
+		hasFinishedModule = true;
+		UIManager.s_instance.hintButton.gameObject.SetActive( false );
+		switch( moduleType )
+		{
+		case PracticeModule.Choose:
+			ApplicationManager.s_instance.playerData.p_choose = true;
+			break;
+		case PracticeModule.Prepare:
+			ApplicationManager.s_instance.playerData.p_prepare = true;
+			break;
+		case PracticeModule.Calibrate:
+			ApplicationManager.s_instance.playerData.p_calibrate = true;
+			break;
+		case PracticeModule.Use:
+			ApplicationManager.s_instance.playerData.p_use = true;
+			break;
+		case PracticeModule.FullCourse:
+			ApplicationManager.s_instance.playerData.p_full = true;
+			break;
+		}
+		ApplicationManager.s_instance.Save();
+
+		MessageWindow completionMessageWindow = completionPopup.GetComponent<MessageWindow>();
+		string completionMessage = completionMessageWindow.bodyText.text;
+		if( numMistakes == 0 ) {
+			completionMessage += "\nYou didn't have any mistakes in this practice.";
+		} else {
+			completionMessage += "\nYou made "+ numMistakes +" in this practice. Keep practicing until you can complete this module without any mistakes.";
+		}
+		completionMessageWindow.bodyText.text = completionMessage;
+
+		StartCoroutine( ToggleOnCompletionPopup() );
+	}
+
+	private IEnumerator ToggleOnCompletionPopup() {
+		float startTime = Time.time;
+		float lerpDuration = 0.15f;
+		completionPopup.interactable = true;
+		completionPopup.blocksRaycasts = true;
+
+		while( lerpDuration >= Time.time - startTime ) {
+			completionPopup.alpha = Mathf.Lerp( 0f, 1f, (Time.time-startTime)/lerpDuration );
+			yield return null;
+		}
+
+		completionPopup.alpha = 1f;
 	}
 }

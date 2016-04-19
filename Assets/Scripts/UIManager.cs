@@ -33,15 +33,21 @@ public class UIManager : MonoBehaviour {
 	public RectTransform defaultListViewModuleTitle, defaultListViewButton, defaultListViewSectionTitle;
 	public Color listViewButtonNormalColor, listViewButtonHighlightColor;
 	public Button hintButton;
+	private float scrollBarIncrementAmount = 0.1f;
 
 	[Header("Tools")]
 	public Button pointerToolButton;
 	public Button rotateToolButton;
 	public Button panToolButton;
 	public Button forcepsToolButton;
+	private Sprite pointerButtonNormalSprite, pointerButtonHighlightedSprite,
+					rotateButtonNormalSprite, rotateButtonHighlightedSprite,
+					panButtonNormalSprite, panButtonHighlightedSprite,
+					forcepsButtonNormalSprite, forcepsButtonHighlightedSprite;
 
-	public Texture2D pointerCursor,
-				rotateCursor,
+	[Header("Cursors")]
+	public Texture2D pointerCursor;
+	public Texture2D rotateCursor,
 				panCursor,
 				forcepsCursor,
 				selectableItemCursor,
@@ -52,9 +58,25 @@ public class UIManager : MonoBehaviour {
 		if( s_instance == null ) {
 			s_instance = this;
 			DontDestroyOnLoad( gameObject );
+
+			Init();
 		} else {
 			DestroyImmediate( gameObject );
 		}
+	}
+
+	void Init() {
+		pointerButtonNormalSprite = pointerToolButton.image.sprite;
+		pointerButtonHighlightedSprite = pointerToolButton.spriteState.highlightedSprite;
+
+		rotateButtonNormalSprite = rotateToolButton.image.sprite;
+		rotateButtonHighlightedSprite = rotateToolButton.spriteState.highlightedSprite;
+
+		panButtonNormalSprite = panToolButton.image.sprite;
+		panButtonHighlightedSprite = panToolButton.spriteState.highlightedSprite;
+
+		forcepsButtonNormalSprite = forcepsToolButton.image.sprite;
+		forcepsButtonHighlightedSprite = forcepsToolButton.spriteState.highlightedSprite;
 	}
 
 	public void CloseDropDowns() {
@@ -108,20 +130,35 @@ public class UIManager : MonoBehaviour {
 	}
 
 	public void UpdateMouseCursor() {
-		switch (ApplicationManager.s_instance.currentMouseMode) 
-		{
-		case ApplicationManager.MouseMode.Pointer:
-			Cursor.SetCursor( pointerCursor, Vector2.zero, CursorMode.ForceSoftware );
-			break;
-		case ApplicationManager.MouseMode.Rotate:
-			Cursor.SetCursor( rotateCursor, Vector2.zero, CursorMode.ForceSoftware );
-			break;
-		case ApplicationManager.MouseMode.Pan:
-			Cursor.SetCursor( panCursor, Vector2.zero, CursorMode.ForceSoftware );
-			break;
-		case ApplicationManager.MouseMode.Forceps:
-			Cursor.SetCursor( forcepsCursor, Vector2.zero, CursorMode.ForceSoftware );
-			break;
+		if( ApplicationManager.s_instance.currentSpecialCursorMode == ApplicationManager.SpecialCursorMode.None ) {
+			switch (ApplicationManager.s_instance.currentMouseMode) 
+			{
+			case ApplicationManager.MouseMode.Pointer:
+				Cursor.SetCursor( pointerCursor, Vector2.zero, CursorMode.ForceSoftware );
+				break;
+			case ApplicationManager.MouseMode.Rotate:
+				Cursor.SetCursor( rotateCursor, Vector2.zero, CursorMode.ForceSoftware );
+				break;
+			case ApplicationManager.MouseMode.Pan:
+				Cursor.SetCursor( panCursor, Vector2.zero, CursorMode.ForceSoftware );
+				break;
+			case ApplicationManager.MouseMode.Forceps:
+				Cursor.SetCursor( forcepsCursor, Vector2.zero, CursorMode.ForceSoftware );
+				break;
+			}
+		} else {
+			switch( ApplicationManager.s_instance.currentSpecialCursorMode )
+			{
+			case ApplicationManager.SpecialCursorMode.OpenHand:
+				Cursor.SetCursor( selectableItemCursor, Vector2.zero, CursorMode.ForceSoftware );
+				break;
+			case ApplicationManager.SpecialCursorMode.ClosedHand:
+				Cursor.SetCursor( holdingItemCursor, Vector2.zero, CursorMode.ForceSoftware );
+				break;
+			case ApplicationManager.SpecialCursorMode.PointingHand:
+				Cursor.SetCursor( placeItemCursor, Vector2.zero, CursorMode.ForceSoftware );
+				break;
+			}
 		}
 	}
 
@@ -182,6 +219,11 @@ public class UIManager : MonoBehaviour {
 	/// <param name="toggleOn">If set to <c>true</c> toggle on.</param>
 	public void ToggleSidePanel( bool toggleOn, bool lerpTransition ) {
 		CanvasGroup cG = sidePanel.GetComponent<CanvasGroup>();
+		if( cG.alpha == 1f && toggleOn == true )
+			return;
+		else if( cG.alpha == 0f && toggleOn == false )
+			return;
+
 		if( lerpTransition ) 
 			StartCoroutine( LerpSidePanelAlpha( toggleOn, 0.15f, cG ) );
 		else
@@ -206,4 +248,53 @@ public class UIManager : MonoBehaviour {
 		}
 		cG.alpha = endVal;
 	}
+
+	public void ToggleToolHighlight( int newHighlightedTool ) {
+		pointerToolButton.image.sprite = pointerButtonNormalSprite;
+		rotateToolButton.image.sprite = rotateButtonNormalSprite;
+		panToolButton.image.sprite = panButtonNormalSprite;
+		forcepsToolButton.image.sprite = forcepsButtonNormalSprite;
+
+		ApplicationManager.MouseMode toolToHighlight = (ApplicationManager.MouseMode)newHighlightedTool;
+		switch( toolToHighlight )
+		{
+		case ApplicationManager.MouseMode.Pointer:
+			pointerToolButton.image.sprite = pointerButtonHighlightedSprite;
+			break;
+		case ApplicationManager.MouseMode.Rotate:
+			rotateToolButton.image.sprite = rotateButtonHighlightedSprite;
+			break;
+		case ApplicationManager.MouseMode.Pan:
+			panToolButton.image.sprite = panButtonHighlightedSprite;
+			break;
+		case ApplicationManager.MouseMode.Forceps:
+			forcepsToolButton.image.sprite = forcepsButtonHighlightedSprite;
+			break;
+		}
+	}
+
+	public void ListViewUpButton() {
+		listViewVerticalScrollbar.value = Mathf.Clamp(listViewVerticalScrollbar.value+scrollBarIncrementAmount, 0f, 1f);
+	}
+
+	public void ListViewDownButton() {
+		listViewVerticalScrollbar.value = Mathf.Clamp(listViewVerticalScrollbar.value-scrollBarIncrementAmount, 0f, 1f);
+	}
+
+	public void ListViewRightButton() {
+		listViewHorizontalScrollbar.value = Mathf.Clamp(listViewHorizontalScrollbar.value+scrollBarIncrementAmount, 0f, 1f);
+	}
+
+	public void ListViewLeftButton() {
+		listViewHorizontalScrollbar.value = Mathf.Clamp(listViewHorizontalScrollbar.value-scrollBarIncrementAmount, 0f, 1f);
+	}
+
+	public void DescriptionViewUpButton() {
+		descriptionViewScrollbar.value = Mathf.Clamp(descriptionViewScrollbar.value+scrollBarIncrementAmount, 0f, 1f);
+	}
+
+	public void DescriptionViewDownButton() {
+		descriptionViewScrollbar.value = Mathf.Clamp(descriptionViewScrollbar.value-scrollBarIncrementAmount, 0f, 1f);
+	}
+
 }

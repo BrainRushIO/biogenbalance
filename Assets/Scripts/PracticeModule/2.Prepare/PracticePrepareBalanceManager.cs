@@ -4,6 +4,7 @@ using System.Collections;
 public class PracticePrepareBalanceManager : BasePracticeSubmodule {
 
 	public RectTransform bubble;
+	public Canvas screwsCanvas, bubbleCanvas;
 
 	private float currentBubbleX, currentBubbleY;
 	private float bubbleWinThreshold = 2.5f;
@@ -20,6 +21,9 @@ public class PracticePrepareBalanceManager : BasePracticeSubmodule {
 	}
 
 	void Update() {
+		if( PracticeManager.s_instance.isInIntro || PracticeManager.s_instance.hasFinishedModule )
+			return;
+
 		CheckInputs();
 
 		switch( currentStep ) {
@@ -27,7 +31,9 @@ public class PracticePrepareBalanceManager : BasePracticeSubmodule {
 			break;
 		case 1:
 			if( Mathf.Abs(bubble.localPosition.x) <= bubbleWinThreshold && Mathf.Abs(bubble.localPosition.y) <= bubbleWinThreshold ) {
-				Debug.Log( "Yay you win!" );
+				screwsCanvas.gameObject.SetActive( false );
+				bubbleCanvas.gameObject.SetActive( false );
+				PracticeManager.s_instance.CompleteModule();
 			}
 			break;
 		}
@@ -42,24 +48,6 @@ public class PracticePrepareBalanceManager : BasePracticeSubmodule {
 
 		// Have steps execute specific step logic if they have it
 		moduleSteps[stepIndex].ExecuteStepLogic();
-	}
-
-	/// <summary>
-	/// Resets the scene objects to their default position.
-	/// </summary>
-	public override void ResetScene() {
-	}
-
-	protected override void SelectObject( SelectableObject newSelection ) {
-		ClearSelectedObject( false );
-	}
-
-	public override void ClearSelectedObject( bool lerpToDefaultPos ) {
-		if( selectedObject == SelectableObject.SelectableObjectType.None )
-			return;
-
-		//TODO Turn off highlights and shit
-		selectedObject = SelectableObject.SelectableObjectType.None;
 	}
 
 	public override void ClickedOnObject( SelectableObject clickedOnObject, bool usedForceps ) {

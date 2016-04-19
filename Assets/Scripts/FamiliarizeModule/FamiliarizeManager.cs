@@ -26,6 +26,9 @@ public class FamiliarizeManager : MonoBehaviour {
 	[System.NonSerialized]
 	public bool isDragging = false;
 	public TextAsset familiarizeContentXML;
+	public bool isInIntro = true;
+	public CanvasGroup introPopup;
+	public Camera introCamera;
 
 	[Header("UI")]
 	public Button defaultListViewButton;
@@ -41,6 +44,7 @@ public class FamiliarizeManager : MonoBehaviour {
 	private OrbitCamera orbitCam;
 	private Transform currentCameraPivot, currentCameraStartPos;
 	private string defaultDescViewText = "Click an item in the Outliner to learn more about it.";
+	private bool hasViewedAllItems = false;
 
 	void Awake() {
 		if( s_instance == null ) {
@@ -60,6 +64,12 @@ public class FamiliarizeManager : MonoBehaviour {
 		UIManager.s_instance.UpdateDescriptionViewText( defaultDescViewText );
 		UIManager.s_instance.nextButton.gameObject.SetActive( false );
 		UIManager.s_instance.ToggleSidePanel( true, false );
+
+		if( moduleType == FamiliarizeModule.MicroBalance ) {
+			hasViewedAllItems = ApplicationManager.s_instance.playerData.f_micro;
+		} else {
+			hasViewedAllItems = ApplicationManager.s_instance.playerData.f_semi;
+		}
 	}
 
 	void Update () {
@@ -103,6 +113,27 @@ public class FamiliarizeManager : MonoBehaviour {
 			}
 		}
 		#endregion
+
+		CheckCompletion();
+	}
+
+	void CheckCompletion() {
+		if( hasViewedAllItems )
+			return;
+
+		foreach( FamiliarizeDictionaryEntry entry in familiarizeDictionary.Values ) {
+			if( entry.button.checkBox.isOn == false )
+				return;
+		}
+
+		hasViewedAllItems = true;
+		if( moduleType == FamiliarizeModule.MicroBalance ) {
+			ApplicationManager.s_instance.playerData.f_micro = true;
+		} else {
+			ApplicationManager.s_instance.playerData.f_semi = true;
+		}
+
+		ApplicationManager.s_instance.Save();
 	}
 
 	void InitializeFamiliarizeDictionary() {
@@ -160,7 +191,7 @@ public class FamiliarizeManager : MonoBehaviour {
 	}
 
 	public void SelectObjectOfKey( string searchKey ) {
-		if( isLerpingToNewPosition )
+		if( isLerpingToNewPosition || isInIntro )
 			return;
 
 		FamiliarizeDictionaryEntry temp;
@@ -280,5 +311,23 @@ public class FamiliarizeManager : MonoBehaviour {
 			tempBlock.normalColor = UIManager.s_instance.listViewButtonNormalColor;
 		}
 		listViewButton.colors = tempBlock;
+	}
+
+	public void ClickedCloseIntroPopupButton() {
+		StartCoroutine( CloseIntroPopup() );
+	}
+
+	private IEnumerator CloseIntroPopup() {
+		float startTime = Time.time;
+		float lerpDuration = 0.15f;
+		introPopup.transform.parent.gameObject.SetActive( false );
+
+		while( lerpDuration > Time.time - startTime ) {
+			introPopup.alpha = Mathf.Lerp( 1f, 0f, (Time.time-startTime)/lerpDuration );
+			yield return null;
+		}
+
+		introCamera.gameObject.SetActive( false );
+		isInIntro = false;
 	}
 }
