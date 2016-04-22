@@ -32,6 +32,7 @@ public class ApplicationManager : MonoBehaviour {
 			DontDestroyOnLoad( gameObject );
 
 			resolutions = Screen.resolutions;
+			currentResolution = ( resolutions.Length > 1 ) ? resolutions.Length-2 : resolutions.Length-1;
 			Screen.SetResolution( resolutions[currentResolution].width, resolutions[currentResolution].height, false );
 		} else {
 			DestroyImmediate( gameObject );
