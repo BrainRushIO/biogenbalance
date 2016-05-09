@@ -50,7 +50,7 @@
 		<item>
 			<key>printButton</key>
 			<listText>Print Button</listText>
-			<descriptionText>Prints out the recorded data to a printer connected via the Serial Port.</descriptionText>
+			<descriptionText>Sends out the recorded data to a data acquisition system connected via the Serial Port.</descriptionText>
 		</item>
 		<item>
 			<key>decimalButton</key>
@@ -85,7 +85,7 @@
 		<item>
 			<key>serialPort</key>
 			<listText>Serial Port</listText>
-			<descriptionText>Port used to connect to printers.</descriptionText>
+			<descriptionText>Port used to connect to data acquisition system.</descriptionText>
 		</item>
 		<!--<item>
 			<key>calibrationLabel</key>
@@ -157,7 +157,7 @@
 		<item>
 			<key>printButton</key>
 			<listText>Print Button</listText>
-			<descriptionText>Prints out the recorded data to a printer connected via the Serial Port.</descriptionText>
+			<descriptionText>Sends data to the data acquisition system connected via the Serial Port.</descriptionText>
 		</item>
 		<item>
 			<key>levelingScrews</key>
@@ -172,7 +172,7 @@
 		<item>
 			<key>serialPort</key>
 			<listText>Serial Port</listText>
-			<descriptionText>Port used to connect to printers.</descriptionText>
+			<descriptionText>Port used to connect to data acquisition system.</descriptionText>
 		</item>
 		<!--<item>
 			<key>calibrationLabel</key>
