@@ -61,7 +61,7 @@ Note: Always refer to your balance’s SOP to find its specifications.</descript
 		</section>
 		<step>
 			<listText>Weights</listText>
-			<descriptionText>This is a calibration weight. There are many shapes and sizes but we will be using these for our examples and calibration. These weights have their mass engraved on the face of their top side. Remember to use forceps to handle calibration weights. Oils from your skin are enough to throw the weight off and will cause issues with the calibration.</descriptionText>
+			<descriptionText>This is a calibration weight and it is used for a calibration check. These weights have their mass engraved on the face of their top side. Remember to use forceps to handle calibration weights. Oils from your skin are enough to throw the weight off and will cause issues with the calibration check.</descriptionText>
 		</step>
 		<step>
 			<listText>Determining What Balance to Choose</listText>
@@ -120,7 +120,7 @@ Note: Always refer to your balance’s SOP to find its specifications.</descript
 	<calibrateBalance>
 		<moduleTitle>Calibrate the Balance</moduleTitle>
 		<popupWindow>
-			<text>Welcome to the Acquire - Balance Calibration Module. In this module, we will help you learn about the calibration procedure the balances. By the end of this lesson, you will understand how to perform calibration of a balance.</text>
+			<text>Welcome to the Acquire - Balance Calibration Module. In this module, we will help you learn about the calibration procedure the balances. By the end of this lesson, you will understand how to perform calibration of a balance. Note: Refer to your Balance SOP for the specific sequence of buttons used on your particular instrument.</text>
 		</popupWindow>
 		<step>
 			<listText>Turn Balance On</listText>
@@ -141,7 +141,7 @@ Note: Different balances enter Calibration Mode in different ways. Refer to your
 		</step>
 		<step>
 			<listText>The Calibration Weight</listText>
-			<descriptionText>This is a calibration weight. It is used when calibrating a balance to ensure that the balance is in a working condition. Use forceps to handle the calibration weight. Note: Use gloves for heavier weights.</descriptionText>
+			<descriptionText>This is a calibration weight. It is used to perform a calibration check each time the balance is used. Use forceps to handle the calibration weight. Note: Use gloves for heavier weights.</descriptionText>
 		</step>
 		<step>
 			<listText>Open Door</listText>
@@ -165,7 +165,7 @@ Note: Different balances enter Calibration Mode in different ways. Refer to your
 		</step>
 		<step>
 			<listText>Calibration Finished</listText>
-			<descriptionText>The balance has been calibrated. Calibration is not required for the rest of the time the balance will be used this session.</descriptionText>
+			<descriptionText>The balance has been calibrated. Calibration is not required for the rest of the time the balance will be used this session. Note: Calibration is performed intermittently while a calibration check is performed each time a balance is used.</descriptionText>
 		</step>
 	</calibrateBalance>
 	<useBalance>
