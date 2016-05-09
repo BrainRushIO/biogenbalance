@@ -442,7 +442,7 @@ public class PracticeManager : MonoBehaviour {
 		if( numMistakes == 0 ) {
 			completionMessage += "\nYou didn't have any mistakes in this practice.";
 		} else {
-			completionMessage += "\nYou made "+ numMistakes +" in this practice. Keep practicing until you can complete this module without any mistakes.";
+			completionMessage += "\nYou made "+ numMistakes +" mistakes in this practice. Keep practicing until you can complete this module without any mistakes.";
 		}
 		completionMessageWindow.bodyText.text = completionMessage;
 
