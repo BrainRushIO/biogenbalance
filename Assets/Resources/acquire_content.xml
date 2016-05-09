@@ -21,7 +21,7 @@
 			<listText>Models</listText>
 			<descriptionText>The balance displayed is the Sartorius ME5. Depending on the balance being used, it will have a different Weight Capacity, and Precision.
 
-Note: Always refer to your balance’s User Manual to find its specifications.</descriptionText>
+Note: Always refer to your balance’s SOP to find its specifications.</descriptionText>
 		</step>
 		<step>
 			<listText>Body</listText>
@@ -46,7 +46,7 @@ Note: Always refer to your balance’s User Manual to find its specifications.</
 			<listText>Models</listText>
 			<descriptionText>The balance displayed is the Sartorius AZ214. Depending on the balance being used, it will have a different Weight Capacity, and Precision.
 
-Note: Always refer to your balance’s User Manual to find its specifications.</descriptionText>
+Note: Always refer to your balance’s SOP to find its specifications.</descriptionText>
 		</step>
 			<step>
 				<listText>Body</listText>
@@ -137,7 +137,7 @@ Note: Always refer to your balance’s User Manual to find its specifications.</
 			<listText>Activate Calibration Mode</listText>
 			<descriptionText>To enter Calibration Mode, hold the tare button down until you hear a beep.
 
-Note: Different balances enter Calibration Mode in different ways. Refer to your specific balance’s user manual.</descriptionText>
+Note: Different balances enter Calibration Mode in different ways. Refer to your specific balance’s SOP.</descriptionText>
 		</step>
 		<step>
 			<listText>The Calibration Weight</listText>
