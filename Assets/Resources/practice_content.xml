@@ -24,7 +24,7 @@ This Semi-MicroBalance has a maximum weight capacity of 210g and a precision of 
 		</popupWindow>
 		<step>
 			<listText>Get into Leveling Position</listText>
-			<descriptionText>Click the button behind the balance to assume the balance leveling position.</descriptionText>
+			<descriptionText>Click the button behind the balance to assume the balance leveling position. Use to rotate icon below to rotate the camera, then use the cursor icon to press the button</descriptionText>
 		</step>
 		<step>
 			<listText>Level the Balance</listText>
@@ -37,7 +37,7 @@ This Semi-MicroBalance has a maximum weight capacity of 210g and a precision of 
 			<text></text>
 		</popupWindow>
 		<step>
-			<listText>Access Balancec Face</listText>
+			<listText>Access Balance Face</listText>
 			<descriptionText>Click the button in front of the balance to access the balance’s face buttons.</descriptionText>
 		</step>
 		<step>
