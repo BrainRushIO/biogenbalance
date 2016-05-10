@@ -39,7 +39,7 @@ public class PracticeChooseBalanceManager : BasePracticeSubmodule {
 			PracticeManager.s_instance.CompleteModule();
 		} else {
 			PracticeManager.s_instance.PressedHintButton();
-			PracticeManager.s_instance.numMistakes++;
+			PracticeManager.s_instance.MakeMistake();
 		}
 	}
 

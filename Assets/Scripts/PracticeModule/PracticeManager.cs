@@ -118,6 +118,11 @@ public class PracticeManager : MonoBehaviour {
 		UIManager.s_instance.ToggleSidePanel( true, true );
 	}
 
+	public void MakeMistake() {
+		numMistakes++;
+		UIManager.s_instance.HintWindow.gameObject.SetActive (true);
+	}
+
 	public void GoToNextStep() {
 		if( hasFinishedModule )
 			return;
@@ -440,9 +445,9 @@ public class PracticeManager : MonoBehaviour {
 		MessageWindow completionMessageWindow = completionPopup.GetComponent<MessageWindow>();
 		string completionMessage = completionMessageWindow.bodyText.text;
 		if( numMistakes == 0 ) {
-			completionMessage += "\nYou didn't have any mistakes in this practice.";
+			completionMessage += "\n\nYou didn't have any mistakes in this practice. Select another module from the drop down menu to continue.";
 		} else {
-			completionMessage += "\nYou made "+ numMistakes +" mistakes in this practice. Keep practicing until you can complete this module without any mistakes.";
+			completionMessage += "\n\nYou made "+ numMistakes +" mistakes in this practice. Select another module from the drop down menu to continue.";
 		}
 		completionMessageWindow.bodyText.text = completionMessage;
 

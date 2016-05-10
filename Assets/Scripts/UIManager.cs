@@ -11,6 +11,8 @@ public class UIManager : MonoBehaviour {
 
 	[Header("General")]
 	public MessageWindow messageWindow;
+	public MessageWindow HintWindow;
+
 
 	[Header("Top Bar")]
 	public Button familiarizeButton;
