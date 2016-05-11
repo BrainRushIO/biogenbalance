@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class PracticeUseBalanceManager : BasePracticeSubmodule {
-	public GameObject weighContainerOutside, weighContainerInside, riceContainerOutside, riceContainerInside;
+	public GameObject weighContainerOutside, weighContainerInside, riceContainerOutside, riceContainerInside, doneButton;
 	public SkinnedMeshRenderer riceSkinnedMeshRenderer;
 	public Animator leftGlassDoor, rightGlassDoor;
 	public Transform defaultPivotPos, defaultCamPos, facePivotPos, faceCamPos;
@@ -46,6 +46,9 @@ public class PracticeUseBalanceManager : BasePracticeSubmodule {
 			break;
 		case 6:
 			CheckInputs( new PUToggles[1] { PUToggles.FocusedOnBalanceFace }  );
+			break;
+		case 7:
+			doneButton.SetActive (true);
 			break;
 		default:
 			CheckInputs();
@@ -223,7 +226,7 @@ public class PracticeUseBalanceManager : BasePracticeSubmodule {
 	public void ClickedOnFocusOnBalanceButton() {
 		if( PracticeManager.s_instance.isInIntro )
 			return;
-
+		
 		toggles[(int)PUToggles.FocusedOnBalanceFace] = true;
 		PracticeManager.s_instance.StartNewCameraSlerp( facePivotPos, faceCamPos );
 	}

@@ -81,27 +81,27 @@ This Semi-MicroBalance has a maximum weight capacity of 210g and a precision of 
 		</popupWindow>
 		<step>
 			<listText>Add Weight Container</listText>
-			<descriptionText>Place the weight container on the weigh pan.</descriptionText>
+			<descriptionText>Open the door with the cursor tool and then place the weight container on the weigh pan.</descriptionText>
 		</step>
 		<step>
 			<listText>Close Door</listText>
-			<descriptionText>Make sure the draft shield door is closed before proceeding.</descriptionText>
+			<descriptionText>Close the draft shield door.</descriptionText>
 		</step>
 		<step>
 			<listText>Tare</listText>
-			<descriptionText>Press the Tare button to remove the weight container’s weight from the reading.</descriptionText>
+			<descriptionText>Access the face components then press the Tare button to zero the balance.</descriptionText>
 		</step>
 		<step>
 			<listText>Open Door</listText>
-			<descriptionText>Make sure the draft shield door is open.</descriptionText>
+			<descriptionText>Return to the side view and open the shield door.</descriptionText>
 		</step>
 		<step>
 			<listText>Add Desired Material</listText>
-			<descriptionText>Click on the desired material to select it. Once selected click on the weight container to add the material to the container.</descriptionText>
+			<descriptionText>Click on the weigh material then click the weight container to pour in rice.</descriptionText>
 		</step>
 		<step>
 			<listText>Close Door</listText>
-			<descriptionText>Make sure that the draft shield door is closed to get an accurate reading.</descriptionText>
+			<descriptionText>Close the draft shield door to get an accurate reading.</descriptionText>
 		</step>
 		<step>
 			<listText>Wait for Stable Reading</listText>
