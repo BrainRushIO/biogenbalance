@@ -16,6 +16,7 @@ public class PracticeCalibrateBalanceManager : BasePracticeSubmodule {
 		rightDoorClosedState = Animator.StringToHash( "Base Layer.SMB_RightGlass_Closed" );
 		leftDoorOpenState = Animator.StringToHash( "Base Layer.SMB_LeftGlass_Open" );
 		leftDoorClosedState = Animator.StringToHash( "Base Layer.SMB_LeftGlass_Closed" );
+		UIManager.s_instance.ToggleSidePanel (true, false);
 	}
 
 	void Update() {
@@ -26,6 +27,7 @@ public class PracticeCalibrateBalanceManager : BasePracticeSubmodule {
 		switch( currentStep )
 		{
 		case 0:
+
 		case 1:
 		case 2:
 			CheckInputs( new PCToggles[1] { PCToggles.RDoorOpen } );
@@ -221,9 +223,11 @@ public class PracticeCalibrateBalanceManager : BasePracticeSubmodule {
 	}
 
 	public void ClickedOnFocusOnBalanceButton() {
-		if( PracticeManager.s_instance.isInIntro )
+		if (PracticeManager.s_instance.isInIntro) {
 			return;
-		
+		}
+		print ("RETURNED AND NOT EXECUTING");
+
 		toggles[(int)PCToggles.FocusedOnBalanceFace] = true;
 		PracticeManager.s_instance.StartNewCameraSlerp( facePivotPos, faceCamPos );
 	}

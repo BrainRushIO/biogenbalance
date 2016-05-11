@@ -8,12 +8,14 @@
 		</popupWindow>
 		<step>
 			<listText>Test Weight</listText>
-			<descriptionText>Study the weight and remember how much it weighs.</descriptionText>
+			<descriptionText>Study the weight and remember how much it weighs. Then press next.</descriptionText>
 		</step>
 		<step>
 			<listText>Choose the Balance</listText>
 			<descriptionText>We use a balance’s maximum weight capacity and its precision when determining which is the right choice.
+
 This Microbalance has a maximum weight capacity of 5g and a precision of 1µg.
+
 This Semi-MicroBalance has a maximum weight capacity of 210g and a precision of 0.0001g.</descriptionText>
 		</step>
 	</chooseBalance>
@@ -24,7 +26,7 @@ This Semi-MicroBalance has a maximum weight capacity of 210g and a precision of 
 		</popupWindow>
 		<step>
 			<listText>Get into Leveling Position</listText>
-			<descriptionText>Click the button behind the balance to assume the balance leveling position. Use to rotate icon below to rotate the camera, then use the cursor icon to press the button</descriptionText>
+			<descriptionText>Click the button behind the balance to assume the balance leveling position. Use to rotate tool below to rotate the camera, then use the cursor icon to press the button.</descriptionText>
 		</step>
 		<step>
 			<listText>Level the Balance</listText>
@@ -38,30 +40,30 @@ This Semi-MicroBalance has a maximum weight capacity of 210g and a precision of 
 		</popupWindow>
 		<step>
 			<listText>Access Balance Face</listText>
-			<descriptionText>Click the button in front of the balance to access the balance’s face buttons.</descriptionText>
+			<descriptionText>Use the cursor icon to click the button in front of the balance to access the balance’s face buttons.</descriptionText>
 		</step>
 		<step>
 			<listText>Turn Balance On</listText>
-			<descriptionText>Use the power button to turn on the balance.</descriptionText>
+			<descriptionText>Click the power button to turn on the balance.</descriptionText>
 		</step>
 		<section>
-			<listText>Perform WeightCheck</listText>
+			<listText>Perform Weight Check</listText>
 		</section>
 		<step>
 			<listText>Activate Calibration Mode</listText>
-			<descriptionText>Press and hold the tare button for a number of seconds until the readout display asks for weight.</descriptionText>
+			<descriptionText>After the display turns on, press and hold the tare button for a number of seconds then release and the readout display will ask for the calibration weight value. Press the Return button to continue.</descriptionText>
 		</step>
 		<step>
 			<listText>Open Door</listText>
-			<descriptionText>You must have the door open to place the weight on the weigh pan.</descriptionText>
+			<descriptionText>Use the cursor to click the door handle used to slide open the door.</descriptionText>
 		</step>
 		<step>
 			<listText>Place Calibration Weight</listText>
-			<descriptionText>Select the weight using the forceps tool and place it on the weigh pan by clicking on the weigh pan.</descriptionText>
+			<descriptionText>Use the forceps tool below to click the weight then click the weigh pan to move the weight inside the balance.</descriptionText>
 		</step>
 		<step>
 			<listText>Close Door</listText>
-			<descriptionText>Make sure the draft shield door is closed before proceeding.</descriptionText>
+			<descriptionText>Close the draft door using the cursor tool.</descriptionText>
 		</step>
 		<step>
 			<listText>Wait for Beep</listText>
@@ -69,7 +71,7 @@ This Semi-MicroBalance has a maximum weight capacity of 210g and a precision of 
 		</step>
 		<step>
 			<listText>Remove Calibration Weight</listText>
-			<descriptionText>Use the forceps tool to remove the calibration weight</descriptionText>
+			<descriptionText>Use the forceps tool to remove the calibration weight.</descriptionText>
 		</step>
 	</calibrateBalance>
 	<useBalance>

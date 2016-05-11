@@ -28,6 +28,7 @@ public class PracticePrepareBalanceManager : BasePracticeSubmodule {
 
 		switch( currentStep ) {
 		case 0:
+			UIManager.s_instance.ToggleSidePanel (true, false);
 			break;
 		case 1:
 			if( Mathf.Abs(bubble.localPosition.x) <= bubbleWinThreshold && Mathf.Abs(bubble.localPosition.y) <= bubbleWinThreshold ) {

@@ -38,6 +38,9 @@ public class PracticeUseBalanceManager : BasePracticeSubmodule {
 		// Making exceptions for what layers to ignore depending on step. Shitty, I know but we need to design this better next time.
 		switch( currentStep )
 		{
+//		case 0:
+//			UIManager.s_instance.ToggleSidePanel (true, false);
+//			break;
 		case 4:
 			CheckInputs( new PUToggles[2] { PUToggles.RDoorOpen, PUToggles.FocusedOnBalanceFace }  );
 			break;

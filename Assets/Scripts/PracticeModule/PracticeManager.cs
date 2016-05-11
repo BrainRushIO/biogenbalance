@@ -49,7 +49,7 @@ public class PracticeManager : MonoBehaviour {
 	void Start () {
 		ApplicationManager.s_instance.ChangeMouseMode( (int)ApplicationManager.MouseMode.Pointer );
 		UIManager.s_instance.ToggleToolsActive( true, true, true, true );
-		UIManager.s_instance.ToggleSidePanel( false, false );
+		UIManager.s_instance.ToggleSidePanel( true, false );
 		UIManager.s_instance.hintButton.gameObject.SetActive( false );
 		//HACK remove this line
 		//UIManager.s_instance.nextButton.gameObject.SetActive( true );
@@ -233,7 +233,7 @@ public class PracticeManager : MonoBehaviour {
 		for( int i = 0; i < UIManager.s_instance.listViewContentParent.childCount; i++ )
 			ToggleListViewItemHighLight( i, false );
 		UIManager.s_instance.UpdateDescriptionViewText( "" );
-		UIManager.s_instance.ToggleSidePanel( false, false );
+//		UIManager.s_instance.ToggleSidePanel( false, false );
 	}
 	
 	private void InitializePracticeStepList() {
