@@ -19,7 +19,7 @@
 		</step>
 		<step>
 			<listText>Models</listText>
-			<descriptionText>The balance displayed is the Sartorius ME5. Depending on the balance being used, it will have a different Weight Capacity, and Precision.
+			<descriptionText>The balance displayed is the Sartorius ME5. Depending on the balance being used, it will have a different Weight Capacity and Precision.
 
 Note: Always refer to your balance’s SOP to find its specifications.</descriptionText>
 		</step>
@@ -36,7 +36,7 @@ Note: Always refer to your balance’s SOP to find its specifications.</descript
 		</section>
 		<step>
 			<listText>Intro</listText>
-			<descriptionText>This is a Semi-Microbalance, it is used to weigh objects of more mass than the ones weighed on a Microbalance.</descriptionText>
+			<descriptionText>This is a Semi-Microbalance. It is used to weigh objects of more mass than the ones weighed on a Microbalance.</descriptionText>
 		</step>
 		<step>
 			<listText>Specifications</listText>
@@ -44,7 +44,7 @@ Note: Always refer to your balance’s SOP to find its specifications.</descript
 		</step>
 		<step>
 			<listText>Models</listText>
-			<descriptionText>The balance displayed is the Sartorius AZ214. Depending on the balance being used, it will have a different Weight Capacity, and Precision.
+			<descriptionText>The balance displayed is the Sartorius AZ214. Depending on the balance being used, it will have a different Weight Capacity and Precision.
 
 Note: Always refer to your balance’s SOP to find its specifications.</descriptionText>
 		</step>
@@ -180,7 +180,7 @@ Note: Different balances enter Calibration Mode in different ways. Refer to your
 		</step>
 		<step>
 			<listText>Make Sure Door is Closed</listText>
-			<descriptionText>Make sure the door is closed to ensure a proper reading!</descriptionText>
+			<descriptionText>Make sure the door is closed to ensure a proper reading.</descriptionText>
 		</step>
 		<step>
 			<listText>Tare</listText>

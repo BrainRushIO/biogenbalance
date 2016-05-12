@@ -10,17 +10,17 @@
 		<item>
 			<key>readoutDisplayButtons</key>
 			<listText>Readout Display Buttons</listText>
-			<descriptionText>Buttons whos functions change depending on the current screen on the Readout Display.</descriptionText>
+			<descriptionText>Buttons whose functions change depending on the current screen on the Readout Display.</descriptionText>
 		</item>
 		<item>
 			<key>lTareButton</key>
 			<listText>Left Tare Button</listText>
-			<descriptionText>Zeros or re-zeros the scale. Used often during calibration and when preparing the balance for use. There is one on both sides of the scale face.</descriptionText>
+			<descriptionText>Zeros or re-zeros the scale. Used during calibration and when preparing the balance for use. Located on both sides of the scale face.</descriptionText>
 		</item>
 		<item>
 			<key>rTareButton</key>
 			<listText>Right Tare Button</listText>
-			<descriptionText>Zeros or re-zeros the scale. Used often during calibration and when preparing the balance for use. There is one on both sides of the scale face.</descriptionText>
+			<descriptionText>Zeros or re-zeros the scale. Used during calibration and when preparing the balance for use. Located on both sides of the scale face.</descriptionText>
 		</item>
 		<item>
 			<key>abcButton</key>
@@ -75,7 +75,7 @@
 		<item>
 			<key>levelingScrews</key>
 			<listText>Leveling Screws</listText>
-			<descriptionText>Screws that change the height the balance to make sure it is on a level surface. There is one on each side of the scale.</descriptionText>
+			<descriptionText>Screws that change the height of the balance to make sure it is on a level surface. There is one on each side of the scale.</descriptionText>
 		</item>
 		<item>
 			<key>bubbleLevelIndicator</key>
@@ -95,12 +95,12 @@
 		<item>
 			<key>revolvingDoor</key>
 			<listText>Draft Shield</listText>
-			<descriptionText>Rotating door that encloses the weighing area. Used to stop wind drafts from affecting the weight reading. Some doors are motorized and don't require manual adjustment.</descriptionText>
+			<descriptionText>Rotating door that encloses the weighing area. Used to stop wind drafts from affecting the weight reading. Some doors are motorized and do not require manual adjustment.</descriptionText>
 		</item>
 		<item>
 			<key>pan</key>
 			<listText>Pan</listText>
-			<descriptionText>Surface where weighing materials are placed on.</descriptionText>
+			<descriptionText>Surface upon which weighing materials are placed.</descriptionText>
 		</item>
 		<!--<item>
 			<key>protectionRing</key>
@@ -132,12 +132,12 @@
 		<item>
 			<key>lTareButton</key>
 			<listText>Left Tare Button</listText>
-			<descriptionText>Zeros or re-zeros the scale. Used often during calibration and when preparing the balance for use. There is one on both sides of the scale face.</descriptionText>
+			<descriptionText>Zeros or re-zeros the scale. Used during calibration and when preparing the balance for use. Located on both sides of the scale face.</descriptionText>
 		</item>
 		<item>
 			<key>rTareButton</key>
 			<listText>Right Tare Button</listText>
-			<descriptionText>Zeros or re-zeros the scale. Used often during calibration and when preparing the balance for use. There is one on both sides of the scale face.</descriptionText>
+			<descriptionText>Zeros or re-zeros the scale. Used during calibration and when preparing the balance for use. Located on both sides of the scale face.</descriptionText>
 		</item>
 		<item>
 			<key>powerButton</key>
@@ -162,7 +162,7 @@
 		<item>
 			<key>levelingScrews</key>
 			<listText>Leveling Screws</listText>
-			<descriptionText>Screws that change the height the balance to make sure it is on a level surface. There is one on each side of the scale.</descriptionText>
+			<descriptionText>Screws that change the height of the balance to make sure it is on a level surface. There is one on each side of the scale.</descriptionText>
 		</item>
 		<item>
 			<key>bubbleLevelIndicator</key>
@@ -192,7 +192,7 @@
 		<item>
 			<key>pan</key>
 			<listText>Pan</listText>
-			<descriptionText>Surface where weighing materials are placed on.</descriptionText>
+			<descriptionText>Surface where weighing materials are placed.</descriptionText>
 		</item>
 		<!--<item>
 			<key>protectionRing</key>
